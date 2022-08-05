@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "carlobroderick.github.io",
     "section": "",
-    "text": "To learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "To learn more about Quarto websites visit https://quarto.org/docs/websites.\n\nlibrary(palmerpenguins)\n\nshark_top <- c(\"NA\", 2, 7, 7, 6, 3)\nshark_down <- c(\"NA\", -1, -2, -3, -3, 2)\nshark_fin_1 <- c(5, 2)\nshark_fin_2 <- c(-5, 2)\n\n# Plot dat shark\n\nplot(shark_top, type=\"o\", col=\"red\", ylim=c(-10,10))\n\nWarning in xy.coords(x, y, xlabel, ylabel, log): NAs introduced by coercion\n\nlines(shark_down)\n\nWarning in xy.coords(x, y): NAs introduced by coercion\n\nlines(shark_fin_1, type=\"o\", pch=22, lty=2, col=\"red\")\nlines(shark_fin_2, type=\"o\", pch=22, lty=2, col=\"red\")\n\n# Create a title with a red, bold/italic font\ntitle(main=\"Sharky\", col.main=\"red\", font.main=4)"
   },
   {
     "objectID": "about.html",

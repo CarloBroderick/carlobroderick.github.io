@@ -7,5 +7,21 @@ This is a Quarto website.
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
 ```{r}
-1 + 1
+library(palmerpenguins)
+
+shark_top <- c("NA", 2, 7, 7, 6, 3)
+shark_down <- c("NA", -1, -2, -3, -3, 2)
+shark_fin_1 <- c(5, 2)
+shark_fin_2 <- c(-5, 2)
+
+# Plot dat shark
+
+plot(shark_top, type="o", col="red", ylim=c(-10,10))
+lines(shark_down)
+lines(shark_fin_1, type="o", pch=22, lty=2, col="red")
+lines(shark_fin_2, type="o", pch=22, lty=2, col="red")
+
+# Create a title with a red, bold/italic font
+title(main="Sharky", col.main="red", font.main=4)
+
 ```
