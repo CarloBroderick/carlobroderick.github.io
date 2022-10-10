@@ -12,5 +12,12 @@
     "title": "About",
     "section": "",
     "text": "1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "about2.html",
+    "href": "about2.html",
+    "title": "about2",
+    "section": "",
+    "text": "This is a second about page"
   }
 ]
