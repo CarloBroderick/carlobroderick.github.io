@@ -1,0 +1,11 @@
+---
+title: "about2"
+editor: visual
+jupyter: python3
+---
+
+This is a second about page 
+
+```{r}
+
+```
