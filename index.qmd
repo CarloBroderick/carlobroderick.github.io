@@ -1,5 +1,5 @@
 ---
-title: "carlobroderick.github.io" # if using a built-in template, this title appears under your photo
+title: "Carlo Broderick" # if using a built-in template, this title appears under your photo
 image: headshot.jpg # great spot for your professional headshot :) 
 about: 
   template: trestles # see other templates at https://quarto.org/docs/websites/website-about.html#templates
