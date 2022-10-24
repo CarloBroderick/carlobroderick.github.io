@@ -1,39 +1,18 @@
 ---
-title: "carlobroderick.github.io"
+title: "carlobroderick.github.io" # if using a built-in template, this title appears under your photo
+image: headshot.jpg # great spot for your professional headshot :) 
+about: 
+  template: trestles # see other templates at https://quarto.org/docs/websites/website-about.html#templates
+  image-shape: rounded
+  image-width: 15em
+  links:
+    - icon: linkedin # you'll need to the fontawesome extension to include icons: https://github.com/quarto-ext/fontawesome
+      text: LinkedIn
+      href: https://www.linkedin.com/in/carlo-broderick-55a78352/
+    - icon: github
+      text: GitHub
+      href: https://github.com/CarloBroderick
+    - icon: envelope
+      text: Email
+      href: mailto:carlwilliambroderick@gmail.com
 ---
-
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{r}
-library(palmerpenguins)
-
-shark_top <- c("NA", 2, 7, 7, 6, 3)
-shark_down <- c("NA", -1, -2, -3, -3, 2)
-shark_fin_1 <- c(5, 2)
-shark_fin_2 <- c(-5, 2)
-
-# Plot dat shark
-
-plot(shark_top, type="o", col="red", ylim=c(-10,10))
-lines(shark_down)
-lines(shark_fin_1, type="o", pch=22, lty=2, col="red")
-lines(shark_fin_2, type="o", pch=22, lty=2, col="red")
-
-# Create a title with a red, bold/italic font
-title(main="Sharky", col.main="red", font.main=4)
-
-```
-
-```{r}
-shark_x_2 <- c(1,1,2,5,6,6.5,6.5,10,12,11,12,10,7,6,5,1)
-shark_y_2 <- c(0,1,2,2,5,5,2,2,5,1,-1,0,0,-2,0,0)
-shark_eye_x <- c(1)
-shark_eye_y <- c(1)
-
-plot(shark_x_2, shark_y_2, type="o")
-line(shark_eye_x, shark_eye_y)
-
-
-```
