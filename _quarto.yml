@@ -3,16 +3,21 @@ project:
   output-dir: docs
 
 website:
-  title: "carlobroderick.github.io"
+  title: "Carlo Broderick"
   navbar:
+  # these are the pages on the nav bar, they refer to the .qmd files in the directory
     left:
       - href: index.qmd
         text: Home
       - about.qmd
+      - resources.qmd
+      - about2.qmd
 
 format:
   html:
-    theme: cosmo
+    theme: 
+      light: flatly
+      dark: darkly
     css: mystyles.scss
     toc: true
 
