@@ -256,12 +256,12 @@ div.csl-indent {
 <h1>Searching for Climate Change in Macro-Economic Data</h1>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Cimate denialism is slowly fading within the US. On August 15, 2022, The World Economic Forum noted that the current US congress had 7% fewer “climate deniers” than the previous session, which in tern had 23% less climate deniers than the session before that.<span class="citation" data-cites="climate">(<a href="#ref-climate" role="doc-biblioref"><span>“Climate Denial: Why It Happens and What To Do About It,”</span> n.d.</a>)</span> To add to this trend, the current head of the US executive branch post has recently seen a 100% decrease in climate denialism; however, the prospects for this trend continuing seem less than certain.</p>
+<p>Climate denialism is slowly fading within the US. On August 15, 2022, The World Economic Forum noted that the current US congress had 7% fewer “climate deniers” than the previous session, which in turn, had 23% less climate deniers than the preceeding session. <span class="citation" data-cites="climate">(<a href="#ref-climate" role="doc-biblioref"><span>“Climate Denial: Why It Happens and What To Do About It,”</span> n.d.</a>)</span> To add to this trend, the current head of the US executive branch post has recently seen a 100% decrease in climate denialism; however, the prospects for this trend continuing seem less than certain.</p>
 <p>While climate denialism may be on the wane it is still a considerable force within American, if not global, politics.<span class="citation" data-cites="brigham">(<a href="#ref-brigham" role="doc-biblioref">Brigham, n.d.</a>)</span> The denialists in our country maintain their beliefs in the face of mounting evidence.<span class="citation" data-cites="scientif">(<a href="#ref-scientif" role="doc-biblioref"><span>“Scientific Consensus: Earth’s Climate Is Warming,”</span> n.d.</a>)</span> So I have taken it upon myself to add to the mounting evidence and see if I can definitively convince some of our most recalcitrant conrads of the severity of anthropocentric<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> climate change.</p>
 </section>
 <section id="aim" class="level2">
 <h2 class="anchored" data-anchor-id="aim">Aim</h2>
-<p>I intend to run a number of regressions to see if I can explain any variability in national macroeconomic indicators with the variability in climate change. I.E. Can I see climate changes effect on country level statistics?</p>
+<p>I intend to run a number of regressions to see if I can explain any variability in national macroeconomic indicators with the variability in climate change. I.E. Can I see climate change’s effect on country level statistics?</p>
 <p>Surely this smoking gun will put an end to climate denialism once and for all!</p>
 </section>
 <section id="outline" class="level2">
@@ -276,7 +276,7 @@ div.csl-indent {
 </section>
 <section id="macro-economic-indicator" class="level4">
 <h4 class="anchored" data-anchor-id="macro-economic-indicator">Macro-Economic Indicator</h4>
-<p>The national level statistic I will try to predict in this blog post will be: <em>Annual growth in per capita Gross Domestic Product</em> denoted in <em>2015 USD.</em> While I did attempt to use other metrics in my analysis, this metric seemed the most strait forward to blog about.</p>
+<p>The national level statistic I will try to predict in this blog post will be: <em>Annual growth in per capita Gross Domestic Product</em> denoted in <em>2015 USD.</em> While I did attempt to use other metrics in my analysis, this metric seemed the most straitforward to blog about.</p>
 </section>
 </section>
 <section id="hypothesis-testing" class="level2">
@@ -295,7 +295,7 @@ Indictor(temp) = \beta_{1}(year) + \beta_{2}(temp)_{t} + \beta_{3}(temp)_{t-1} +
 \]</span></p>
 <p>The first model is a standard linear regression with a single coefficient.</p>
 <p>The second model is a linear regression with two lagged temperature variables that represent the temperature one year and two years before. The thinking here is that temperature may have an effect on our indicator (GDP) in later years.</p>
-<p>The third model is the same as the second except with an additional variable of year. I see in the temperature variable that it has an upward trend, likely due to climate changed induced global warming. I worried that if the economic indicator also had a trend then a correlation could be spurious, so in the case that I found any strong high correlation in the first two models I would try and see if adding the time variable lowered the impact of the temperature predictor on the indicator in question.</p>
+<p>The third model is the same as the second except with an additional variable of year. I see in the temperature variable that it has an upward trend, likely due to climate change induced global warming. I worried that if the economic indicator also had a trend then a correlation could be spurious, so in the case that I found any strong high correlation in the first two models I would try and see if adding the time variable lowered the impact of the temperature predictor on the indicator in question.</p>
 </section>
 <section id="null-and-alternative-hypothesis" class="level4">
 <h4 class="anchored" data-anchor-id="null-and-alternative-hypothesis">Null and Alternative Hypothesis</h4>
@@ -332,7 +332,7 @@ H_{1}: 0 \neq \beta_{t} + \beta_{2} + \beta_{3}
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"World"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Lets read in and clean the data. This data can be downloaded from the FAOSTAT <a href="https://www.fao.org/faostat/en/">website</a>. While this analysis can be preformed on multiple different national level statistics, I chose to use <em>National GDP</em>. To export the CSVs found in this blog post use the <a href="https://www.fao.org/faostat/en/#data/MK">Macro Indicators</a> data portal for the indicators and the <a href="https://www.fao.org/faostat/en/#data/ET">Temperature Change</a> data portal for the temperature variable.</p>
+<p>Let’s read in and clean the data. This data can be downloaded from the FAOSTAT <a href="https://www.fao.org/faostat/en/">website</a>. While this analysis can be performed on multiple different national level statistics, I chose to use <em>National GDP</em>. To export the CSVs found in this blog post use the <a href="https://www.fao.org/faostat/en/#data/MK">Macro Indicators</a> data portal for the indicators and the <a href="https://www.fao.org/faostat/en/#data/ET">Temperature Change</a> data portal for the temperature variable.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -368,7 +368,7 @@ H_{1}: 0 \neq \beta_{t} + \beta_{2} + \beta_{3}
 </section>
 <section id="exploring-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="exploring-the-data">Exploring the Data</h2>
-<p>Lets look at our data a little closer to make sure there are no surprises.</p>
+<p>Let’s look at our data a little closer to make sure there are no surprises.</p>
 <section id="map-least-developed-countries" class="level4">
 <h4 class="anchored" data-anchor-id="map-least-developed-countries">Map Least Developed Countries</h4>
 <div class="cell">
@@ -415,7 +415,7 @@ H_{1}: 0 \neq \beta_{t} + \beta_{2} + \beta_{3}
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(ave_stats, country_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Create indicator graph.</p>
+<p>Create an indicator graph</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -460,7 +460,7 @@ H_{1}: 0 \neq \beta_{t} + \beta_{2} + \beta_{3}
 </section>
 <section id="moving-average-of-temperature" class="level4">
 <h4 class="anchored" data-anchor-id="moving-average-of-temperature">Moving average of temperature</h4>
-<p>I worry about the fact that the data on the whole tends to have an upwards trend. I attempted to extract that trend out of my temperature coefficients by including a year variable in one of the models I used when fooling around with this analysis. The addition of year as an predictive variable did not have a strong effect on my model’s outcomes so it’s not shown in this blog.</p>
+<p>I worry about the fact that the data on the whole tends to have an upwards trend. I attempted to extract that trend out of my temperature coefficients by including a year variable in one of the models I used when fooling around with this analysis. The addition of year as a predictive variable did not have a strong effect on my model’s outcomes so it’s not shown in this blog.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -511,7 +511,7 @@ H_{1}: 0 \neq \beta_{t} + \beta_{2} + \beta_{3}
 </section>
 <section id="performing-regressions" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="performing-regressions">Performing Regressions</h2>
-<p>The code below uses a for loop, this opperation can also be done using tidyverse functions which I would actually strongly recommend. The below for loop allow you to put in a dataframe with multiple types on indicators (e.g.&nbsp;agricultural yield growth) which is handy if your are running this regression on lots of indicators; however, for this blog post I’ll just be using our GDP indicator for demonstration.</p>
+<p>The code below uses a for loop, this operation can also be done using tidyverse functions which I would actually strongly recommend. The below for loop allows you to put in a dataframe with multiple types of indicators (e.g.&nbsp;agricultural yield growth) which is handy if you’re are running this regression on lots of indicators; however, for this blog post I’ll just be using our GDP indicator for demonstration.</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
@@ -519,72 +519,67 @@ H_{1}: 0 \neq \beta_{t} + \beta_{2} + \beta_{3}
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>country_list <span class="ot">&lt;-</span> <span class="fu">unique</span>(analysis_df<span class="sc">$</span>country)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># when appending rows to the df that is initiated below it's nice to clear the df so that you can run the loop again</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">remove</span>(result_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in remove(result_df): object 'result_df' not found</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># initialize a df that will be filled by the for loop</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>result_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">country =</span> <span class="fu">character</span>(),</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_d =</span> <span class="fu">numeric</span>(),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_d_p =</span> <span class="fu">numeric</span>(),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_lag_1 =</span> <span class="fu">numeric</span>(),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_lag_1_p =</span> <span class="fu">numeric</span>(),</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_lag_2 =</span> <span class="fu">numeric</span>(),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_lag_2_p =</span> <span class="fu">numeric</span>(),</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">r2 =</span> <span class="fu">numeric</span>(),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">n =</span> <span class="fu">numeric</span>())</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># here is the big for loop that will output a dataframe of the results of all the regressions you run on one or multiple indicators against our temperature variable.</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (coi <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(<span class="fu">unique</span>(country_list)))) {</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  lm_data_country <span class="ot">&lt;-</span> analysis_df <span class="sc">|&gt;</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> country_list[coi])</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># this part of the loop allows for multiple "item" which is the title for national level macro economic statists that are exported from FAOSTAT. For our example it just loops once.</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (measure <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(<span class="fu">unique</span>(lm_data_country<span class="sc">$</span>item)))) {</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    item_list <span class="ot">&lt;-</span> <span class="fu">unique</span>(lm_data_country<span class="sc">$</span>item)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    lm_data_item <span class="ot">&lt;-</span> lm_data_country <span class="sc">|&gt;</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(item <span class="sc">==</span> item_list[measure])</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(lm_data_item<span class="sc">$</span>temp <span class="sc">&gt;</span> <span class="dv">10</span>))) <span class="cf">next</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    lm_output <span class="ot">&lt;-</span> <span class="fu">lm</span>(indicator <span class="sc">~</span> temp <span class="sc">+</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>                      lag_1 <span class="sc">+</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>                      lag_2,</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> lm_data_item, </span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.action =</span> na.exclude)</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    row <span class="ot">&lt;-</span> <span class="fu">c</span>(country_list[coi],</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>             lm_output<span class="sc">$</span>coefficients[[<span class="dv">2</span>]],</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summary</span>(lm_output)[[<span class="st">"coefficients"</span>]][<span class="st">"temp"</span>, <span class="st">"Pr(&gt;|t|)"</span>],</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>             lm_output<span class="sc">$</span>coefficients[[<span class="dv">3</span>]],</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summary</span>(lm_output)[[<span class="st">"coefficients"</span>]][<span class="st">"lag_1"</span>, <span class="st">"Pr(&gt;|t|)"</span>],</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>             lm_output<span class="sc">$</span>coefficients[[<span class="dv">4</span>]],</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summary</span>(lm_output)[[<span class="st">"coefficients"</span>]][<span class="st">"lag_2"</span>, <span class="st">"Pr(&gt;|t|)"</span>],</span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summary</span>(lm_output)[<span class="dv">9</span>], <span class="co"># adjusted r2</span></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>             <span class="fu">count</span>(lm_data_item)) </span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    result_df[<span class="fu">nrow</span>(result_df) <span class="sc">+</span> <span class="dv">1</span>, ] <span class="ot">&lt;-</span> row</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>round_df <span class="ot">&lt;-</span> <span class="cf">function</span>(x, digits) {</span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>    numeric_columns <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x, mode) <span class="sc">==</span> <span class="st">'numeric'</span></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    x[numeric_columns] <span class="ot">&lt;-</span>  <span class="fu">round</span>(x[numeric_columns], digits)</span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>    x</span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>ordered_results <span class="ot">&lt;-</span> result_df <span class="sc">|&gt;</span></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(temp_d_p) <span class="sc">|&gt;</span></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round_df</span>(<span class="dv">3</span>)</span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(ordered_results[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#remove(result_df)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># initialize a df that will be filled by the for loop</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>result_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">country =</span> <span class="fu">character</span>(),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_d =</span> <span class="fu">numeric</span>(),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_d_p =</span> <span class="fu">numeric</span>(),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_lag_1 =</span> <span class="fu">numeric</span>(),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_lag_1_p =</span> <span class="fu">numeric</span>(),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_lag_2 =</span> <span class="fu">numeric</span>(),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">temp_lag_2_p =</span> <span class="fu">numeric</span>(),</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">r2 =</span> <span class="fu">numeric</span>(),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">n =</span> <span class="fu">numeric</span>())</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co"># here is the big for loop that will output a dataframe of the results of all the regressions you run on one or multiple indicators against our temperature variable.</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (coi <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(<span class="fu">unique</span>(country_list)))) {</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  lm_data_country <span class="ot">&lt;-</span> analysis_df <span class="sc">|&gt;</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> country_list[coi])</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># this part of the loop allows for multiple "item" which is the title for national level macro economic statists that are exported from FAOSTAT. For our example it just loops once.</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (measure <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(<span class="fu">unique</span>(lm_data_country<span class="sc">$</span>item)))) {</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    item_list <span class="ot">&lt;-</span> <span class="fu">unique</span>(lm_data_country<span class="sc">$</span>item)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    lm_data_item <span class="ot">&lt;-</span> lm_data_country <span class="sc">|&gt;</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(item <span class="sc">==</span> item_list[measure])</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(lm_data_item<span class="sc">$</span>temp <span class="sc">&gt;</span> <span class="dv">10</span>))) <span class="cf">next</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    lm_output <span class="ot">&lt;-</span> <span class="fu">lm</span>(indicator <span class="sc">~</span> temp <span class="sc">+</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>                      lag_1 <span class="sc">+</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>                      lag_2,</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> lm_data_item, </span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.action =</span> na.exclude)</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    row <span class="ot">&lt;-</span> <span class="fu">c</span>(country_list[coi],</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>             lm_output<span class="sc">$</span>coefficients[[<span class="dv">2</span>]],</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summary</span>(lm_output)[[<span class="st">"coefficients"</span>]][<span class="st">"temp"</span>, <span class="st">"Pr(&gt;|t|)"</span>],</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>             lm_output<span class="sc">$</span>coefficients[[<span class="dv">3</span>]],</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summary</span>(lm_output)[[<span class="st">"coefficients"</span>]][<span class="st">"lag_1"</span>, <span class="st">"Pr(&gt;|t|)"</span>],</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>             lm_output<span class="sc">$</span>coefficients[[<span class="dv">4</span>]],</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summary</span>(lm_output)[[<span class="st">"coefficients"</span>]][<span class="st">"lag_2"</span>, <span class="st">"Pr(&gt;|t|)"</span>],</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summary</span>(lm_output)[<span class="dv">9</span>], <span class="co"># adjusted r2</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>             <span class="fu">count</span>(lm_data_item)) </span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    result_df[<span class="fu">nrow</span>(result_df) <span class="sc">+</span> <span class="dv">1</span>, ] <span class="ot">&lt;-</span> row</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>round_df <span class="ot">&lt;-</span> <span class="cf">function</span>(x, digits) {</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    numeric_columns <span class="ot">&lt;-</span> <span class="fu">sapply</span>(x, mode) <span class="sc">==</span> <span class="st">'numeric'</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>    x[numeric_columns] <span class="ot">&lt;-</span>  <span class="fu">round</span>(x[numeric_columns], digits)</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>ordered_results <span class="ot">&lt;-</span> result_df <span class="sc">|&gt;</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(temp_d_p) <span class="sc">|&gt;</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round_df</span>(<span class="dv">3</span>)</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(ordered_results[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display column-page">
 <table class="table table-sm table-striped">
@@ -697,7 +692,7 @@ H_{1}: 0 \neq \beta_{t} + \beta_{2} + \beta_{3}
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>I am unable to show that national average temperature can predict any variability in national GDP. I did this exercise with other national metrics and with the other models shown above but this p-value was lowest value I could find. Even in this p-value fell below my stated alpha, I would be pretty insecure about pointing to this as a smoking gun for climate change’s impact on economies. Out of more than a thousand regressions that I ran, one one countries data came close to correlating. If you go searching for correlation in this manner you have to make sure that your p-value reflects the number of regressions that you are running, otherwise, you’re going to stumble upon some false positives.</p>
+<p>I am unable to show that national average temperature can predict any variability in national GDP. I did this exercise with other national metrics and with the other models shown above but this p-value was the lowest value I could find. Even if this p-value fell below my stated alpha, I would be pretty insecure about pointing to this as a smoking gun for climate change’s impact on economies. Out of more than a thousand regressions that I ran, only one country’s data came close to correlating. If you go searching for correlation in this manner you have to make sure that your p-value reflects the number of regressions that you are running, otherwise, you’re going to stumble upon some false positives.</p>
 <p>Some thoughts about the results:</p>
 <ul>
 <li><p>The metric of USD 2015 Dollars inflates and deflates based on strength of the countries currency during each year so that already explains some variability that is not in the model</p></li>
@@ -711,9 +706,9 @@ H_{1}: 0 \neq \beta_{t} + \beta_{2} + \beta_{3}
 <p>To improve this analysis:</p>
 <ul>
 <li><p>Increase spatial and temporal resolution.&nbsp;</p></li>
-<li><p>Restrict temporal resolution to impactful seasons (growing season for agricultural indicators).</p></li>
-<li><p>Investigate indicators that would have a direct relationship to heat, e.g.&nbsp;specific agricultural good statistics or contruction.</p></li>
-<li><p>Use other metrics of climate change other than heat</p></li>
+<li><p>Restrict temporal resolution to high impact seasons (growing season for agricultural indicators).</p></li>
+<li><p>Investigate indicators that would have a direct relationship to heat, e.g.&nbsp;specific agricultural good statistics or construction.</p></li>
+<li><p>Use other climate change metrics instead of temperature</p></li>
 </ul>
 
 

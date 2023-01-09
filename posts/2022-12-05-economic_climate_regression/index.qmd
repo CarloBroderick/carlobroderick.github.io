@@ -20,23 +20,21 @@ bibliography: references.bib
 
 ## Introduction
 
-Climate denialism is slowly fading within the US. On August 15, 2022, The World Economic Forum noted that the current US congress had 7% fewer "climate deniers" than the previous session, which in tern had 23% less climate deniers than the session before that.[@climate] To add to this trend, the current head of the US executive branch post has recently seen a 100% decrease in climate denialism; however, the prospects for this trend continuing seem less than certain.
+Climate denialism is slowly fading within the US. On August 15, 2022, The World Economic Forum noted that the current US congress had 7% fewer "climate deniers" than the previous session, which in turn, had 23% less climate deniers than the preceeding session. [@climate]
 
-While climate denialism may be on the wane it is still a considerable force within American, if not global, politics.[@brigham] The denialists in our country maintain their beliefs in the face of mounting evidence.[@scientif] So I have taken it upon myself to add to the mounting evidence and see if I can definitively convince some of our most recalcitrant conrads of the severity of anthropocentric[^1] climate change.
+While climate denialism may be on the wane it is still a considerable force within American politics.[@brigham] The denialists within the US maintain their beliefs in the face of mounting evidence.[@scientif] So I have taken it upon myself to add to this mounting evidence and attempt show a link between temperature and national level economic indicators.
 
-[^1]: This blog post won't actually get at the "anthropocentric" part, I'll mainly be jousting at the "severity" part. The "human caused" climate change post will have to wait until my data science skills are much sharper.
+Note: I will be focusing on climate's impact not on the cause of climate change itself. The correlation between mean temperatures and CO₂ readings from Mt. Mauna Loa in Hawaii are already well known and by themselves do not point to causation. Any more rigorous analysis is beyond my current data science skills, and so, I will leave the anthropocentric attribution to the IPCC.
 
 ## Aim
 
-I intend to run a number of regressions to see if I can explain any variability in national macroeconomic indicators with the variability in climate change. I.E. Can I see climate change's effect on country level statistics?
-
-Surely this smoking gun will put an end to climate denialism once and for all!
+I intend to run a number of regressions to see if I can explain any variability in national macroeconomic indicators with the variability in national average temperature. I.E. Can I see climate change's impact on country level statistics?
 
 ## Outline
 
 #### Countries
 
-I plan to use data from the Food and Agriculture Organization of the United Nations.[@faostat] I will limit my analysis to the group of 49 countries designated as the least developed (LDC) by the United Nations.[@leastde] These countries were chosen for this blog post because, according to the UN Development Project, the economic growth of LDCs is highly dependent on climate-sensitive sectors.[@respondi] This high sensitivity will hopefully lead to a high p-value when regressing temperature on national level statistics.
+All data used in this blog post was provided by the Food and Agriculture Organization of the United Nations.[@faostat] I will limit my analysis to the group of 49 countries designated as the least developed (LDC) by the United Nations.[@leastde] These countries were chosen for this blog post because, according to the UN Development Project, the economic growth of LDCs is highly dependent on climate-sensitive sectors.[@respondi] This high sensitivity will hopefully lead to a low p-value when regressing temperature on national level statistics.
 
 #### Climate Change Metric
 
@@ -44,7 +42,7 @@ The temperature data I will use to predict national indicators will be *Degrees 
 
 #### Macro-Economic Indicator
 
-The national level statistic I will try to predict in this blog post will be: *Annual growth in per capita Gross Domestic Product* denoted in *2015 USD.* While I did attempt to use other metrics in my analysis, this metric seemed the most straitforward to blog about.
+The national level statistic I will try to predict in this blog post will be: *Annual growth in per capita Gross Domestic Product* denoted in *2015 USD.* While I did attempt to use other metrics in my analysis, this metric seemed the most straightforward to blog about.
 
 ## Hypothesis Testing
 
@@ -68,7 +66,7 @@ The first model is a standard linear regression with a single coefficient.
 
 The second model is a linear regression with two lagged temperature variables that represent the temperature one year and two years before. The thinking here is that temperature may have an effect on our indicator (GDP) in later years.
 
-The third model is the same as the second except with an additional variable of year. I see in the temperature variable that it has an upward trend, likely due to climate change induced global warming. I worried that if the economic indicator also had a trend then a correlation could be spurious, so in the case that I found any strong high correlation in the first two models I would try and see if adding the time variable lowered the impact of the temperature predictor on the indicator in question.
+The third model is the same as the second except with an additional variable of year. I see in the temperature variable that it has an upward trend, likely due to climate change induced global warming. I worry that if the economic indicator also had a trend then a correlation could be spurious, so in the case that I found any strong high correlation in the first two models I would try and see if adding the time variable lowered the impact of the temperature predictor on the indicator in question.
 
 #### Null and Alternative Hypothesis
 
@@ -79,22 +77,23 @@ H_{0}: 0 = \beta_{1} + \beta_{2} + \beta_{3}
 $$
 
 $$
-H_{1}: 0 \neq \beta_{t} + \beta_{2} + \beta_{3}
+H_{1}: 0 \neq \beta_{1} + \beta_{2} + \beta_{3}
 $$
 
 #### Alpha and Significance
 
-I will set my significance level to 0.01 which indicates a 1% risk of concluding that temperature is predictive when it is not. Even if I achieve a p-value below 0.01 I will have to do some serious investigation, because if I run multiple models on 49 countries against a number of national level statistics I will be running hundreds of regressions. The chances that one of these will find a relationship is relatively high because of the sheer number of attempts.
+I will set my significance level to 0.01 which indicates a 1% risk of concluding that temperature is predictive when it is not. Even if I achieve a p-value below 0.01 I will have to do some additional validation because I will be regressing multiple models on 49 countries against a number of national level statistics I will be running more than 1,000 regressions. The chances that one of these will find a relationship is relatively high because of the sheer number of attempts.
 
 ## Getting Started
 
-The complete list of libraries and packages used is found here:
+The complete list of libraries, packages, and datasets used in this post can be found here:
 
 ```{r}
 #| echo: true
 #| code-fold: true
 #| output: false
 
+# packages
 library(tidyverse)
 library(lubridate)
 library(janitor)
@@ -106,15 +105,19 @@ library(stats)
 library(slider)
 library(patchwork)
 library(knitr)
+
+# Data
 data("World")
 ```
 
-Let's read in and clean the data. This data can be downloaded from the FAOSTAT [website](https://www.fao.org/faostat/en/). While this analysis can be performed on multiple different national level statistics, I chose to use *National GDP*. To export the CSVs found in this blog post use the [Macro Indicators](https://www.fao.org/faostat/en/#data/MK) data portal for the indicators and the [Temperature Change](https://www.fao.org/faostat/en/#data/ET) data portal for the temperature variable.
+Let's read in and clean the data. This data can be downloaded from the FAOSTAT [website](https://www.fao.org/faostat/en/). While this analysis can be performed on multiple different national level statistics, I chose to use *National GDP* in this blog post for simplicity. To export the CSVs found in this blog post use the [Macro Indicators](https://www.fao.org/faostat/en/#data/MK) data portal for the indicators and the [Temperature Change](https://www.fao.org/faostat/en/#data/ET) data portal for the temperature variable.
 
 ```{r}
 #| echo: true
 #| code-fold: true
 #| output: false
+
+# read in the data
 temp_raw <- read_csv(here("posts", 
                           "2022-12-05-economic_climate_regression",
                           "FAOSTAT_temp.csv"))
@@ -148,12 +151,13 @@ analysis_df <- left_join(indi_df, temp_df,
 
 Let's look at our data a little closer to make sure there are no surprises.
 
-#### Map Least Developed Countries
+#### Map of Least Developed Countries (LDC)
 
 ```{r}
 #| echo: true
 #| code-fold: true
 #| output: true
+
 # filter World data to only LDCs
 LDC_map <- left_join(World, analysis_df, 
                      by = c("name" = "country")) |>
@@ -168,7 +172,7 @@ tm_shape(World) +
             main.title.position = "center")
 ```
 
-#### Create time series of temperature and indicator data
+#### Create a time series of temperature and indicator data
 
 Wrangle the data
 
@@ -176,6 +180,7 @@ Wrangle the data
 #| echo: true
 #| code-fold: true
 #| output: false
+
 # create an average temperature and indicator column
 ave_stats <- analysis_df |>
   group_by(year) |>
@@ -191,9 +196,14 @@ country_stats <- analysis_df |>
 
 # combine data into single dataframe for graphing
 plot_df <- rbind(ave_stats, country_stats)
+
+# change the levels for the legend order
+plot_df$country <- as.factor(plot_df$country)
+plot_df$country <- relevel(plot_df$country, "Average")
+levels(plot_df$country)
 ```
 
-Create an indicator graph
+Graph of indicator (GDP)
 
 ```{r}
 #| echo: true
@@ -207,18 +217,25 @@ gdp_series <- ggplot(data = plot_df) +
        x="Year", 
        title="Annual GDP Growth", 
        caption = "Source: FAOSTAT") +
-  scale_colour_discrete(name  = "Country") +
+  scale_colour_manual(name  = "Country", 
+                      values = c("Average" = "#04332c",
+                                "Afghanistan" = "#ff4c24",
+                                "Bangladesh" = "#67b62c",
+                                "Zambia" = "#0184cf")) +
   theme(plot.title = element_text(hjust = 0.5))
 
 gdp_series
 ```
 
-Create temperature graph.
+Graph of Temperature
 
 ```{r}
 #| echo: true
 #| code-fold: true
 #| output: true
+
+
+
 # create a plot of temperature over time
 temp_series <- ggplot(data = plot_df) +
   geom_hline(yintercept = 0, color = c("grey")) +
@@ -227,15 +244,19 @@ temp_series <- ggplot(data = plot_df) +
        x="Year", 
        title="Degrees above Average Time Series", 
        caption = "Source: FAOSTAT") +
-  scale_colour_discrete(name  = "Country") +
+  scale_colour_manual(name  = "Country", 
+                      values = c("Average" = "#04332c",
+                                "Afghanistan" = "#ff4c24",
+                                "Bangladesh" = "#67b62c",
+                                "Zambia" = "#0184cf")) +
   theme(plot.title = element_text(hjust = 0.5))
 
 temp_series
 ```
 
-#### Moving average of temperature
+#### Moving average of temperature 
 
-I worry about the fact that the data on the whole tends to have an upwards trend. I attempted to extract that trend out of my temperature coefficients by including a year variable in one of the models I used when fooling around with this analysis. The addition of year as a predictive variable did not have a strong effect on my model's outcomes so it's not shown in this blog.
+During this analysis I worried that both the dependent and independent variables might have a temporal trend. I attempted to extract that trend out of my temperature coefficients by including a year variable in one of the models I used; however, the addition of year as a predictive variable did not have a strong effect on my model's p-values or the temperature coefficients so it is left out of this blog.
 
 ```{r}
 #| echo: true
@@ -355,7 +376,16 @@ round_df <- function(x, digits) {
 
 ordered_results <- result_df |>
   arrange(temp_d_p) |>
-  round_df(3)
+  round_df(3) |>
+  rename(Country = country, 
+         Temperature = temp_d, 
+         "Temp p-value" = temp_d_p,
+         "1 Year Lag" = "temp_lag_1",
+         "1 Year p-value" = temp_lag_1_p,
+         "2 Year Lag" = "temp_lag_2",
+         "2 Year p-value" = temp_lag_2_p,
+         "R-Squared" = r2,
+         Count = n)
 
 kable(ordered_results[1:6, ])
 ```
@@ -364,9 +394,9 @@ kable(ordered_results[1:6, ])
 
 For all indicators, countries, and groups of countries tested (hundreds of lms):
 
--   I could not find a p-value was below .011
+-   I could not find a p-value that was below .011
 
--   Few adjusted R2 were above .4
+-   Few adjusted r squares were above .4
 
 -   no low p-valued overlapped with high adjusted R squared.\
 
@@ -374,15 +404,15 @@ I fail to reject the null hypothesis with a significance level (alpha = 0.01) an
 
 ## Conclusion
 
-I am unable to show that national average temperature can predict any variability in national GDP. I did this exercise with other national metrics and with the other models shown above but this p-value was the lowest value I could find. Even if this p-value fell below my stated alpha, I would be pretty insecure about pointing to this as a smoking gun for climate change's impact on economies. Out of more than a thousand regressions that I ran, only one country's data came close to correlating. If you go searching for correlation in this manner you have to make sure that your p-value reflects the number of regressions that you are running, otherwise, you're going to stumble upon some false positives.
+I am unable to show that national average temperature can predict any variability in national GDP. I did this exercise with other national metrics and with the other models shown above but this p-value was the lowest value I could find. Even if this p-value fell below my stated alpha, I would be pretty insecure about pointing to this as a smoking gun for climate change's impact on economies. Out the thousand plus regressions that I ran, only one country's data came close to correlating. If you go searching for correlation in this manner you have to make sure that your p-value reflects the number of regressions that you are running, otherwise, you're going to stumble upon some false positives.
 
 Some thoughts about the results:
 
--   The metric of USD 2015 Dollars inflates and deflates based on strength of the countries currency during each year so that already explains some variability that is not in the model
+-   The metric of USD 2015 Dollars inflates and deflates based on strength of a country's currency during each year so that already explains some variability that is not in the model
 
 -   Small sample size per country (\~50 years)
 
--   GDP may not be noticeably impacted by climate change at this temporal and spatial scale, yet.
+-   GDP may not be noticeably impacted by climate change at this temporal and spatial scale.
 
 -   The relationship between GDP & Climate Change may be masked by other factors that have a greater impact on GDP, e.g. the invasion and occupation of the country of interest as we can see in the plot above where Afghanistan's GDP growth spikes in the early 2000s.
 
@@ -392,8 +422,8 @@ To improve this analysis:
 
 -   Increase spatial and temporal resolution. 
 
--   Restrict temporal resolution to impactful seasons (growing season for agricultural indicators).
+-   Restrict temporal resolution to high impact seasons (growing season for agricultural indicators).
 
 -   Investigate indicators that would have a direct relationship to heat, e.g. specific agricultural good statistics or construction.
 
--   Use other metrics of climate change other than heat
+-   Use other climate change metrics instead of temperature like precipitation or drought indices.
