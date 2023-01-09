@@ -254,7 +254,7 @@ temp_series <- ggplot(data = plot_df) +
 temp_series
 ```
 
-#### Moving average of temperature 
+#### Moving average of temperature
 
 During this analysis I worried that both the dependent and independent variables might have a temporal trend. I attempted to extract that trend out of my temperature coefficients by including a year variable in one of the models I used; however, the addition of year as a predictive variable did not have a strong effect on my model's p-values or the temperature coefficients so it is left out of this blog.
 
