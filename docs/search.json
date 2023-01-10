@@ -39,6 +39,13 @@
     "href": "posts.html",
     "title": "My Blog",
     "section": "",
-    "text": "Quarto\n\n\nR\n\n\nMEDS\n\n\n\nAn attmpt to find climate changes impact on national level economic statistics.\n\n\n\nCarlo Broderick\n\n\nDec 1, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Quarto\n\n\nR\n\n\nMEDS\n\n\n\nAn investigation of the impacts of the texas blackout on differing census tracts using satalite and US administrative data.\n\n\n\nCarlo Broderick\n\n\nJan 10, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuarto\n\n\nR\n\n\nMEDS\n\n\n\nAn attmpt to find climate changes impact on national level economic statistics.\n\n\n\nCarlo Broderick\n\n\nDec 1, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/2023-1-10-texas-blackout/index.html",
+    "href": "posts/2023-1-10-texas-blackout/index.html",
+    "title": "Texas Blackout Analysis",
+    "section": "",
+    "text": "BibTeX citation:@online{broderick2023,\n  author = {Carlo Broderick},\n  title = {Texas {Blackout} {Analysis}},\n  date = {01/10/2023},\n  url = {https://carlobroderick.github.io/posts/1-10-2023-quarto-blogs/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nCarlo Broderick. 1AD–10AD. “Texas Blackout Analysis.”\n1AD–10AD. https://carlobroderick.github.io/posts/1-10-2023-quarto-blogs/."
   }
 ]

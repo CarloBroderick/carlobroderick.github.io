@@ -35,4 +35,4 @@ Carlo went on to become the first employee of SupplyShift, a software company fo
 
 <b>Future</b>
 
-## His current interests include machine learning, computer vision, GIS, and the subtle art of the slow cooked bean. Carlo plans to leverage the machine learning techniques, learned at Bren, to assess the increasingly large data sets coming out of the corporate responsibility and supply chain management industries, all with a focus on remote sensing and global information systems.
+His current interests include machine learning, computer vision, GIS, and the subtle art of the slow cooked bean. Carlo plans to leverage the machine learning techniques, learned at Bren, to assess the increasingly large data sets coming out of the corporate responsibility and supply chain management industries, all with a focus on remote sensing and global information systems.
