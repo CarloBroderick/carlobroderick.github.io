@@ -1,0 +1,17 @@
+---
+title: "Texas Blackout Analysis"
+description: "An investigation of the impacts of the texas blackout on differing census tracts using satalite and US administrative data."
+author:
+  - name: Carlo Broderick
+    url: https://carlobroderick.github.io/
+    orcid: 0000-0002-1723-5418
+    affiliation: Master of Environmental Data Science Program @ The Bren School (UCSB) & The National Center for Ecological Analysis & Synthesis
+    affiliation-url: https://ucsb-meds.github.io/ 
+date: 1-10-2023
+categories: [Quarto, R, MEDS] # self-defined categories
+citation: 
+  url: https://carlobroderick.github.io/posts/1-10-2023-quarto-blogs/ 
+image: example.jpg
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+bibliography: references.bib
+---

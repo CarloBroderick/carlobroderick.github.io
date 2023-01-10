@@ -380,10 +380,10 @@ ordered_results <- result_df |>
   rename(Country = country, 
          Temperature = temp_d, 
          "Temp p-value" = temp_d_p,
-         "1 Year Lag" = "temp_lag_1",
-         "1 Year p-value" = temp_lag_1_p,
-         "2 Year Lag" = "temp_lag_2",
-         "2 Year p-value" = temp_lag_2_p,
+         "1 Yr Lag" = "temp_lag_1",
+         "1 Yr p-value" = temp_lag_1_p,
+         "2 Yr Lag" = "temp_lag_2",
+         "2 Yr p-value" = temp_lag_2_p,
          "R-Squared" = r2,
          Count = n)
 
