@@ -159,6 +159,8 @@ houston_lights_old_crs <- sf_lights[houston_area, ]
 houston_lights <- st_transform(houston_lights_old_crs , crs = "EPSG:3083")
 ```
 
+![](images/Screen%20Shot%202023-01-10%20at%208.13.21%20PM.png)
+
 The roads geopackage includes data on roads other than highways. However, we can avoid reading in data we don't need by taking advantage of `st_read`'s ability to subset using a SQL query.
 
 ```{r}
@@ -171,7 +173,7 @@ The roads geopackage includes data on roads other than highways. However, we can
 query <- "SELECT * FROM gis_osm_roads_free_1 WHERE fclass='motorway'"
 
 #load just highway data from geopackage using st_read
-highways_WGS_84 <- st_read("data/gis_osm_roads_free_1.gpkg", 
+highways_WGS_84 <- st_read(file.path("data", "gis_osm_roads_free_1.gpkg"), 
                            query = query)
 
 #reproject data to EPSG:3083
@@ -252,7 +254,7 @@ income <- income_1 |>
 data <- left_join(geom, income, by = "GEOID")
 ```
 
-#### determine which census tracts experienced blackouts 
+#### determine which census tracts experienced blackouts
 
 ```{r}
 #| echo: true
@@ -283,7 +285,7 @@ census_blackout <- data_houston[blackout_homes, ,op = st_intersects]|>
   mutate(blackout = "yes")
 ```
 
-#### compare incomes of impacted tracts to unimpacted tracts 
+#### compare incomes of impacted tracts to unimpacted tracts
 
 ```{r}
 #| echo: true
