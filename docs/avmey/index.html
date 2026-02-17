@@ -76,14 +76,11 @@ p a:hover {
     position: relative;
 }
 
-/* Section color rotation (matching avmey.com palette) */
-.section:nth-child(1)  { background: #abcab8; } /* sage green  */
-.section:nth-child(2)  { background: #6aacc4; } /* blue         */
-.section:nth-child(3)  { background: #e57d72; } /* coral        */
-.section:nth-child(4)  { background: #6aacc4; } /* blue         */
-.section:nth-child(5)  { background: #f49b3d; } /* orange       */
-.section:nth-child(6)  { background: #e57d72; } /* coral        */
-.section:nth-child(7)  { background: #6aacc4; } /* blue         */
+/* Section color classes (matching avmey.com palette) */
+.bg-sage  { background: #abcab8; } /* sage green  */
+.bg-blue  { background: #6aacc4; } /* blue         */
+.bg-coral { background: #e57d72; } /* coral        */
+.bg-orange{ background: #f49b3d; } /* orange       */
 
 /* ================================================================
    🌊 WAVE DIVIDERS
@@ -187,9 +184,8 @@ p a:hover {
 }
 
 /* Per-section button accent colors */
-.section:nth-child(3) .button-animated { background: #e57d72; }
-.section:nth-child(5) .button-animated { background: #f49b3d; }
-.section:nth-child(6) .button-animated { background: #e57d72; }
+.bg-coral .button-animated  { background: #d4685e; }
+.bg-orange .button-animated { background: #e08a2d; }
 
 /* ================================================================
    📑 LEFT TABLE OF CONTENTS
@@ -438,7 +434,7 @@ footer {
 <!-- ================================================================
      🏠 SECTION 1 – HOME / HERO  (sage green #abcab8)
      ================================================================ -->
-<div id="home" class="section">
+<div id="home" class="section bg-sage">
     <div class="hero-wrapper">
         <h2>Carlo Broderick</h2>
         <div class="typing-line" id="typing-target"></div>
@@ -454,7 +450,7 @@ footer {
 <!-- ================================================================
      📖 SECTION 2 – ABOUT  (blue #6aacc4)
      ================================================================ -->
-<div id="about" class="section">
+<div id="about" class="section bg-blue">
     <p>Hi! I'm Carlo. I grew up in California and I'm currently based in Asunci&oacute;n, Paraguay as a <a href="https://www.linkedin.com/in/carlobroderick/" target="_blank">Fulbright Scholar</a>. I'm a data analyst at the <a href="https://www.nceas.ucsb.edu/" target="_blank">National Center for Ecological Analysis and Synthesis (NCEAS)</a> at UC Santa Barbara. Throughout my work, I am dedicated to using data science in the pursuit of environmental sustainability and climate resilience.</p>
 
     <p>I have a Master's in Environmental Data Science from <a href="https://bren.ucsb.edu/masters-programs/master-environmental-data-science" target="_blank">UC Santa Barbara</a> with a focus on geospatial analytics, machine learning, and wildfire science. For more info about my education and research, <a href="#education">see here!</a></p>
@@ -473,7 +469,7 @@ footer {
 <!-- ================================================================
      🔬 SECTION 3 – MY WORK  (coral #e57d72)
      ================================================================ -->
-<div id="work" class="section">
+<div id="work" class="section bg-coral">
     <h1>My Work</h1>
 
     <p>At NCEAS, I work on the <strong>Western Wildfire Resilience Index</strong>, analyzing wildfire evacuation patterns across the American West. Our team builds geospatial models to understand how communities respond to wildfire events, combining road network analysis, population dynamics, and fire behavior data.</p>
@@ -502,7 +498,7 @@ footer {
 <!-- ================================================================
      💼 SECTION 4 – EXPERIENCE  (blue #6aacc4)
      ================================================================ -->
-<div id="experience" class="section">
+<div id="experience" class="section bg-blue">
     <h1>Experience</h1>
 
     <div class="experience-item">
@@ -545,7 +541,7 @@ footer {
 <!-- ================================================================
      🎓 SECTION 5 – EDUCATION  (orange #f49b3d)
      ================================================================ -->
-<div id="education" class="section">
+<div id="education" class="section bg-orange">
     <h1>Education</h1>
 
     <p><strong>UC Santa Barbara, Bren School</strong><br>Master's degree, Environmental Data Science<br>Aug 2022 &ndash; Jul 2023</p>
@@ -572,7 +568,7 @@ footer {
 <!-- ================================================================
      🤝 SECTION 6 – COMMUNITY / VOLUNTEERING  (coral #e57d72)
      ================================================================ -->
-<div id="community" class="section">
+<div id="community" class="section bg-coral">
     <h1>Community</h1>
 
     <div class="fieldwork-item">
@@ -600,7 +596,7 @@ footer {
 <!-- ================================================================
      🛠️ SECTION 7 – SKILLS & TOOLS  (blue #6aacc4)
      ================================================================ -->
-<div id="skills" class="section">
+<div id="skills" class="section bg-blue">
     <h1>Skills &amp; Tools</h1>
 
     <div class="skill-tags">
