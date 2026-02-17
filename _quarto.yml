@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Carlo Broderick" # this appears top left website
+  navbar:
+  # these are the pages on the nav bar, they refer to the .qmd files in the directory
+    left:
+      - href: index.qmd
+        text: Home
+      - posts.qmd # this is the blog listing page that redirects to the posts folder
+
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly
+    css: mystyles.scss # this is a file that allows for highly customizable formating
+    toc: true
+
+editor: visual

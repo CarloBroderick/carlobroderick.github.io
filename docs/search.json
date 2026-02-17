@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "posts/2022-12-05-economic_climate_regression/index.html",
+    "href": "posts/2022-12-05-economic_climate_regression/index.html",
+    "title": "Searching for Climate Change in Macro-Economic Data",
+    "section": "",
+    "text": "References\n\nBrigham, Katie. n.d. “The Money Funding Climate Change Denial.” https://www.cnbc.com/2020/12/20/the-big-business-of-climate-change-denial-.html.\n\n\n“Climate Denial: Why It Happens and What To Do About It.” n.d. https://www.climaterealityproject.org/blog/climate-denial-why-it-happens-and-wh….\n\n\n“FAOSTAT.” n.d. https://www.fao.org/faostat/en/#home.\n\n\n“Least Developed Countries (LDCs) | Department of Economic and Social Affairs.” n.d. https://www.un.org/development/desa/dpad/least-developed-country-category.html.\n\n\n“Responding To Climate Change In Least Developed Countries | United Nations Development Programme.” n.d. https://www.undp.org/arab-states/publications/responding-climate-change-least-developed-countries.\n\n\n“Scientific Consensus: Earth’s Climate Is Warming.” n.d. https://climate.nasa.gov/scientific-consensus.\n\nCitationBibTeX citation:@online{broderick2022,\n  author = {Carlo Broderick},\n  title = {Searching for {Climate} {Change} in {Macro-Economic} {Data}},\n  date = {12/01/2022},\n  url = {https://carlobroderick.github.io/posts/2022-31-24-quarto-blogs/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nCarlo Broderick. 12AD–1AD. “Searching for Climate Change in\nMacro-Economic Data.” 12AD–1AD. https://carlobroderick.github.io/posts/2022-31-24-quarto-blogs/."
+  },
+  {
+    "objectID": "posts/2023-1-10-texas-blackout/index.html",
+    "href": "posts/2023-1-10-texas-blackout/index.html",
+    "title": "Texas Blackout Analysis",
+    "section": "",
+    "text": "Footnotes\n\n\nWikipedia. 2021. “2021 Texas power crisis.” Last modified October 2, 2021. https://en.wikipedia.org/wiki/2021_Texas_power_crisis.↩︎\n\nCitationBibTeX citation:@online{broderick2023,\n  author = {Carlo Broderick},\n  title = {Texas {Blackout} {Analysis}},\n  date = {01/10/2023},\n  url = {https://carlobroderick.github.io/posts/1-10-2023-quarto-blogs/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nCarlo Broderick. 1AD–10AD. “Texas Blackout Analysis.”\n1AD–10AD. https://carlobroderick.github.io/posts/1-10-2023-quarto-blogs/."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Carlo Broderick",
+    "section": "",
+    "text": "Carlo Broderick is a master’s student at UCSB’s Bren School of Environmental Science and Management pursuing a degree in environmental data science. He received his Bachelor’s degree in Environmental Studies and Economics from the University of California, Santa Cruz with a focus in non-governmental market regulation.\n\nExperience\nCarlo went on to become the first employee of SupplyShift, a software company focused on supply chain management and corporate responsibility that now manages an international team of more than 60. At SupplyShift, he oversaw the implementation of multiple Fortune-500 supply chain data collection and analysis programs. Later, Carlo became the program coordinator for UC Santa Barbara’s Mellichamp Sustainable Materials and Product Design Initiative. From these two career postings, Carlo gained extensive experience within sustainability organizations that use data to address our many environmental crises.\n\nFuture\nHis current interests include machine learning, computer vision, GIS, and the subtle art of the slow cooked bean. Carlo plans to leverage the machine learning techniques, learned at Bren, to assess the increasingly large data sets coming out of the corporate responsibility and supply chain management industries, all with a focus on remote sensing and global information systems."
+  },
+  {
+    "objectID": "about2.html",
+    "href": "about2.html",
+    "title": "about2",
+    "section": "",
+    "text": "This is a second about page"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "My Blog",
+    "section": "",
+    "text": "Quarto\n\n\nR\n\n\nMEDS\n\n\n\nAn investigation of the impacts of the texas blackout on differing census tracts using satalite and US administrative data.\n\n\n\nCarlo Broderick\n\n\nJan 10, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nQuarto\n\n\nR\n\n\nMEDS\n\n\n\nAn attmpt to find climate changes impact on national level economic statistics.\n\n\n\nCarlo Broderick\n\n\nDec 1, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  }
+]

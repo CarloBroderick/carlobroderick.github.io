@@ -1,0 +1,6 @@
+---
+title: "resources"
+author: "carlo"
+editor: visual
+jupyter: python3
+---

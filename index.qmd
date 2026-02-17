@@ -1,0 +1,38 @@
+---
+# this is the home page, it has special formatting that is designed by quarto.
+
+title: "Carlo Broderick" # if using a built-in template, this title appears under your photo
+
+image: headshot.jpg # great spot for your professional headshot :) 
+
+about: 
+  template: trestles # see other templates at https://quarto.org/docs/websites/website-about.html#templates
+  image-shape: rounded
+  image-width: 17em
+  links:
+    - icon: linkedin # you'll need to the fontawesome extension to include icons: https://github.com/quarto-ext/fontawesome
+      text: LinkedIn
+      href: https://www.linkedin.com/in/carlo-broderick-55a78352/
+    - icon: github
+      text: GitHub
+      href: https://github.com/CarloBroderick
+    - icon: envelope
+      text: Email
+      href: mailto:carlwilliambroderick@gmail.com
+---
+
+<b>Education</b>
+
+Carlo Broderick is a master's student at UCSB's Bren School of Environmental Science and Management pursuing a degree in environmental data science. He received his Bachelor's degree in Environmental Studies and Economics from the University of California, Santa Cruz with a focus in non-governmental market regulation.
+
+------------------------------------------------------------------------
+
+<b>Experience</b>
+
+Carlo went on to become the first employee of SupplyShift, a software company focused on supply chain management and corporate responsibility that now manages an international team of more than 60. At SupplyShift, he oversaw the implementation of multiple Fortune-500 supply chain data collection and analysis programs. Later, Carlo became the program coordinator for UC Santa Barbara's Mellichamp Sustainable Materials and Product Design Initiative. From these two career postings, Carlo gained extensive experience within sustainability organizations that use data to address our many environmental crises.
+
+------------------------------------------------------------------------
+
+<b>Future</b>
+
+His current interests include machine learning, computer vision, GIS, and the subtle art of the slow cooked bean. Carlo plans to leverage the machine learning techniques, learned at Bren, to assess the increasingly large data sets coming out of the corporate responsibility and supply chain management industries, all with a focus on remote sensing and global information systems.
