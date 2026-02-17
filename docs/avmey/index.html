@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlo Broderick</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+/* ================================================================
+   🎨 RESET & BASE
+   ================================================================ */
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #b1c6c9;
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+}
+
+/* ================================================================
+   🔤 TYPOGRAPHY
+   ================================================================ */
+h1, h2, h3, h4, h5, h6, a, span {
+    padding: 0.714em !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+}
+
+p {
+    padding: 0.714em !important;
+    color: #ffffff;
+    text-align: center;
+    text-transform: none;
+    font-weight: normal;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+p a {
+    padding: 0 !important;
+    text-transform: none;
+    font-weight: normal;
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+p a:hover {
+    opacity: 0.8;
+}
+
+/* ================================================================
+   📦 SECTIONS – FULL-VIEWPORT COLORED BLOCKS
+   ================================================================ */
+.section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+    padding: 80px 15% 200px;
+    position: relative;
+}
+
+/* Section color rotation (matching avmey.com palette) */
+.section:nth-child(1)  { background: #abcab8; } /* sage green  */
+.section:nth-child(2)  { background: #6aacc4; } /* blue         */
+.section:nth-child(3)  { background: #e57d72; } /* coral        */
+.section:nth-child(4)  { background: #6aacc4; } /* blue         */
+.section:nth-child(5)  { background: #f49b3d; } /* orange       */
+.section:nth-child(6)  { background: #e57d72; } /* coral        */
+.section:nth-child(7)  { background: #6aacc4; } /* blue         */
+
+/* ================================================================
+   🌊 WAVE DIVIDERS
+   ================================================================ */
+.wave-divider {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    pointer-events: none;
+    line-height: 0;
+}
+
+.wave-divider svg {
+    display: block;
+    width: 100%;
+    height: 120px;
+}
+
+/* ================================================================
+   🏠 HERO SECTION
+   ================================================================ */
+.hero-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+}
+
+.hero-wrapper h2 {
+    font-size: clamp(28px, 5vw, 50px);
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 0.15em;
+    line-height: 1.2;
+}
+
+.typing-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: clamp(14px, 2.5vw, 20px);
+    min-height: 30px;
+    margin-top: 10px;
+}
+
+.typing-line::after {
+    content: '';
+    width: 10px;
+    height: 4px;
+    display: block;
+    background: white;
+    margin-bottom: 2px;
+    margin-left: 4px;
+    animation: fade 350ms alternate infinite;
+}
+
+@keyframes fade {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+/* First section needs extra padding for the hero overlay */
+.section:first-child {
+    min-height: 100vh;
+    padding-bottom: 0;
+}
+
+/* ================================================================
+   🔘 ANIMATED BUTTONS
+   ================================================================ */
+.button-animated {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #6aacc4;
+    text-decoration: none;
+    padding: 8px 18px !important;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 350ms ease-in-out, transform 350ms ease-in-out;
+    font-size: 14px;
+    margin: 5px;
+}
+
+.button-animated:hover {
+    transform: scale(1.08);
+}
+
+.button-animated span {
+    padding: 0 !important;
+}
+
+/* Per-section button accent colors */
+.section:nth-child(3) .button-animated { background: #e57d72; }
+.section:nth-child(5) .button-animated { background: #f49b3d; }
+.section:nth-child(6) .button-animated { background: #e57d72; }
+
+/* ================================================================
+   📑 LEFT TABLE OF CONTENTS
+   ================================================================ */
+.toc {
+    position: fixed;
+    left: 2%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 45;
+    font-size: 12px;
+    line-height: 2.2;
+    width: 160px;
+}
+
+.toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc li a {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 2px 0 !important;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.toc li.visible > a {
+    color: #ffffff;
+    transform: translateX(5px);
+}
+
+/* ================================================================
+   🦶 FIXED FOOTER ICONS
+   ================================================================ */
+footer {
+    bottom: 0;
+    right: 0;
+    margin: 0 auto;
+    position: fixed;
+    height: auto;
+    width: 100%;
+    background: transparent;
+    text-align: center;
+    z-index: 100;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    gap: 8px;
+}
+
+.footer-content a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 0 !important;
+    transition: transform 350ms ease-in-out, background 350ms ease-in-out;
+}
+
+.footer-content a:hover {
+    transform: scale(1.2);
+    background: rgba(255,255,255,0.45);
+}
+
+.footer-content a i {
+    padding: 0 !important;
+}
+
+/* ================================================================
+   📋 CONTENT HELPERS
+   ================================================================ */
+.experience-item {
+    margin-bottom: 25px;
+}
+
+.experience-item h4 {
+    font-size: 16px;
+    margin-bottom: 0;
+    padding-bottom: 0 !important;
+}
+
+.experience-item .meta {
+    font-size: 13px;
+    opacity: 0.85;
+    padding-top: 0 !important;
+}
+
+.fieldwork-item {
+    margin-bottom: 15px;
+}
+
+.fieldwork-item strong {
+    padding: 0 !important;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.skill-tag {
+    background: rgba(255,255,255,0.2);
+    padding: 6px 16px !important;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* ================================================================
+   🖼️ MODAL OVERLAYS
+   ================================================================ */
+.mask {
+    background: rgba(0, 0, 0, 0.68);
+    visibility: hidden;
+    transition: 0.7s;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 101;
+    opacity: 0;
+    left: 0;
+    top: 0;
+}
+
+.modal {
+    transform: translate(-50%, -50%);
+    transition: 0.5s ease-out;
+    background: #7d9d95;
+    visibility: hidden;
+    position: fixed;
+    height: 75vh;
+    width: 75vw;
+    z-index: 110;
+    opacity: 0;
+    overflow-y: auto;
+    left: 50%;
+    top: 50%;
+    border-radius: 8px;
+}
+
+.modal__content {
+    padding: 5%;
+    font-size: 16px;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal__content p {
+    text-align: left;
+    max-width: 700px;
+}
+
+.modal__content h3 {
+    margin-top: 20px;
+}
+
+.active {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.close-btn {
+    position: absolute;
+    cursor: pointer;
+    color: white;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    z-index: 1000;
+    padding: 5px !important;
+    text-decoration: none;
+}
+
+.close-btn:hover {
+    opacity: 0.7;
+}
+
+/* ================================================================
+   📱 RESPONSIVE
+   ================================================================ */
+@media screen and (max-width: 1200px) {
+    body { font-size: 14px; }
+    .modal__content { font-size: 14px; }
+}
+
+@media only screen and (max-width: 800px) {
+    .toc { display: none; }
+    .section {
+        padding-left: 8%;
+        padding-right: 8%;
+        padding-bottom: 160px;
+    }
+    .hero-wrapper {
+        width: 90%;
+    }
+    .modal {
+        width: 92vw;
+        height: 85vh;
+    }
+}
+    </style>
+</head>
+<body>
+
+<!-- ================================================================
+     📌 TABLE OF CONTENTS (LEFT SIDEBAR NAV)
+     ================================================================ -->
+<nav class="toc">
+    <ul>
+        <li class="visible"><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">My Work</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#community">Community</a></li>
+        <li><a href="#skills">Skills</a></li>
+    </ul>
+</nav>
+
+<!-- ================================================================
+     🏠 SECTION 1 – HOME / HERO  (sage green #abcab8)
+     ================================================================ -->
+<div id="home" class="section">
+    <div class="hero-wrapper">
+        <h2>Carlo Broderick</h2>
+        <div class="typing-line" id="typing-target"></div>
+    </div>
+
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z" fill="#6aacc4"/>
+        </svg>
+    </div>
+</div>
+
+<!-- ================================================================
+     📖 SECTION 2 – ABOUT  (blue #6aacc4)
+     ================================================================ -->
+<div id="about" class="section">
+    <p>Hi! I'm Carlo. I grew up in California and I'm currently based in Asunci&oacute;n, Paraguay as a <a href="https://www.linkedin.com/in/carlobroderick/" target="_blank">Fulbright Scholar</a>. I'm a data analyst at the <a href="https://www.nceas.ucsb.edu/" target="_blank">National Center for Ecological Analysis and Synthesis (NCEAS)</a> at UC Santa Barbara. Throughout my work, I am dedicated to using data science in the pursuit of environmental sustainability and climate resilience.</p>
+
+    <p>I have a Master's in Environmental Data Science from <a href="https://bren.ucsb.edu/masters-programs/master-environmental-data-science" target="_blank">UC Santa Barbara</a> with a focus on geospatial analytics, machine learning, and wildfire science. For more info about my education and research, <a href="#education">see here!</a></p>
+
+    <p>I'm passionate about the intersection of technology and environmental science. When I'm not crunching data, you'll find me volunteering at the <a href="#community">local animal shelter</a>, exploring backcountry terrain, or working on creative data visualization projects.</p>
+
+    <p>I was selected as a <a href="https://fulbrightscholars.org/" target="_blank">Fulbright Scholar</a> and have been based in Paraguay since May 2024, conducting independent research on environmental data systems.</p>
+
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,40 C240,100 480,10 720,60 C960,110 1200,20 1440,50 L1440,120 L0,120 Z" fill="#e57d72"/>
+        </svg>
+    </div>
+</div>
+
+<!-- ================================================================
+     🔬 SECTION 3 – MY WORK  (coral #e57d72)
+     ================================================================ -->
+<div id="work" class="section">
+    <h1>My Work</h1>
+
+    <p>At NCEAS, I work on the <strong>Western Wildfire Resilience Index</strong>, analyzing wildfire evacuation patterns across the American West. Our team builds geospatial models to understand how communities respond to wildfire events, combining road network analysis, population dynamics, and fire behavior data.</p>
+
+    <p>I also served as an <strong>Ocean Health Index Fellow</strong>, collaborating with the OHI team to conduct the annual global ocean health assessment. I specialized in environmental data science for data preparation, processing, and score calculation&mdash;applying open data science methods and communicating results through data visualizations and reports.</p>
+
+    <p>Take a look at some of my projects:</p>
+
+    <h3>
+        <a class="button-animated" href="javascript:void(0)" onclick="openModal('modal-wildfire')"><span>🔥 Wildfire Evacuation Analysis</span></a>
+        <a class="button-animated" href="javascript:void(0)" onclick="openModal('modal-ohi')"><span>🌊 Ocean Health Index</span></a>
+        <a class="button-animated" href="javascript:void(0)" onclick="openModal('modal-cnn')"><span>🧠 CNN Research</span></a>
+    </h3>
+
+    <h4>
+        <a class="button-animated" href="javascript:void(0)" onclick="openModal('modal-supply')"><span>Previous work: Supply Chain Management</span></a>
+    </h4>
+
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,80 C360,20 720,100 1080,40 C1260,10 1380,30 1440,60 L1440,120 L0,120 Z" fill="#6aacc4"/>
+        </svg>
+    </div>
+</div>
+
+<!-- ================================================================
+     💼 SECTION 4 – EXPERIENCE  (blue #6aacc4)
+     ================================================================ -->
+<div id="experience" class="section">
+    <h1>Experience</h1>
+
+    <div class="experience-item">
+        <h4>Fulbright Scholar: Independent Research</h4>
+        <p class="meta">U.S. Department of State &middot; Full-time<br>May 2024 &ndash; Present &middot; Asunci&oacute;n, Paraguay</p>
+    </div>
+
+    <div class="experience-item">
+        <h4>Western Wildfire Index Data Analyst</h4>
+        <p class="meta">NCEAS &middot; Full-time<br>Sep 2023 &ndash; Present &middot; Santa Barbara, California</p>
+    </div>
+
+    <div class="experience-item">
+        <h4>Ocean Health Index Fellow</h4>
+        <p class="meta">NCEAS &middot; Full-time<br>May 2023 &ndash; Sep 2023 &middot; Santa Barbara, California</p>
+    </div>
+
+    <div class="experience-item">
+        <h4>Program Coordinator</h4>
+        <p class="meta">UC Santa Barbara<br>2019 &ndash; Jul 2022 &middot; Santa Barbara, California</p>
+    </div>
+
+    <div class="experience-item">
+        <h4>Supply Chain Management Consultant</h4>
+        <p class="meta">Self Employed<br>2017 &ndash; 2018 &middot; Santa Cruz, California</p>
+    </div>
+
+    <div class="experience-item">
+        <h4>Client Management Team Lead</h4>
+        <p class="meta">SupplyShift<br>2015 &ndash; 2017 &middot; Santa Cruz, California</p>
+    </div>
+
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,50 C480,110 960,10 1440,70 L1440,120 L0,120 Z" fill="#f49b3d"/>
+        </svg>
+    </div>
+</div>
+
+<!-- ================================================================
+     🎓 SECTION 5 – EDUCATION  (orange #f49b3d)
+     ================================================================ -->
+<div id="education" class="section">
+    <h1>Education</h1>
+
+    <p><strong>UC Santa Barbara, Bren School</strong><br>Master's degree, Environmental Data Science<br>Aug 2022 &ndash; Jul 2023</p>
+    <p style="font-size:14px; opacity:0.9;">Convolutional Neural Networks (CNN), Geographic Information Systems (GIS), Remote Sensing, Machine Learning, Geospatial Analytics</p>
+
+    <br>
+
+    <p><strong>University of California, Santa Cruz</strong><br>BA of Environmental Studies &amp; Economics<br>2012 &ndash; 2016</p>
+    <p style="font-size:14px; opacity:0.9;">Golden Key Honors Society (3 years), Student Environmental Center Intern (3 years), Teaching Assistant (2 years)</p>
+
+    <br>
+
+    <h3>Certifications</h3>
+    <p>AIARE 1 &middot; American Institute for Avalanche Research and Education &middot; Apr 2022</p>
+    <p>Permaculture Design Certification &middot; Santa Barbara City College &middot; Jan 2019</p>
+
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,60 C240,10 480,100 720,50 C960,0 1200,80 1440,40 L1440,120 L0,120 Z" fill="#e57d72"/>
+        </svg>
+    </div>
+</div>
+
+<!-- ================================================================
+     🤝 SECTION 6 – COMMUNITY / VOLUNTEERING  (coral #e57d72)
+     ================================================================ -->
+<div id="community" class="section">
+    <h1>Community</h1>
+
+    <div class="fieldwork-item">
+        <h4>Dog TLC &mdash; Capitola Animal Shelter</h4>
+        <p>Weekly volunteer at the local pet shelter &middot; Jan 2017 &ndash; Present</p>
+    </div>
+
+    <div class="fieldwork-item">
+        <h4>Community Organizer &mdash; American Red Cross</h4>
+        <p>Coordinated the creation of a UCSC internship program &middot; Jan 2013 &ndash; Jan 2014</p>
+    </div>
+
+    <div class="fieldwork-item">
+        <h4>Staff Teaching Assistant</h4>
+        <p>"Sustainability by the Numbers" Discovery Course &middot; UC Santa Barbara &middot; 2021</p>
+    </div>
+
+    <div class="wave-divider">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,30 C360,100 720,20 1080,70 C1260,100 1380,50 1440,60 L1440,120 L0,120 Z" fill="#6aacc4"/>
+        </svg>
+    </div>
+</div>
+
+<!-- ================================================================
+     🛠️ SECTION 7 – SKILLS & TOOLS  (blue #6aacc4)
+     ================================================================ -->
+<div id="skills" class="section">
+    <h1>Skills &amp; Tools</h1>
+
+    <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">R</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Machine Learning</span>
+        <span class="skill-tag">Remote Sensing</span>
+        <span class="skill-tag">GIS</span>
+        <span class="skill-tag">CNN</span>
+        <span class="skill-tag">GeoPandas</span>
+        <span class="skill-tag">QGIS</span>
+        <span class="skill-tag">ArcGIS</span>
+        <span class="skill-tag">Google Earth Engine</span>
+        <span class="skill-tag">TensorFlow</span>
+        <span class="skill-tag">scikit-learn</span>
+        <span class="skill-tag">Tidyverse</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">HTML/CSS</span>
+        <span class="skill-tag">Data Visualization</span>
+        <span class="skill-tag">Quarto</span>
+        <span class="skill-tag">Shiny</span>
+        <span class="skill-tag">Supply Chain Analytics</span>
+        <span class="skill-tag">Project Management</span>
+    </div>
+
+    <br><br>
+
+    <p>Made with &#10084; by Carlo</p>
+</div>
+
+<!-- ================================================================
+     🦶 FIXED FOOTER
+     ================================================================ -->
+<footer>
+    <div class="footer-content">
+        <a href="https://github.com/CarloBroderick" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/carlobroderick/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://carlobroderick.github.io/" target="_blank" title="Blog"><i class="fas fa-blog"></i></a>
+        <a href="mailto:carlobroderick@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+</footer>
+
+<!-- ================================================================
+     🖼️ MODALS
+     ================================================================ -->
+
+<!-- 🔥 Wildfire Evacuation Modal -->
+<div class="mask" id="mask-wildfire" onclick="closeModal('modal-wildfire')"></div>
+<div class="modal" id="modal-wildfire">
+    <span class="close-btn" onclick="closeModal('modal-wildfire')">&times;</span>
+    <div class="modal__content">
+        <h2>🔥 Wildfire Evacuation Analysis</h2>
+        <p>As a Data Analyst at NCEAS, I work on the Western Wildfire Resilience Index (WWRI), which analyzes wildfire evacuation patterns across the American West.</p>
+        <p>The project combines geospatial analysis of road networks, population dynamics, fire perimeter data, and community vulnerability assessments to model how people evacuate during wildfire events. We use network analysis techniques to identify evacuation bottlenecks and at-risk communities.</p>
+        <p>Our work directly informs emergency management planning and helps communities build resilience against increasing wildfire threats in the western United States.</p>
+        <p><strong>Tools:</strong> Python, R, GeoPandas, Network Analysis, QGIS, Remote Sensing</p>
+        <br>
+        <a class="button-animated" href="https://wwri.github.io/public_publication/publication_htmls/road_networks/us_bivariate_map.html" target="_blank"><span>View the interactive map &rarr;</span></a>
+    </div>
+</div>
+
+<!-- 🌊 Ocean Health Index Modal -->
+<div class="mask" id="mask-ohi" onclick="closeModal('modal-ohi')"></div>
+<div class="modal" id="modal-ohi">
+    <span class="close-btn" onclick="closeModal('modal-ohi')">&times;</span>
+    <div class="modal__content">
+        <h2>🌊 Ocean Health Index</h2>
+        <p>As an OHI Fellow at NCEAS (May&ndash;Sep 2023), I collaborated with the OHI team to conduct the annual global Ocean Health Index assessment.</p>
+        <p>I specialized in environmental data science for data preparation, processing, and score calculation. I actively communicated OHI methods and results through diverse mediums including web content, reports, and data visualizations.</p>
+        <p>I engaged in hands-on calculation of the annual global Ocean Health Index, advanced scoring approaches, and explored a wide array of ecological datasets. Applied open data science methods and collaborated closely with fellow team members to ensure effective scientific communication.</p>
+        <p><strong>Tools:</strong> R, Tidyverse, RMarkdown, GitHub, Open Data Science</p>
+    </div>
+</div>
+
+<!-- 🧠 CNN Modal -->
+<div class="mask" id="mask-cnn" onclick="closeModal('modal-cnn')"></div>
+<div class="modal" id="modal-cnn">
+    <span class="close-btn" onclick="closeModal('modal-cnn')">&times;</span>
+    <div class="modal__content">
+        <h2>🧠 Convolutional Neural Networks</h2>
+        <p>During my Master's in Environmental Data Science at UC Santa Barbara, I worked extensively with Convolutional Neural Networks (CNNs) for environmental applications.</p>
+        <p>My capstone work involved training deep learning models for image classification tasks related to environmental monitoring&mdash;including satellite imagery analysis and remote sensing data processing.</p>
+        <p>This work demonstrated the power of combining computer vision techniques with geospatial data for large-scale environmental assessment.</p>
+        <p><strong>Tools:</strong> Python, TensorFlow, PyTorch, scikit-learn, Remote Sensing</p>
+    </div>
+</div>
+
+<!-- 📦 Supply Chain Modal -->
+<div class="mask" id="mask-supply" onclick="closeModal('modal-supply')"></div>
+<div class="modal" id="modal-supply">
+    <span class="close-btn" onclick="closeModal('modal-supply')">&times;</span>
+    <div class="modal__content">
+        <h2>📦 Supply Chain Management</h2>
+        <p>Before pivoting to data science, I built a career in supply chain management and corporate sustainability.</p>
+        <p>As <strong>Client Management Team Lead at SupplyShift</strong> (2015&ndash;2017), I managed client-facing relations and oversaw the Client Management Team. Responsibilities included client program management, interdepartmental coordination, supply chain data management consulting, product development, and project management.</p>
+        <p>I later worked as an independent <strong>Supply Chain Management &amp; Corporate Responsibility Consultant</strong> (2017&ndash;2018), providing advisory services for the management of international supply chains with a focus on data collection, risk management, and corporate responsibility.</p>
+        <p><strong>Skills:</strong> Client Management, Data Collection, Risk Management, Corporate Responsibility, Program Management</p>
+    </div>
+</div>
+
+<!-- ================================================================
+     ⚡ JAVASCRIPT
+     ================================================================ -->
+<script>
+/* ================================================================
+   🎯 TYPING ANIMATION
+   ================================================================ */
+(function() {
+    const phrases = [
+        'Environmental Data Scientist',
+        'Fulbright Scholar',
+        'Wildfire Resilience Researcher',
+        'Geospatial Analyst',
+        'Ocean Health Fellow',
+        'Machine Learning Enthusiast'
+    ];
+    const el = document.getElementById('typing-target');
+    let phraseIdx = 0;
+    let charIdx = 0;
+    let deleting = false;
+
+    function tick() {
+        const current = phrases[phraseIdx];
+        if (!deleting) {
+            el.textContent = current.substring(0, charIdx + 1);
+            charIdx++;
+            if (charIdx === current.length) {
+                deleting = true;
+                setTimeout(tick, 2000);
+                return;
+            }
+            setTimeout(tick, 80);
+        } else {
+            el.textContent = current.substring(0, charIdx - 1);
+            charIdx--;
+            if (charIdx === 0) {
+                deleting = false;
+                phraseIdx = (phraseIdx + 1) % phrases.length;
+                setTimeout(tick, 400);
+                return;
+            }
+            setTimeout(tick, 40);
+        }
+    }
+    tick();
+})();
+
+/* ================================================================
+   📌 TOC ACTIVE TRACKING
+   ================================================================ */
+(function() {
+    const tocLinks = document.querySelectorAll('.toc li');
+    const sections = document.querySelectorAll('.section[id]');
+
+    function onScroll() {
+        let current = '';
+        sections.forEach(function(section) {
+            const top = section.offsetTop - 200;
+            if (window.scrollY >= top) {
+                current = section.getAttribute('id');
+            }
+        });
+        tocLinks.forEach(function(li) {
+            li.classList.remove('visible');
+            if (li.querySelector('a').getAttribute('href') === '#' + current) {
+                li.classList.add('visible');
+            }
+        });
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+})();
+
+/* ================================================================
+   🖼️ MODAL OPEN / CLOSE
+   ================================================================ */
+function openModal(id) {
+    var maskId = 'mask-' + id.replace('modal-', '');
+    document.getElementById(maskId).classList.add('active');
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(id) {
+    var maskId = 'mask-' + id.replace('modal-', '');
+    document.getElementById(maskId).classList.remove('active');
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+/* Close modal on Escape key */
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal.active').forEach(function(m) {
+            closeModal(m.id);
+        });
+    }
+});
+
+/* ================================================================
+   🔗 SMOOTH SCROLL FOR TOC LINKS
+   ================================================================ */
+document.querySelectorAll('.toc a, a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+        var href = this.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            e.preventDefault();
+            var target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
+});
+</script>
+
+</body>
+</html>
