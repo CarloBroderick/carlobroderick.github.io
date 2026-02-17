@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Carlo Broderick - Data Analyst, Fulbright Scholar, wildfire nerd">
+    <title>Carlo Broderick</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- ============================================== -->
+    <!-- All CSS inlined for single-file deployment     -->
+    <!-- ============================================== -->
+    <style>
+:root {
+    --bg:           #0d1117;
+    --bg-card:      #161b22;
+    --bg-hover:     #1c2333;
+    --text:         #e6edf3;
+    --text-soft:    #8b949e;
+    --text-muted:   #484f58;
+    --border:       #30363d;
+    --fire:         #ff6b35;
+    --ocean:        #00d4aa;
+    --geo:          #a78bfa;
+    --ml:           #f472b6;
+    --yellow:       #fbbf24;
+    --blue:         #58a6ff;
+    --green:        #3fb950;
+    --pink:         #f778ba;
+    --gradient-name: linear-gradient(135deg, #ff6b35, #fbbf24, #00d4aa, #a78bfa, #f472b6);
+    --gradient-subtle: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(0,212,170,0.05));
+    --font-main:  'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:  'Space Mono', 'JetBrains Mono', monospace;
+    --font-hand:  'Caveat', cursive;
+    --max-width: 900px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+::selection { background: var(--fire); color: var(--bg); }
+
+/* Scatter Dots */
+.scatter-dots { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.scatter-dots::before, .scatter-dots::after { content: ''; position: absolute; border-radius: 50%; }
+.scatter-dots::before {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,107,53,0.07) 0%, transparent 70%);
+    top: 10%; right: 5%;
+    animation: float 20s ease-in-out infinite;
+}
+.scatter-dots::after {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,212,170,0.05) 0%, transparent 70%);
+    bottom: 20%; left: 0%;
+    animation: float 25s ease-in-out infinite reverse;
+}
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(30px, -20px); }
+    66% { transform: translate(-20px, 15px); }
+}
+
+/* Layout */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+/* Header */
+.site-header {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(13, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+}
+.site-header nav {
+    max-width: var(--max-width); margin: 0 auto; padding: 1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.logo { font-family: var(--font-mono); font-size: 0.9rem; color: var(--ocean); text-decoration: none; }
+.blink { animation: blink 1.2s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.site-header ul { display: flex; list-style: none; gap: 2rem; }
+.site-header ul a {
+    font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-soft);
+    text-decoration: none; transition: color 0.2s;
+}
+.site-header ul a:hover { color: var(--yellow); }
+.menu-toggle {
+    display: none; background: none; border: none; cursor: pointer;
+    flex-direction: column; gap: 5px; padding: 4px;
+}
+.menu-toggle span { display: block; width: 22px; height: 2px; background: var(--text); transition: transform 0.3s, opacity 0.3s; }
+
+/* Intro */
+.intro { min-height: 100vh; display: flex; align-items: center; padding: 8rem 2rem 6rem; position: relative; z-index: 1; }
+.intro-inner { max-width: var(--max-width); margin: 0 auto; width: 100%; }
+.intro-label { font-family: var(--font-mono); font-size: 0.9rem; color: var(--ocean); margin-bottom: 1rem; }
+.intro h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+.gradient-text {
+    background: var(--gradient-name); background-size: 200% auto;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; animation: shimmer 6s linear infinite;
+}
+@keyframes shimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+.intro-blurb { font-size: 1.15rem; color: var(--text-soft); line-height: 1.8; margin-bottom: 2rem; max-width: 600px; }
+.intro-blurb a { color: var(--ocean); text-decoration: none; border-bottom: 1px dashed var(--ocean); }
+.intro-blurb a:hover { border-bottom-style: solid; }
+.intro-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; }
+.tag { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.3rem 0.75rem; border-radius: 99px; font-weight: 500; letter-spacing: 0.02em; }
+.tag-fire   { background: rgba(255,107,53,0.15); color: var(--fire); }
+.tag-ocean  { background: rgba(0,212,170,0.15);  color: var(--ocean); }
+.tag-geo    { background: rgba(167,139,250,0.15); color: var(--geo); }
+.tag-ml     { background: rgba(244,114,182,0.15); color: var(--ml); }
+.tag-dog    { background: rgba(251,191,36,0.15);  color: var(--yellow); }
+.intro-links { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+.intro-links a { font-size: 0.95rem; color: var(--text-soft); text-decoration: none; transition: color 0.2s; }
+.intro-links a:hover { color: var(--text); }
+.arrow-link { color: var(--yellow) !important; font-weight: 500; }
+
+/* Sections */
+section { padding: 6rem 0; position: relative; z-index: 1; }
+.about { border-top: 1px solid var(--border); }
+h2 { font-size: 2rem; font-weight: 700; margin-bottom: 2.5rem; letter-spacing: -0.02em; }
+.section-number { font-family: var(--font-mono); color: var(--fire); font-size: 1rem; font-weight: 400; margin-right: 0.5rem; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; }
+.about-text p { color: var(--text-soft); font-size: 1.05rem; line-height: 1.85; margin-bottom: 1.25rem; }
+.currently-box, .education-box {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.5rem; margin-bottom: 1.5rem;
+}
+.currently-box h3, .education-box h3 { font-family: var(--font-hand); font-size: 1.4rem; color: var(--yellow); margin-bottom: 1rem; }
+.currently-box ul { list-style: none; }
+.currently-box li { font-size: 0.9rem; color: var(--text-soft); padding: 0.35rem 0; display: flex; align-items: center; gap: 0.6rem; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+.dot-green  { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.dot-blue   { background: var(--blue);  box-shadow: 0 0 6px var(--blue); }
+.dot-yellow { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
+.dot-pink   { background: var(--pink);  box-shadow: 0 0 6px var(--pink); }
+.education-box p { font-size: 0.9rem; color: var(--text-soft); margin-bottom: 0.75rem; line-height: 1.5; }
+.education-box p:last-child { margin-bottom: 0; }
+.education-box strong { font-family: var(--font-mono); color: var(--geo); font-size: 0.85rem; }
+.muted { color: var(--text-muted); font-size: 0.85rem; }
+
+/* Projects */
+.work { border-top: 1px solid var(--border); }
+.project-list { display: flex; flex-direction: column; gap: 2rem; }
+.project {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 2rem;
+    transition: border-color 0.3s, transform 0.2s;
+}
+.project:hover { border-color: var(--text-muted); transform: translateY(-2px); }
+.project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+.project-emoji { font-size: 2rem; }
+.project-tags { display: flex; gap: 0.4rem; }
+.project h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
+.project p { color: var(--text-soft); font-size: 1rem; line-height: 1.75; margin-bottom: 1rem; }
+.project-tools { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.project-tools code {
+    font-family: var(--font-mono); font-size: 0.75rem;
+    background: rgba(88, 166, 255, 0.1); color: var(--blue);
+    padding: 0.2rem 0.6rem; border-radius: 4px;
+}
+.project-link {
+    font-family: var(--font-mono); font-size: 0.85rem; color: var(--fire);
+    text-decoration: none; display: inline-block; padding: 0.5rem 1.25rem;
+    border: 1px solid var(--fire); border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+.project-link:hover { background: var(--fire); color: var(--bg); }
+
+/* Toolbox */
+.toolbox { border-top: 1px solid var(--border); }
+.section-note { color: var(--text-muted); font-size: 0.9rem; font-style: italic; margin-top: -1.5rem; margin-bottom: 2.5rem; }
+.toolbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+.tool-group { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; }
+.tool-group h3 { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+.tool-group ul { list-style: none; }
+.tool-group li { font-size: 0.95rem; color: var(--text-soft); padding: 0.35rem 0; display: flex; justify-content: space-between; align-items: center; }
+.freq { font-size: 0.6rem; color: var(--ocean); letter-spacing: 1px; opacity: 0.7; }
+
+/* Contact */
+.contact { border-top: 1px solid var(--border); }
+.contact p { color: var(--text-soft); font-size: 1.1rem; line-height: 1.75; margin-bottom: 2rem; max-width: 500px; }
+.contact-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.contact-btn {
+    font-family: var(--font-mono); font-size: 0.9rem; color: var(--text);
+    text-decoration: none; padding: 0.75rem 2rem;
+    border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s;
+}
+.contact-btn:hover { border-color: var(--ocean); color: var(--ocean); background: rgba(0,212,170,0.05); }
+
+/* Footer */
+footer { border-top: 1px solid var(--border); padding: 2.5rem 0; position: relative; z-index: 1; }
+footer p { font-size: 0.85rem; color: var(--text-muted); }
+
+/* Responsive */
+@media (max-width: 700px) {
+    .site-header ul {
+        position: fixed; inset: 0; background: var(--bg);
+        flex-direction: column; align-items: center; justify-content: center;
+        gap: 2.5rem; transform: translateX(100%); transition: transform 0.3s ease; z-index: 99;
+    }
+    .site-header ul.open { transform: translateX(0); }
+    .site-header ul a { font-size: 1.2rem; }
+    .menu-toggle { display: flex; z-index: 101; }
+    .intro { min-height: auto; padding: 7rem 2rem 4rem; }
+    .intro h1 { font-size: 2.2rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .toolbox-grid { grid-template-columns: 1fr; }
+}
+    </style>
+</head>
+<body>
+
+    <div class="scatter-dots" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <nav>
+            <a href="#" class="logo">C:\Broderick&gt;<span class="blink">_</span></a>
+            <ul id="nav-menu">
+                <li><a href="#about">about</a></li>
+                <li><a href="#work">work</a></li>
+                <li><a href="#toolbox">toolbox</a></li>
+                <li><a href="#contact">contact</a></li>
+            </ul>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Intro -->
+    <section class="intro">
+        <div class="intro-inner">
+            <p class="intro-label">hello world &mdash;</p>
+            <h1>I'm <span class="gradient-text">Carlo Broderick</span></h1>
+            <p class="intro-blurb">
+                Data analyst at <a href="https://www.nceas.ucsb.edu/" target="_blank" rel="noopener">NCEAS</a>.
+                Fulbright Scholar in Paraguay. I make maps of things that are on fire,
+                count fish for a living (sort of), and write Python until my eyes cross.
+                Based in Santa Barbara when I'm not somewhere else.
+            </p>
+            <div class="intro-tags">
+                <span class="tag tag-fire">wildfire risk</span>
+                <span class="tag tag-ocean">ocean health</span>
+                <span class="tag tag-geo">geospatial</span>
+                <span class="tag tag-ml">machine learning</span>
+                <span class="tag tag-dog">dog person</span>
+            </div>
+            <div class="intro-links">
+                <a href="#work" class="arrow-link">see what I've been up to &darr;</a>
+                <a href="https://github.com/CarloBroderick" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://www.linkedin.com/in/carlo-broderick-55a78352/" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://carlobroderick.github.io" target="_blank" rel="noopener">Blog</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2><span class="section-number">01.</span> About</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        I took the scenic route to data science. Started with Environmental Studies
+                        and Economics at UC Santa Cruz, spent a few years doing supply chain consulting
+                        and corporate responsibility work, then went back to UCSB for a Master's in
+                        Environmental Data Science because I missed being confused by math.
+                    </p>
+                    <p>
+                        Now I work at NCEAS on the Western Wildfire Risk Index &mdash; basically
+                        trying to figure out which communities are most at risk and whether they
+                        can get out if things go sideways. Before that I was an Ocean Health Index
+                        Fellow, which involved a lot of marine ecology data and a surprising amount
+                        of R code.
+                    </p>
+                    <p>
+                        I'm currently in Paraguay on a Fulbright doing independent research, which
+                        is a pretty wild sentence to type. I care a lot about open science,
+                        reproducible workflows, and making technical work make sense to people
+                        who didn't spend three hours debugging a GeoPandas CRS issue.
+                    </p>
+                    <p>
+                        When I'm not staring at rasters, I'm probably at the animal shelter,
+                        hiking, or reading backcountry avalanche forecasts (AIARE 1 certified,
+                        very cool, I know).
+                    </p>
+                </div>
+                <div class="about-sidebar">
+                    <div class="currently-box">
+                        <h3>Currently</h3>
+                        <ul>
+                            <li><span class="dot dot-green"></span> Fulbright Scholar &mdash; Paraguay</li>
+                            <li><span class="dot dot-blue"></span> Data Analyst &mdash; NCEAS</li>
+                            <li><span class="dot dot-yellow"></span> Reading &mdash; too many papers</li>
+                            <li><span class="dot dot-pink"></span> Listening &mdash; probably a podcast</li>
+                        </ul>
+                    </div>
+                    <div class="education-box">
+                        <h3>Education</h3>
+                        <p><strong>MEDS</strong> Environmental Data Science<br><span class="muted">UC Santa Barbara, 2023</span></p>
+                        <p><strong>BA</strong> Environmental Studies &amp; Economics<br><span class="muted">UC Santa Cruz</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work -->
+    <section id="work" class="work">
+        <div class="container">
+            <h2><span class="section-number">02.</span> Work</h2>
+            <div class="project-list">
+
+                <article class="project">
+                    <div class="project-header">
+                        <span class="project-emoji">🔥</span>
+                        <div class="project-tags">
+                            <span class="tag tag-fire">Geospatial</span>
+                            <span class="tag tag-geo">Wildfire</span>
+                        </div>
+                    </div>
+                    <h3>Community wildfire evacuation analysis</h3>
+                    <p>
+                        Can 30,000 U.S. communities actually evacuate during a wildfire? I built
+                        a pipeline combining USFS burn probability rasters with OpenStreetMap road
+                        data to find out. The result is an interactive bivariate map that shows
+                        where fire risk and escape routes collide. Spoiler: some places are in trouble.
+                    </p>
+                    <div class="project-tools">
+                        <code>Python</code> <code>OSMnx</code> <code>GeoPandas</code> <code>Rasterio</code> <code>Folium</code>
+                    </div>
+                    <a href="https://wwri.github.io/public_publication/publication_htmls/road_networks/us_bivariate_map.html" target="_blank" rel="noopener" class="project-link">
+                        View the interactive map &rarr;
+                    </a>
+                </article>
+
+                <article class="project">
+                    <div class="project-header">
+                        <span class="project-emoji">🌊</span>
+                        <div class="project-tags">
+                            <span class="tag tag-ocean">Ecology</span>
+                            <span class="tag tag-ml">Open Science</span>
+                        </div>
+                    </div>
+                    <h3>Ocean Health Index global assessment</h3>
+                    <p>
+                        Contributed to the annual global OHI assessment as a fellow. This meant
+                        wrangling a truly absurd number of ecological datasets, calculating ocean
+                        health scores, and making it all reproducible. Learned a lot about marine
+                        ecology and an unreasonable amount about R tidyverse.
+                    </p>
+                    <div class="project-tools">
+                        <code>R</code> <code>tidyverse</code> <code>Spatial Analysis</code> <code>Data Viz</code>
+                    </div>
+                </article>
+
+                <article class="project">
+                    <div class="project-header">
+                        <span class="project-emoji">🛰️</span>
+                        <div class="project-tags">
+                            <span class="tag tag-ml">CNN</span>
+                            <span class="tag tag-geo">Remote Sensing</span>
+                        </div>
+                    </div>
+                    <h3>Environmental classification with CNNs</h3>
+                    <p>
+                        Pointed convolutional neural networks at satellite imagery and asked them
+                        to tell me what they saw. Part of my MEDS thesis work &mdash; focused on
+                        using deep learning for environmental monitoring and spatial pattern
+                        recognition.
+                    </p>
+                    <div class="project-tools">
+                        <code>Python</code> <code>PyTorch</code> <code>Remote Sensing</code> <code>GIS</code>
+                    </div>
+                </article>
+
+                <article class="project">
+                    <div class="project-header">
+                        <span class="project-emoji">🔗</span>
+                        <div class="project-tags">
+                            <span class="tag tag-fire">Sustainability</span>
+                            <span class="tag tag-ocean">Consulting</span>
+                        </div>
+                    </div>
+                    <h3>Supply chain transparency &amp; risk</h3>
+                    <p>
+                        In a past life, I managed international supply chain data for corporate
+                        sustainability programs. Led a team, built client relationships, and
+                        learned that most interesting data problems start with someone saying
+                        "we have a spreadsheet but..."
+                    </p>
+                    <div class="project-tools">
+                        <code>Data Management</code> <code>Risk Analysis</code> <code>Project Management</code>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Toolbox -->
+    <section id="toolbox" class="toolbox">
+        <div class="container">
+            <h2><span class="section-number">03.</span> Toolbox</h2>
+            <p class="section-note">Things I reach for regularly. Sorted by how often I google the docs.</p>
+            <div class="toolbox-grid">
+                <div class="tool-group">
+                    <h3>// languages</h3>
+                    <ul>
+                        <li>Python <span class="freq">&#9608;&#9608;&#9608;&#9608;&#9608;</span></li>
+                        <li>R <span class="freq">&#9608;&#9608;&#9608;&#9608;</span></li>
+                        <li>SQL <span class="freq">&#9608;&#9608;&#9608;</span></li>
+                        <li>JavaScript <span class="freq">&#9608;&#9608;</span></li>
+                    </ul>
+                </div>
+                <div class="tool-group">
+                    <h3>// geospatial</h3>
+                    <ul>
+                        <li>GeoPandas / Shapely</li>
+                        <li>Rasterio / GDAL</li>
+                        <li>OSMnx</li>
+                        <li>Folium / Leaflet</li>
+                        <li>GIS</li>
+                    </ul>
+                </div>
+                <div class="tool-group">
+                    <h3>// data &amp; ml</h3>
+                    <ul>
+                        <li>pandas / NumPy</li>
+                        <li>scikit-learn</li>
+                        <li>PyTorch</li>
+                        <li>tidyverse</li>
+                        <li>CNNs / Deep Learning</li>
+                    </ul>
+                </div>
+                <div class="tool-group">
+                    <h3>// infra &amp; viz</h3>
+                    <ul>
+                        <li>Git / GitHub</li>
+                        <li>Docker</li>
+                        <li>Matplotlib / Seaborn</li>
+                        <li>Plotly</li>
+                        <li>Remote Sensing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2><span class="section-number">04.</span> Say hi</h2>
+            <p>
+                I like talking to people about weird datasets, environmental science,
+                or really anything. Don't be shy.
+            </p>
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/carlo-broderick-55a78352/" target="_blank" rel="noopener" class="contact-btn">LinkedIn</a>
+                <a href="https://github.com/CarloBroderick" target="_blank" rel="noopener" class="contact-btn">GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Made by Carlo Broderick with too much coffee &middot; Santa Barbara / Asunci&oacute;n &middot; 2026</p>
+        </div>
+    </footer>
+
+    <!-- ============================================== -->
+    <!-- All JS inlined for single-file deployment      -->
+    <!-- ============================================== -->
+    <script>
+    // Mobile Nav
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    menuToggle.addEventListener('click', () => { navMenu.classList.toggle('open'); });
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => { navMenu.classList.remove('open'); });
+    });
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const target = document.querySelector(targetId);
+            if (target) {
+                e.preventDefault();
+                const headerHeight = document.querySelector('.site-header').offsetHeight;
+                const y = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Scatter Dots
+    (function() {
+        const container = document.querySelector('.scatter-dots');
+        if (!container) return;
+        const colors = [
+            'rgba(255,107,53,0.25)', 'rgba(0,212,170,0.25)',
+            'rgba(167,139,250,0.2)', 'rgba(244,114,182,0.2)', 'rgba(251,191,36,0.2)'
+        ];
+        for (let i = 0; i < 40; i++) {
+            const dot = document.createElement('div');
+            const size = Math.random() * 6 + 2;
+            dot.style.cssText = 'position:absolute;width:'+size+'px;height:'+size+'px;border-radius:50%;background:'+colors[Math.floor(Math.random()*colors.length)]+';top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;opacity:'+(Math.random()*0.6+0.2);
+            container.appendChild(dot);
+        }
+    })();
+
+    // Logo color fun
+    const logo = document.querySelector('.logo');
+    const funColors = ['#ff6b35','#00d4aa','#a78bfa','#f472b6','#fbbf24','#58a6ff'];
+    logo.addEventListener('mouseenter', () => { logo.style.color = funColors[Math.floor(Math.random()*funColors.length)]; });
+    logo.addEventListener('mouseleave', () => { logo.style.color = ''; });
+    </script>
+</body>
+</html>
