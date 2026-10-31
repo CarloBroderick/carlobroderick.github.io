@@ -132,6 +132,9 @@
   }
   .sr-list li.tile.hl { transform: scale(1.04); box-shadow: 0 12px 30px rgba(40, 30, 20, .16); }
   .chart .lane.hl { transform: scaleX(1.9); }
+  .chart .con-path { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
+  .chart .con-path path { fill: none; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; transition: stroke-width .25s ease; }
+  .chart .con-path.hl path { stroke-width: 13; }
   .sr-list .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
   .sr-list .when { color: var(--muted); font-size: .9rem; font-variant-numeric: tabular-nums; }
   .sr-list .details { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .3s ease, opacity .25s ease; }
@@ -299,7 +302,7 @@
         <span class="lane" data-k="ful" style="--lane:1; --s:2025.0; --e:2026.5; --c:#0f766e"></span>
         <span class="lane" data-k="ohi" style="--lane:1; --s:2023.0; --e:2024.0; --c:#d4a017"></span>
         <span class="lane" data-k="pc" style="--lane:0; --s:2019.0; --e:2023.0; --c:#7c3aed"></span>
-        <span class="lane" data-k="con" style="--lane:1; --s:2017.0; --e:2019.0; --c:#2563eb"></span>
+        <svg class="con-path" data-k="con" viewBox="0 0 126 100" preserveAspectRatio="none" aria-hidden="true"><path d="M 104 83.094 L 104 74.641 C 104 77.641 78 77.641 78 74.641 L 78 66.188" stroke="#2563eb" /></svg>
         <span class="lane" data-k="ss" style="--lane:0; --s:2015.0; --e:2018.0; --c:#be185d"></span>
       </div>
       <div>
