@@ -185,23 +185,25 @@
     </div>
 
     <div class="stage" id="stage" role="region" aria-roledescription="carousel" aria-label="Photos of Carlo">
-      <button class="ph headshot" style="--d:0" aria-label="Headshot" aria-current="true">
+      <button class="ph headshot" style="--d:0" data-photo="headshot" aria-label="Headshot" aria-current="true">
         <img src="headshot.jpg" alt="Portrait of Carlo Broderick">
       </button>
-      <button class="ph" style="--d:1" aria-label="Show photo 1"><img src="photos/05.jpg" alt="Photo 1 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-2" aria-label="Show photo 2"><img src="photos/01.jpg" alt="Photo 2 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:3" aria-label="Show photo 3"><img src="photos/09.jpg" alt="Photo 3 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-4" aria-label="Show photo 4"><img src="photos/03.jpg" alt="Photo 4 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:5" aria-label="Show photo 5"><img src="photos/12.jpg" alt="Photo 5 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-6" aria-label="Show photo 6"><img src="photos/07.jpg" alt="Photo 6 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-5" aria-label="Show photo 7"><img src="photos/02.jpg" alt="Photo 7 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:4" aria-label="Show photo 8"><img src="photos/13.jpg" alt="Photo 8 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-3" aria-label="Show photo 9"><img src="photos/11.jpg" alt="Photo 9 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:2" aria-label="Show photo 10"><img src="photos/06.jpg" alt="Photo 10 from Carlo's archive" loading="lazy"></button>
-      <button class="ph" style="--d:-1" aria-label="Show photo 11"><img src="photos/08.jpg" alt="Photo 11 from Carlo's archive" loading="lazy"></button>
+      <button class="ph" style="--d:1" data-photo="05" aria-label="Show photo 05"><img src="photos/05.jpg" alt="Photo 05 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-2" data-photo="01" aria-label="Show photo 01"><img src="photos/01.jpg" alt="Photo 01 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:3" data-photo="09" aria-label="Show photo 09"><img src="photos/09.jpg" alt="Photo 09 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-4" data-photo="03" aria-label="Show photo 03"><img src="photos/03.jpg" alt="Photo 03 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:5" data-photo="12" aria-label="Show photo 12"><img src="photos/12.jpg" alt="Photo 12 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-6" data-photo="07" aria-label="Show photo 07"><img src="photos/07.jpg" alt="Photo 07 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-7" data-photo="02" aria-label="Show photo 02"><img src="photos/02.jpg" alt="Photo 02 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:6" data-photo="13" aria-label="Show photo 13"><img src="photos/13.jpg" alt="Photo 13 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-5" data-photo="04" aria-label="Show photo 04"><img src="photos/04.jpg" alt="Photo 04 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:4" data-photo="11" aria-label="Show photo 11"><img src="photos/11.jpg" alt="Photo 11 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-3" data-photo="10" aria-label="Show photo 10"><img src="photos/10.jpg" alt="Photo 10 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:2" data-photo="06" aria-label="Show photo 06"><img src="photos/06.jpg" alt="Photo 06 from Carlo's archive" loading="lazy"></button>
+      <button class="ph" style="--d:-1" data-photo="08" aria-label="Show photo 08"><img src="photos/08.jpg" alt="Photo 08 from Carlo's archive" loading="lazy"></button>
       <button class="stage-btn prev" aria-label="Previous photo">‹</button>
       <button class="stage-btn next" aria-label="Next photo">›</button>
-      <p class="stage-count" aria-live="polite">1 / 12</p>
+      <p class="stage-count" aria-live="polite">Headshot · 1 / 14</p>
     </div>
   </header>
 
@@ -374,7 +376,8 @@
       card.classList.toggle('far', Math.abs(d) > 1);
       card.setAttribute('aria-current', d === 0 ? 'true' : 'false');
     });
-    count.textContent = (cur + 1) + ' / ' + n;
+    var label = cards[cur].getAttribute('data-photo');
+    count.textContent = (label === 'headshot' ? 'Headshot' : 'Photo ' + label) + ' · ' + (cur + 1) + ' / ' + n;
   }
 
   function go(step) {
