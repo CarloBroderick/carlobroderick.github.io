@@ -113,19 +113,25 @@
   .card .go { margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px 16px; font-weight: 600; font-size: .95rem; }
 
   .scenic { --today: 2026.83; --span: 11.83; --S: 44px; display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; }
-  .chart { position: relative; width: 300px; align-self: stretch; min-height: 420px; }
+  .chart { position: relative; width: 126px; align-self: stretch; min-height: 420px; }
   .chart .axis { position: absolute; left: 62px; top: 0; bottom: 0; width: 1px; background: var(--muted); opacity: .6; }
   .chart .tick { position: absolute; left: 0; width: 56px; text-align: right; font-size: .8rem; color: var(--muted); transform: translateY(-50%); font-variant-numeric: tabular-nums; }
   .chart .tick::after { content: ""; position: absolute; right: -10px; top: 50%; width: 6px; height: 1px; background: var(--muted); }
   .chart .lane {
     position: absolute; width: 8px; border-radius: 4px; background: var(--c);
-    left: calc(74px + var(--lane) * 22px);
+    left: calc(74px + var(--lane) * 26px);
+    transform-origin: center; transition: transform .25s ease, box-shadow .25s ease;
     top: calc((var(--today) - var(--e)) / var(--span) * 100%);
     height: calc((var(--e) - var(--s)) / var(--span) * 100%);
   }
   .sr-list { list-style: none; margin: 0; padding: 0; }
-  .sr-list li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 0 0 24px; }
-  .sr-list .rule { width: 28px; height: 3px; border-radius: 2px; background: var(--c); margin-top: .95em; }
+  .sr-list li.tile {
+    background: var(--surface); border: 2px solid var(--c); border-radius: 16px;
+    padding: 14px 18px; margin: 0 0 16px; box-shadow: var(--shadow);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .sr-list li.tile.hl { transform: scale(1.04); box-shadow: 0 12px 30px rgba(40, 30, 20, .16); }
+  .chart .lane.hl { transform: scaleX(1.9); }
   .sr-list .when { display: block; color: var(--muted); font-size: .9rem; font-variant-numeric: tabular-nums; }
   .sr-list .role { font-weight: 600; }
   .sr-list .org { color: var(--muted); }
@@ -150,6 +156,7 @@
     .stage { height: 300px; --w: 200px; --h: 246px; --step: 34px; }
     .stage.open { --step: 64px; }
     .scenic { grid-template-columns: 1fr; gap: 28px; }
+    .chart { min-height: 380px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .ph, .stage-btn, .stage-count { transition: none; }
@@ -270,7 +277,7 @@
     <div class="scenic">
       <div class="chart" aria-hidden="true">
         <span class="axis"></span>
-        <span class="tick" style="top: 0.000%">Today</span>
+        <span class="tick" style="top: 0%">Today</span>
         <span class="tick" style="top: 7.016%">2026</span>
         <span class="tick" style="top: 15.469%">2025</span>
         <span class="tick" style="top: 23.922%">2024</span>
@@ -283,37 +290,43 @@
         <span class="tick" style="top: 83.094%">2017</span>
         <span class="tick" style="top: 91.547%">2016</span>
         <span class="tick" style="top: 100.000%">2015</span>
-        <span class="lane" style="--lane:0; --s:2023.0; --e:2026.83; --c:#c2410c"></span>
-        <span class="lane" style="--lane:1; --s:2025.0; --e:2026.5; --c:#0f766e"></span>
-        <span class="lane" style="--lane:2; --s:2023.0; --e:2024.0; --c:#d4a017"></span>
-        <span class="lane" style="--lane:3; --s:2019.0; --e:2023.0; --c:#7c3aed"></span>
-        <span class="lane" style="--lane:4; --s:2017.0; --e:2019.0; --c:#2563eb"></span>
-        <span class="lane" style="--lane:5; --s:2015.0; --e:2018.0; --c:#be185d"></span>
+        <span class="lane" data-k="ra" style="--lane:0; --s:2023.0; --e:2026.83; --c:#c2410c"></span>
+        <span class="lane" data-k="ful" style="--lane:1; --s:2025.0; --e:2026.5; --c:#0f766e"></span>
+        <span class="lane" data-k="ohi" style="--lane:1; --s:2023.0; --e:2024.0; --c:#d4a017"></span>
+        <span class="lane" data-k="pc" style="--lane:0; --s:2019.0; --e:2023.0; --c:#7c3aed"></span>
+        <span class="lane" data-k="con" style="--lane:1; --s:2017.0; --e:2019.0; --c:#2563eb"></span>
+        <span class="lane" data-k="ss" style="--lane:0; --s:2015.0; --e:2018.0; --c:#be185d"></span>
       </div>
       <div>
         <ul class="sr-list">
-        <li style="--c:#c2410c"><span class="rule"></span>
-          <div><span class="when">2023 – present</span><span class="role">Research Associate</span> · <span class="org"><a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a></span>
+        <li class="tile" data-k="ra" style="--c:#c2410c">
+          <span class="when">2023 – present</span>
+          <div><span class="role">Research Associate</span> · <span class="org"><a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a></span>
           <p>Data analysis for the <a href="https://wildfireindex.org/">Wildfire Resilience Index</a>: geospatial pipelines, wildfire-exposure research and interactive maps.</p></div>
         </li>
-        <li style="--c:#0f766e"><span class="rule"></span>
-          <div><span class="when">2025 – 2026</span><span class="role"><a href="https://fulbrightscholars.org/country/paraguay">Fulbright full-ride scholarship</a></span> · <span class="org">U.S. Department of State · Asunción, Paraguay</span>
+        <li class="tile" data-k="ful" style="--c:#0f766e">
+          <span class="when">2025 – 2026</span>
+          <div><span class="role"><a href="https://fulbrightscholars.org/country/paraguay">Fulbright full-ride scholarship</a></span> · <span class="org">U.S. Department of State · Asunción, Paraguay</span>
           <p>Studied wildfire, wildfire land use and geography. I still work with Hen Data, the company I worked with there.</p></div>
         </li>
-        <li style="--c:#d4a017"><span class="rule"></span>
-          <div><span class="when">2023</span><span class="role"><a href="https://oceanhealthindex.org/">Ocean Health Index Fellow</a></span> · <span class="org"><a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a></span>
+        <li class="tile" data-k="ohi" style="--c:#d4a017">
+          <span class="when">2023</span>
+          <div><span class="role"><a href="https://oceanhealthindex.org/">Ocean Health Index Fellow</a></span> · <span class="org"><a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a></span>
           <p>Data preparation, processing and score calculation for the annual global assessment.</p></div>
         </li>
-        <li style="--c:#7c3aed"><span class="rule"></span>
-          <div><span class="when">2019 – 2022</span><span class="role">Program Coordinator</span> · <span class="org"><a href="https://www.ucsb.edu/">UC Santa Barbara</a></span>
+        <li class="tile" data-k="pc" style="--c:#7c3aed">
+          <span class="when">2019 – 2022</span>
+          <div><span class="role">Program Coordinator</span> · <span class="org"><a href="https://www.ucsb.edu/">UC Santa Barbara</a></span>
           <p>Coordinated the Mellichamp Sustainable Materials and Product Design Initiative: grants, website, marketing, events and stakeholders. Staff TA for <em>Sustainability by the Numbers</em> (2021).</p></div>
         </li>
-        <li style="--c:#2563eb"><span class="rule"></span>
-          <div><span class="when">2017 – 2018</span><span class="role">Supply Chain &amp; Corporate Responsibility Consultant</span> · <span class="org">Self-employed · Santa Cruz</span>
+        <li class="tile" data-k="con" style="--c:#2563eb">
+          <span class="when">2017 – 2018</span>
+          <div><span class="role">Supply Chain &amp; Corporate Responsibility Consultant</span> · <span class="org">Self-employed · Santa Cruz</span>
           <p>Advised on international supply chains: data collection, risk management and corporate responsibility.</p></div>
         </li>
-        <li style="--c:#be185d"><span class="rule"></span>
-          <div><span class="when">2015 – 2017</span><span class="role">Client Management Team Lead</span> · <span class="org"><a href="https://sphera.com/company/news/sphera-acquires-supplyshift">SupplyShift</a>, Santa Cruz (now part of Sphera)</span>
+        <li class="tile" data-k="ss" style="--c:#be185d">
+          <span class="when">2015 – 2017</span>
+          <div><span class="role">Client Management Team Lead</span> · <span class="org"><a href="https://sphera.com/company/news/sphera-acquires-supplyshift">SupplyShift</a>, Santa Cruz (now part of Sphera)</span>
           <p>Led the client team and oversaw supply-chain data programs for Fortune 500 companies. Sphera bought SupplyShift in 2024 and built it into its supply-chain visibility tool.</p></div>
         </li>
         </ul>
@@ -435,6 +448,17 @@
   });
 
   layout();
+
+  // Hovering a posting grows its tile and its bar together.
+  document.querySelectorAll('[data-k]').forEach(function (el) {
+    var k = el.getAttribute('data-k');
+    el.addEventListener('mouseenter', function () {
+      document.querySelectorAll('[data-k="' + k + '"]').forEach(function (x) { x.classList.add('hl'); });
+    });
+    el.addEventListener('mouseleave', function () {
+      document.querySelectorAll('[data-k="' + k + '"]').forEach(function (x) { x.classList.remove('hl'); });
+    });
+  });
 })();
 </script>
 </body>
