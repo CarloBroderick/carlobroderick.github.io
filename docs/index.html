@@ -112,18 +112,17 @@
   .card .paper { font-size: .9rem; color: var(--muted); background: var(--accent-soft); border-radius: 10px; padding: 10px 12px; margin: 0 0 14px; }
   .card .go { margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px 16px; font-weight: 600; font-size: .95rem; }
 
-  .scenic { --today: 2026.83; --S: 44px; display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; }
-  .chart { position: relative; width: 300px; height: calc((var(--today) - 2015) * var(--S)); }
+  .scenic { --today: 2026.83; --span: 11.83; --S: 44px; display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; }
+  .chart { position: relative; width: 300px; align-self: stretch; min-height: 420px; }
   .chart .axis { position: absolute; left: 62px; top: 0; bottom: 0; width: 1px; background: var(--muted); opacity: .6; }
   .chart .tick { position: absolute; left: 0; width: 56px; text-align: right; font-size: .8rem; color: var(--muted); transform: translateY(-50%); font-variant-numeric: tabular-nums; }
   .chart .tick::after { content: ""; position: absolute; right: -10px; top: 50%; width: 6px; height: 1px; background: var(--muted); }
   .chart .lane {
     position: absolute; width: 8px; border-radius: 4px; background: var(--c);
     left: calc(74px + var(--lane) * 22px);
-    top: calc((var(--today) - var(--e)) * var(--S));
-    height: calc((var(--e) - var(--s)) * var(--S));
+    top: calc((var(--today) - var(--e)) / var(--span) * 100%);
+    height: calc((var(--e) - var(--s)) / var(--span) * 100%);
   }
-  .chart .axis-label { position: absolute; left: 0; top: -28px; font-size: .75rem; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
   .sr-list { list-style: none; margin: 0; padding: 0; }
   .sr-list li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 0 0 24px; }
   .sr-list .rule { width: 28px; height: 3px; border-radius: 2px; background: var(--c); margin-top: .95em; }
@@ -150,7 +149,7 @@
     .hero { grid-template-columns: 1fr; gap: 8px; padding: 16px 0 40px; }
     .stage { height: 300px; --w: 200px; --h: 246px; --step: 34px; }
     .stage.open { --step: 64px; }
-    .scenic { grid-template-columns: 1fr; gap: 28px; --S: 30px; }
+    .scenic { grid-template-columns: 1fr; gap: 28px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .ph, .stage-btn, .stage-count { transition: none; }
@@ -267,24 +266,23 @@
   <section id="experience">
     <h2>The scenic route</h2>
     <p class="section-intro">Supply chains, sustainability programs, then a turn toward data science.</p>
-    <p class="scale-note">Time runs up the side, 2015 at the bottom and today at the top. Each bar is as long as that role or degree lasted.</p>
+    <p class="scale-note">2015 at the bottom, today at the top. Each bar is as long as that role lasted.</p>
     <div class="scenic">
       <div class="chart" aria-hidden="true">
-        <span class="axis-label">Time</span>
         <span class="axis"></span>
-        <span class="tick" style="top: calc((2026.83 - 2026.83) * var(--S))">Today</span>
-        <span class="tick" style="top: calc((2026.83 - 2026) * var(--S))">2026</span>
-        <span class="tick" style="top: calc((2026.83 - 2025) * var(--S))">2025</span>
-        <span class="tick" style="top: calc((2026.83 - 2024) * var(--S))">2024</span>
-        <span class="tick" style="top: calc((2026.83 - 2023) * var(--S))">2023</span>
-        <span class="tick" style="top: calc((2026.83 - 2022) * var(--S))">2022</span>
-        <span class="tick" style="top: calc((2026.83 - 2021) * var(--S))">2021</span>
-        <span class="tick" style="top: calc((2026.83 - 2020) * var(--S))">2020</span>
-        <span class="tick" style="top: calc((2026.83 - 2019) * var(--S))">2019</span>
-        <span class="tick" style="top: calc((2026.83 - 2018) * var(--S))">2018</span>
-        <span class="tick" style="top: calc((2026.83 - 2017) * var(--S))">2017</span>
-        <span class="tick" style="top: calc((2026.83 - 2016) * var(--S))">2016</span>
-        <span class="tick" style="top: calc((2026.83 - 2015) * var(--S))">2015</span>
+        <span class="tick" style="top: 0.000%">Today</span>
+        <span class="tick" style="top: 7.016%">2026</span>
+        <span class="tick" style="top: 15.469%">2025</span>
+        <span class="tick" style="top: 23.922%">2024</span>
+        <span class="tick" style="top: 32.375%">2023</span>
+        <span class="tick" style="top: 40.828%">2022</span>
+        <span class="tick" style="top: 49.281%">2021</span>
+        <span class="tick" style="top: 57.735%">2020</span>
+        <span class="tick" style="top: 66.188%">2019</span>
+        <span class="tick" style="top: 74.641%">2018</span>
+        <span class="tick" style="top: 83.094%">2017</span>
+        <span class="tick" style="top: 91.547%">2016</span>
+        <span class="tick" style="top: 100.000%">2015</span>
         <span class="lane" style="--lane:0; --s:2023.0; --e:2026.83; --c:#c2410c"></span>
         <span class="lane" style="--lane:1; --s:2025.0; --e:2026.5; --c:#0f766e"></span>
         <span class="lane" style="--lane:2; --s:2023.0; --e:2024.0; --c:#d4a017"></span>
