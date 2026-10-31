@@ -1,334 +1,264 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.37">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Carlo Broderick</title>
+<meta name="description" content="Carlo Broderick is a Research Associate at the National Center for Ecological Analysis and Synthesis (NCEAS), UC Santa Barbara, working on wildfire resilience, geospatial data science and interactive maps.">
+<meta property="og:title" content="Carlo Broderick">
+<meta property="og:description" content="Research Associate at NCEAS, UC Santa Barbara. Wildfire resilience, geospatial data science and interactive maps.">
+<meta property="og:image" content="https://carlobroderick.github.io/headshot.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
+  :root {
+    --bg: #faf8f4;
+    --surface: #ffffff;
+    --text: #1d1a16;
+    --muted: #5e574e;
+    --line: #e6dfd4;
+    --accent: #b93f0c;
+    --accent-soft: #fbe9df;
+    --shadow: 0 1px 2px rgba(40, 30, 20, .05), 0 4px 16px rgba(40, 30, 20, .05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14120f;
+      --surface: #1d1a16;
+      --text: #f1ece4;
+      --muted: #a9a094;
+      --line: #322d26;
+      --accent: #f6904f;
+      --accent-soft: #3a2417;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  nav.top { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; }
+  nav.top .name { font-weight: 600; text-decoration: none; color: var(--text); }
+  nav.top ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+  nav.top ul a { color: var(--muted); text-decoration: none; font-size: .95rem; }
+  nav.top ul a:hover { color: var(--accent); }
+
+  .hero { display: grid; grid-template-columns: 1fr 220px; gap: 48px; align-items: center; padding: 48px 0 56px; }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 10px; }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 600; line-height: 1.15; letter-spacing: -.01em; }
+  h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); margin: 0 0 18px; }
+  .hero p { margin: 0 0 14px; max-width: 62ch; }
+  .hero p.lead { font-size: 1.12rem; }
+  .hero img {
+    width: 220px; height: 220px; object-fit: cover; border-radius: 50%;
+    border: 6px solid var(--surface); box-shadow: var(--shadow);
+  }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .links a {
+    display: inline-block; padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--text); text-decoration: none; font-size: .92rem; font-weight: 500; background: var(--surface);
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); }
+  .links a.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .links a.primary:hover { color: var(--bg); opacity: .9; }
+
+  section { padding: 44px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 1.9rem; margin: 0 0 8px; }
+  .section-intro { color: var(--muted); margin: 0 0 28px; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(285px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px 22px 20px;
+    box-shadow: var(--shadow); display: flex; flex-direction: column;
+  }
+  .card .tag { font-size: .78rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+  .card h3 { font-size: 1.25rem; margin: 0 0 10px; }
+  .card p { margin: 0 0 14px; font-size: .96rem; }
+  .card .go { margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px 16px; font-weight: 500; font-size: .95rem; }
+
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline li { display: grid; grid-template-columns: 150px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px dashed var(--line); }
+  .timeline li:last-child { border-bottom: 0; }
+  .when { color: var(--muted); font-size: .92rem; padding-top: 2px; font-variant-numeric: tabular-nums; }
+  .role { font-weight: 600; }
+  .org { color: var(--muted); }
+  .timeline p { margin: 4px 0 0; font-size: .96rem; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .two h3 { font-size: 1.3rem; margin: 0 0 12px; }
+  .plain { list-style: none; margin: 0; padding: 0; }
+  .plain li { padding: 8px 0; }
+  .plain .org { display: block; font-size: .94rem; }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 0 48px; color: var(--muted); font-size: .92rem; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 0 16px; }
+    nav.top ul { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 24px; padding: 20px 0 40px; }
+    .hero img { width: 140px; height: 140px; order: -1; }
+    .timeline li { grid-template-columns: 1fr; gap: 2px; }
+    .two { grid-template-columns: 1fr; gap: 28px; }
+  }
 </style>
-
-
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 20,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
-  }
-}</script>
-
-
-<link rel="stylesheet" href="mystyles.scss">
 </head>
+<body>
+<div class="wrap">
 
-<body class="nav-fixed fullcontent">
+  <nav class="top" aria-label="Main">
+    <a class="name" href="./">Carlo Broderick</a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="posts.html">Blog</a></li>
+    </ul>
+  </nav>
 
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Carlo Broderick</span>
-  </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page">Home</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./posts.html">My Blog</a>
-  </li>  
-</ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
-      </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-<!-- margin-sidebar -->
-    
-<!-- main -->
-<div class="quarto-about-trestles">
-  <div class="about-entity">
-    <img src="headshot.jpg" class="about-image
-  rounded " style="width: 17em;">
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Carlo Broderick</h1>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Research Associate · NCEAS, UC Santa Barbara</p>
+      <h1>Carlo Broderick</h1>
+      <p class="lead">I'm an environmental data scientist at the <a href="https://www.nceas.ucsb.edu/">National Center for Ecological Analysis and Synthesis</a> (NCEAS). I work on the <a href="https://wildfireindex.org/">Wildfire Resilience Index</a>, building the geospatial pipelines and interactive maps that show where communities are exposed to wildfire and how well they can respond.</p>
+      <p>In 2025–26 I was a Fulbright Scholar in Asunción, Paraguay, and I still work with partners there on fire simulation. Before that I was an Ocean Health Index fellow, and I spent several years in supply-chain sustainability, starting as an early employee at SupplyShift.</p>
+      <div class="links">
+        <a class="primary" href="mailto:carlwilliambroderick@gmail.com">Email me</a>
+        <a href="https://www.linkedin.com/in/carlo-broderick-55a78352/">LinkedIn</a>
+        <a href="https://github.com/CarloBroderick">GitHub</a>
+        <a href="posts.html">Blog</a>
+      </div>
+    </div>
+    <img src="headshot.jpg" alt="Portrait of Carlo Broderick">
+  </header>
+
+  <section id="work">
+    <h2>Selected work</h2>
+    <p class="section-intro">Wildfire, ocean health and open tools for data science.</p>
+    <div class="cards">
+
+      <article class="card">
+        <p class="tag">NCEAS · 2023–present</p>
+        <h3>Wildfire Resilience Index</h3>
+        <p>An index of how well communities in the western U.S. can resist, recover from and adapt to wildfire. I process and analyse the data behind its indicators, from road networks to burn hazard.</p>
+        <div class="go"><a href="https://wildfireindex.org/">wildfireindex.org →</a></div>
+      </article>
+
+      <article class="card">
+        <p class="tag">Interactive map · 2026</p>
+        <h3>Wildfire evacuation risk across U.S. communities</h3>
+        <p>How many roads lead out of 30,728 small U.S. communities, set against how likely the land around them is to burn. Built from OpenStreetMap road networks and national burn-probability data.</p>
+        <div class="go"><a href="https://wri-science.github.io/public_publication/publication_htmls/road_networks/us_bivariate_map.html">Open the map →</a></div>
+      </article>
+
+      <article class="card">
+        <p class="tag">Interactive map · 2026</p>
+        <h3>Wildfire risk to U.S. cultural resources</h3>
+        <p>Burn hazard for 56,106 places on the National Register of Historic Places. Companion map to Farnisa, Halpern &amp; Fong, <em>Scientific Reports</em> (2026).</p>
+        <div class="go">
+          <a href="https://wri-science.github.io/public_publication/publication_htmls/fsim_nps_places/us_interactive_map.html">Open the map →</a>
+          <a href="https://doi.org/10.1038/s41598-026-52407-9">Read the paper →</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <p class="tag">Paraguay · 2025–present</p>
+        <h3>Parafire</h3>
+        <p>A fire-risk, simulation and rapid-response platform for INFONA, Paraguay's national forestry institute, with Forest4Life Paraguay. It includes a review of the country's weather-station data and a fire-spread simulator tested against historical fires.</p>
+        <div class="go"><a href="https://carlobroderick.github.io/Parafire/">Published pages (Spanish/English) →</a></div>
+      </article>
+
+      <article class="card">
+        <p class="tag">NCEAS-AI · open source</p>
+        <h3>Coding-agent toolkits for data science</h3>
+        <p>Ready-made skills and a personalised ruleset that steer AI coding agents toward reproducible, analysis-first environmental data science in R and Python, including house-style interactive maps and chart pages.</p>
+        <div class="go">
+          <a href="https://github.com/NCEAS-AI/Coding-Agent-Skills-for-Data-Science">Skills →</a>
+          <a href="https://github.com/NCEAS-AI/Coding-Agent-Rules-for-Data-Science">Rules →</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <p class="tag">NCEAS · 2023</p>
+        <h3>Ocean Health Index</h3>
+        <p>As an OHI fellow I helped run the annual global assessment: preparing ecological datasets, calculating scores, and communicating the methods and results through web content, reports and visualisations.</p>
+        <div class="go"><a href="https://oceanhealthindex.org/">oceanhealthindex.org →</a></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <p class="section-intro">The scenic route: supply chains, sustainability programs, then data science.</p>
+    <ul class="timeline">
+      <li>
+        <span class="when">2023 – present</span>
+        <div><span class="role">Research Associate</span> · <span class="org">NCEAS, UC Santa Barbara</span>
+          <p>Data analysis for the Wildfire Resilience Index: geospatial pipelines, wildfire-exposure research and interactive maps.</p></div>
+      </li>
+      <li>
+        <span class="when">2025 – 2026</span>
+        <div><span class="role">Fulbright Scholar, independent research</span> · <span class="org">U.S. Department of State · Asunción, Paraguay</span></div>
+      </li>
+      <li>
+        <span class="when">2023</span>
+        <div><span class="role">Ocean Health Index Fellow</span> · <span class="org">NCEAS, UC Santa Barbara</span>
+          <p>Data preparation, processing and score calculation for the annual global assessment.</p></div>
+      </li>
+      <li>
+        <span class="when">2019 – 2022</span>
+        <div><span class="role">Program Coordinator</span> · <span class="org">UC Santa Barbara</span>
+          <p>Coordinated the Mellichamp Sustainable Materials and Product Design Initiative: grants, website, marketing, events and stakeholders. Staff TA for <em>Sustainability by the Numbers</em> (2021).</p></div>
+      </li>
+      <li>
+        <span class="when">2017 – 2018</span>
+        <div><span class="role">Supply Chain &amp; Corporate Responsibility Consultant</span> · <span class="org">Self-employed · Santa Cruz</span>
+          <p>Advised on international supply chains: data collection, risk management and corporate responsibility.</p></div>
+      </li>
+      <li>
+        <span class="when">2015 – 2017</span>
+        <div><span class="role">Client Management Team Lead</span> · <span class="org">SupplyShift · Santa Cruz</span>
+          <p>Led the client team and oversaw supply-chain data programs for Fortune 500 companies.</p></div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="education">
+    <div class="two">
+      <div>
+        <h3>Education</h3>
+        <ul class="plain">
+          <li><span class="role">Master of Environmental Data Science</span><span class="org">Bren School, UC Santa Barbara · 2023</span></li>
+          <li><span class="role">BA, Environmental Studies &amp; Economics</span><span class="org">UC Santa Cruz</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Outside work</h3>
+        <ul class="plain">
+          <li>Animal-shelter volunteer with Dog TLC since 2017</li>
+          <li>AIARE 1 avalanche certified; permaculture design certificate</li>
+          <li>Still perfecting the slow-cooked bean</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Carlo Broderick · Santa Barbara, California ·
+    <a href="mailto:carlwilliambroderick@gmail.com">carlwilliambroderick@gmail.com</a> ·
+    <a href="posts.html">Earlier blog posts</a>
+  </footer>
+
 </div>
-<div class="quarto-title-meta">
-  </div>
-</header>
-    <div class="about-links">
-  <a href="https://www.linkedin.com/in/carlo-broderick-55a78352/" class="about-link">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/CarloBroderick" class="about-link">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">GitHub</span>
-  </a>
-  <a href="mailto:carlwilliambroderick@gmail.com" class="about-link">
-    <i class="bi bi-envelope"></i>
-     <span class="about-link-text">Email</span>
-  </a>
-</div>
-  </div>
-  <div class="about-contents"><main class="content" id="quarto-document-content">
-<p><b>Education</b></p>
-<p>Carlo Broderick is a master’s student at UCSB’s Bren School of Environmental Science and Management pursuing a degree in environmental data science. He received his Bachelor’s degree in Environmental Studies and Economics from the University of California, Santa Cruz with a focus in non-governmental market regulation.</p>
-<hr>
-<p><b>Experience</b></p>
-<p>Carlo went on to become the first employee of SupplyShift, a software company focused on supply chain management and corporate responsibility that now manages an international team of more than 60. At SupplyShift, he oversaw the implementation of multiple Fortune-500 supply chain data collection and analysis programs. Later, Carlo became the program coordinator for UC Santa Barbara’s Mellichamp Sustainable Materials and Product Design Initiative. From these two career postings, Carlo gained extensive experience within sustainability organizations that use data to address our many environmental crises.</p>
-<hr>
-<p><b>Future</b></p>
-<p>His current interests include machine learning, computer vision, GIS, and the subtle art of the slow cooked bean. Carlo plans to leverage the machine learning techniques, learned at Bren, to assess the increasingly large data sets coming out of the corporate responsibility and supply chain management industries, all with a focus on remote sensing and global information systems.</p>
-
-
-</main></div>
-</div>
- <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
-        }
-      }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
-      return false;
-    }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  let localAlternateSentinel = 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } 
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
-    }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    setTimeout(function() {
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  function tippyHover(el, contentFn) {
-    const config = {
-      allowHTML: true,
-      content: contentFn,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start'
-    };
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      return note.innerHTML;
-    });
-  }
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
-      });
-      return popup.innerHTML;
-    });
-  }
-});
-</script>
-</div> <!-- /content -->
-
-
-
-</body></html>
+</body>
+</html>
