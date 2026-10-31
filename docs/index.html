@@ -47,15 +47,11 @@
   .eyebrow { color: var(--accent-2); font-weight: 600; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 10px; }
   h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 600; line-height: 1.15; letter-spacing: -.01em; }
   h1 { font-size: clamp(2.5rem, 6vw, 3.8rem); margin: 0 0 18px; }
-  .wave { display: inline-block; transform-origin: 70% 70%; animation: wave 2.4s ease-in-out infinite; }
-  @keyframes wave { 0%, 60%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(14deg); } 20% { transform: rotate(-8deg); } }
-  @media (prefers-reduced-motion: reduce) { .wave { animation: none; } }
   .hero p { margin: 0 0 14px; max-width: 62ch; }
   .hero p.lead { font-size: 1.14rem; }
   .hero img {
     width: 260px; height: 320px; object-fit: cover; object-position: 50% 22%;
-    border-radius: 0; box-shadow: var(--shadow); display: block;
-    transform: rotate(-1.5deg);
+    border-radius: 24px; box-shadow: var(--shadow); display: block;
   }
   .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
   .links a {
@@ -63,8 +59,6 @@
     color: var(--text); text-decoration: none; font-size: .92rem; font-weight: 600; background: var(--surface);
   }
   .links a:hover { border-color: var(--accent); color: var(--accent); }
-  .links a.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .links a.primary:hover { color: #fff; opacity: .92; }
 
   section { padding: 48px 0; border-top: 1px solid var(--line); }
   h2 { font-size: 2rem; margin: 0 0 8px; }
@@ -127,11 +121,11 @@
   <header class="hero">
     <div>
       <p class="eyebrow">Research Associate · NCEAS, UC Santa Barbara</p>
-      <h1>Hi, I'm Carlo <span class="wave" aria-hidden="true">👋</span></h1>
+      <h1>Hi, I'm Carlo</h1>
       <p class="lead">I make maps and data tools about wildfire and the places it touches. My day job is at the <a href="https://www.nceas.ucsb.edu/">National Center for Ecological Analysis and Synthesis</a> (NCEAS), where I help build the <a href="https://wildfireindex.org/">Wildfire Resilience Index</a>: the data pipelines and interactive maps that show where communities are exposed to fire and how well they can cope.</p>
       <p>I was a Fulbright Scholar in Asunción, Paraguay in 2025–26, and I still work with partners there on fire simulation. Before that I was an Ocean Health Index fellow, and I spent a few years in supply-chain sustainability, starting as an early employee at SupplyShift.</p>
       <div class="links">
-        <a class="primary" href="mailto:carlwilliambroderick@gmail.com">Say hello</a>
+        <a href="mailto:carlwilliambroderick@gmail.com">Email</a>
         <a href="https://www.linkedin.com/in/carlo-broderick-55a78352/">LinkedIn</a>
         <a href="https://github.com/CarloBroderick">GitHub</a>
         <a href="posts.html">Blog</a>
@@ -149,7 +143,7 @@
         <p class="tag">NCEAS · 2023–present</p>
         <h3>Wildfire Resilience Index</h3>
         <p>A look at how well communities in the western U.S. can resist, recover from and adapt to wildfire. I process and analyze the data behind its indicators, from road networks to burn hazard.</p>
-        <div class="go"><a href="https://wildfireindex.org/">Explore the index →</a></div>
+        <div class="go"><a href="https://wildfireindex.org/">Open the map and explore the index →</a></div>
       </article>
 
       <article class="card">
@@ -178,10 +172,6 @@
         <p class="tag">Paraguay · 2025–present</p>
         <h3>Parafire</h3>
         <p>A fire-risk, simulation and rapid-response platform for INFONA, Paraguay's national forestry institute, built with Forest4Life Paraguay. It includes a review of the country's weather-station data and a fire-spread simulator tested against historical fires.</p>
-        <div class="go">
-          <a href="https://carlobroderick.github.io/Parafire/">Project pages →</a>
-          <a href="https://github.com/CarloBroderick/Parafire">Code →</a>
-        </div>
       </article>
 
       <article class="card">
@@ -243,17 +233,19 @@
   <section id="education">
     <div class="two">
       <div>
-        <h3>School</h3>
+        <h3>Education</h3>
         <ul class="plain">
+          <li><span class="role">BA, Environmental Studies &amp; Economics</span><span class="org">UC Santa Cruz · 2015</span></li>
+          <li><span class="role">Project Management Certification</span><span class="org">UC Berkeley</span></li>
           <li><span class="role">Master of Environmental Data Science</span><span class="org">Bren School, UC Santa Barbara · 2023</span></li>
-          <li><span class="role">BA, Environmental Studies &amp; Economics</span><span class="org">UC Santa Cruz</span></li>
+          <li><span class="role">Permaculture Design Certificate</span><span class="org">Santa Barbara City College</span></li>
         </ul>
       </div>
       <div>
         <h3>Off the clock</h3>
         <ul class="plain fun">
-          <li>Animal-shelter volunteer with Dog TLC since 2017</li>
-          <li>AIARE 1 avalanche certified, and a permaculture design certificate</li>
+          <li>Animal-shelter volunteer with Dog TLC</li>
+          <li><a href="https://avalanche.org/">AIARE 1 avalanche certified</a></li>
           <li>Still perfecting the slow-cooked bean</li>
         </ul>
       </div>
