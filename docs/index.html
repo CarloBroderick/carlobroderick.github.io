@@ -43,22 +43,57 @@
   nav.top ul a { color: var(--muted); text-decoration: none; font-size: .95rem; font-weight: 500; }
   nav.top ul a:hover { color: var(--accent); }
 
-  .hero { display: grid; grid-template-columns: 1fr 260px; gap: 48px; align-items: center; padding: 40px 0 56px; }
+  .hero { display: grid; grid-template-columns: 1fr 420px; gap: 32px; align-items: center; padding: 40px 0 56px; }
   .eyebrow { color: var(--accent-2); font-weight: 600; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 10px; }
   h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 600; line-height: 1.15; letter-spacing: -.01em; }
   h1 { font-size: clamp(2.5rem, 6vw, 3.8rem); margin: 0 0 18px; }
   .hero p { margin: 0 0 14px; max-width: 62ch; }
   .hero p.lead { font-size: 1.14rem; }
-  .hero img {
-    width: 260px; height: 320px; object-fit: cover; object-position: 50% 22%;
-    border-radius: 24px; box-shadow: var(--shadow); display: block;
-  }
   .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
   .links a {
     display: inline-block; padding: 9px 18px; border: 1.5px solid var(--line); border-radius: 999px;
     color: var(--text); text-decoration: none; font-size: .92rem; font-weight: 600; background: var(--surface);
   }
   .links a:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Photo stack: the headshot sits on top, the other photos peek out behind it. */
+  .stage {
+    position: relative; height: 390px; width: 100%;
+    --w: 260px; --h: 320px;
+    --step: 52px; --tilt: 5deg; --fall: .08; --grow: 1;
+  }
+  .stage.open { --step: 84px; --tilt: 2deg; --fall: .05; --grow: 1.08; }
+  .ph {
+    position: absolute; left: 50%; top: 50%;
+    width: var(--w); height: var(--h);
+    margin: calc(var(--h) / -2) 0 0 calc(var(--w) / -2);
+    padding: 0; border: 0; border-radius: 24px; overflow: hidden;
+    background: var(--surface); box-shadow: var(--shadow); cursor: pointer;
+    transform:
+      translateX(calc(var(--d, 0) * var(--step)))
+      rotate(calc(var(--d, 0) * var(--tilt)))
+      scale(calc((1 - var(--ad, 0) * var(--fall)) * var(--grow)));
+    transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .3s ease;
+  }
+  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ph.headshot img { object-position: 50% 22%; }
+  .ph.far { opacity: 0; pointer-events: none; }
+  .ph:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+  .stage-btn {
+    position: absolute; top: 50%; z-index: 50; transform: translateY(-50%);
+    width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--line);
+    background: var(--surface); color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer;
+    box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity .25s ease;
+  }
+  .stage.open .stage-btn { opacity: 1; pointer-events: auto; }
+  .stage-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .stage-btn.prev { left: 0; }
+  .stage-btn.next { right: 0; }
+  .stage-count {
+    position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 50;
+    font-size: .8rem; color: var(--muted); opacity: 0; transition: opacity .25s ease; white-space: nowrap;
+  }
+  .stage.open .stage-count { opacity: 1; }
 
   section { padding: 48px 0; border-top: 1px solid var(--line); }
   h2 { font-size: 2rem; margin: 0 0 8px; }
@@ -98,10 +133,14 @@
   @media (max-width: 760px) {
     .wrap { padding: 0 16px; }
     nav.top ul { display: none; }
-    .hero { grid-template-columns: 1fr; gap: 28px; padding: 16px 0 40px; }
-    .hero img { width: 200px; height: 246px; order: -1; }
+    .hero { grid-template-columns: 1fr; gap: 8px; padding: 16px 0 40px; }
+    .stage { height: 300px; --w: 200px; --h: 246px; --step: 34px; }
+    .stage.open { --step: 64px; }
     .timeline li { grid-template-columns: 1fr; gap: 2px; }
     .two { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ph, .stage-btn, .stage-count { transition: none; }
   }
 </style>
 </head>
@@ -131,7 +170,28 @@
         <a href="posts.html">Blog</a>
       </div>
     </div>
-    <img src="headshot.jpg" alt="Portrait of Carlo Broderick">
+
+    <div class="stage" id="stage" role="region" aria-roledescription="carousel" aria-label="Photos of Carlo">
+      <button class="ph headshot" style="--d:0" aria-label="Headshot" aria-current="true">
+        <img src="headshot.jpg" alt="Portrait of Carlo Broderick">
+      </button>
+      <button class="ph" style="--d:1" aria-label="Show photo 1"><img src="photos/01.jpg" alt="Photo 1 from Carlo's archive" loading="lazy"></button>
+      <button class="ph" style="--d:-1" aria-label="Show photo 2"><img src="photos/02.jpg" alt="Photo 2 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:2" aria-label="Show photo 3"><img src="photos/03.jpg" alt="Photo 3 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-2" aria-label="Show photo 4"><img src="photos/04.jpg" alt="Photo 4 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:3" aria-label="Show photo 5"><img src="photos/05.jpg" alt="Photo 5 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-3" aria-label="Show photo 6"><img src="photos/06.jpg" alt="Photo 6 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:4" aria-label="Show photo 7"><img src="photos/07.jpg" alt="Photo 7 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-4" aria-label="Show photo 8"><img src="photos/08.jpg" alt="Photo 8 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:5" aria-label="Show photo 9"><img src="photos/09.jpg" alt="Photo 9 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-5" aria-label="Show photo 10"><img src="photos/10.jpg" alt="Photo 10 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:6" aria-label="Show photo 11"><img src="photos/11.jpg" alt="Photo 11 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-6" aria-label="Show photo 12"><img src="photos/12.jpg" alt="Photo 12 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:7" aria-label="Show photo 13"><img src="photos/13.jpg" alt="Photo 13 from Carlo's archive" loading="lazy"></button>
+      <button class="stage-btn prev" aria-label="Previous photo">‹</button>
+      <button class="stage-btn next" aria-label="Next photo">›</button>
+      <p class="stage-count" aria-live="polite">1 / 14</p>
+    </div>
   </header>
 
   <section id="work">
@@ -259,5 +319,90 @@
   </footer>
 
 </div>
+
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var cards = Array.prototype.slice.call(stage.querySelectorAll('.ph'));
+  var prevBtn = stage.querySelector('.stage-btn.prev');
+  var nextBtn = stage.querySelector('.stage-btn.next');
+  var count = stage.querySelector('.stage-count');
+  var n = cards.length;
+  var cur = 0;
+  var wheelLock = false;
+  var touchX = null;
+
+  function layout() {
+    cards.forEach(function (card, i) {
+      var d = ((i - cur) % n + n) % n;
+      if (d > n / 2) d -= n;
+      card.style.setProperty('--d', d);
+      card.style.setProperty('--ad', Math.abs(d));
+      card.style.zIndex = 20 - Math.abs(d);
+      card.classList.toggle('far', Math.abs(d) > 1);
+      card.setAttribute('aria-current', d === 0 ? 'true' : 'false');
+    });
+    count.textContent = (cur + 1) + ' / ' + n;
+  }
+
+  function go(step) {
+    cur = ((cur + step) % n + n) % n;
+    layout();
+  }
+
+  function open() { stage.classList.add('open'); }
+  function close() { stage.classList.remove('open'); }
+
+  cards.forEach(function (card, i) {
+    card.addEventListener('click', function (e) {
+      if (!stage.classList.contains('open')) { open(); e.preventDefault(); return; }
+      if (i !== cur) { cur = i; layout(); }
+    });
+  });
+
+  prevBtn.addEventListener('click', function () { open(); go(-1); });
+  nextBtn.addEventListener('click', function () { open(); go(1); });
+
+  // Hover opens the stack on mouse; focus opens it for keyboard users.
+  stage.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') open(); });
+  stage.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') close(); });
+  stage.addEventListener('focusin', open);
+  stage.addEventListener('focusout', function (e) {
+    if (!stage.contains(e.relatedTarget)) close();
+  });
+  document.addEventListener('click', function (e) {
+    if (!stage.contains(e.target)) close();
+  });
+
+  // Arrow keys move through the photos while the stack has focus.
+  stage.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { go(1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+  });
+
+  // Mouse wheel or trackpad swipe scrolls through the photos while the stack is open.
+  stage.addEventListener('wheel', function (e) {
+    if (!stage.classList.contains('open')) return;
+    var delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (Math.abs(delta) < 20) return;
+    e.preventDefault();
+    if (wheelLock) return;
+    wheelLock = true;
+    go(delta > 0 ? 1 : -1);
+    setTimeout(function () { wheelLock = false; }, 350);
+  }, { passive: false });
+
+  // Touch: tap opens, swipe changes photo.
+  stage.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) > 40) { open(); go(dx < 0 ? 1 : -1); }
+  });
+
+  layout();
+})();
+</script>
 </body>
 </html>
