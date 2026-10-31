@@ -11,163 +11,202 @@
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     color-scheme: light;
-    --bg: #fbf7f0;
-    --surface: #ffffff;
-    --text: #1d1a16;
-    --muted: #5e574e;
-    --line: #ebe3d6;
+    --bg: #f6f1e8;
+    --surface: #fffcf7;
+    --ink: #1c1915;
+    --muted: #6b6257;
+    --faint: #a39a8d;
+    --line: #e6ddcf;
     --accent: #c2410c;
-    --accent-2: #0f766e;
-    --accent-soft: #fde8d7;
-    --shadow: 0 2px 6px rgba(40, 30, 20, .06), 0 10px 24px rgba(40, 30, 20, .06);
+    --ember: #c2410c;
+    --teal: #0f766e;
+    --ochre: #c4870f;
+    --plum: #6d4bb3;
+    --lake: #2f6db5;
+    --rose: #b8326a;
+    --shadow-sm: 0 1px 2px rgba(40, 30, 20, .05), 0 4px 14px rgba(40, 30, 20, .05);
+    --shadow-lg: 0 2px 6px rgba(40, 30, 20, .08), 0 18px 40px rgba(40, 30, 20, .14);
+    --serif: Fraunces, Georgia, serif;
+    --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
     background: var(--bg);
-    color: var(--text);
-    font: 17px/1.65 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink);
+    font: 17px/1.65 var(--sans);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
-  a { color: var(--accent); text-underline-offset: 3px; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.12; letter-spacing: -.015em; margin: 0; }
 
-  nav.top { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; }
-  nav.top .name { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 1.15rem; text-decoration: none; color: var(--text); }
-  nav.top ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
-  nav.top ul a { color: var(--muted); text-decoration: none; font-size: .95rem; font-weight: 500; }
-  nav.top ul a:hover { color: var(--accent); }
+  /* ---------- nav ---------- */
+  nav.top { display: flex; justify-content: space-between; align-items: center; padding: 26px 0; }
+  nav.top .name { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; text-decoration: none; color: var(--ink); }
+  nav.top ul { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; }
+  nav.top ul a { color: var(--muted); text-decoration: none; font-size: .94rem; font-weight: 500; }
+  nav.top ul a:hover { color: var(--ink); }
 
-  .hero { display: grid; grid-template-columns: 1fr 420px; gap: 32px; align-items: center; padding: 40px 0 56px; }
-  .eyebrow { color: var(--accent-2); font-weight: 600; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 10px; }
-  h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 600; line-height: 1.15; letter-spacing: -.01em; }
-  h1 { font-size: clamp(2.5rem, 6vw, 3.8rem); margin: 0 0 18px; }
-  .hero p { margin: 0 0 14px; max-width: 62ch; }
-  .hero p.lead { font-size: 1.14rem; }
-  .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  /* ---------- hero ---------- */
+  .hero { display: grid; grid-template-columns: 1fr 440px; gap: 40px; align-items: center; padding: 36px 0 72px; }
+  .eyebrow { color: var(--teal); font-weight: 600; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 16px; }
+  h1 { font-size: clamp(2.8rem, 6.4vw, 4.4rem); font-weight: 500; letter-spacing: -.03em; margin-bottom: 22px; }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero p { margin: 0 0 14px; max-width: 58ch; }
+  .hero p.lead { font-size: 1.16rem; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
   .links a {
-    display: inline-block; padding: 9px 18px; border: 1.5px solid var(--line); border-radius: 999px;
-    color: var(--text); text-decoration: none; font-size: .92rem; font-weight: 600; background: var(--surface);
+    display: inline-block; padding: 9px 20px; border: 1.5px solid var(--line); border-radius: 999px;
+    color: var(--ink); text-decoration: none; font-size: .92rem; font-weight: 600; background: var(--surface);
+    transition: border-color .2s ease, color .2s ease, transform .2s ease;
   }
-  .links a:hover { border-color: var(--accent); color: var(--accent); }
+  .links a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
-  /* Photo stack: the headshot sits on top, the other photos peek out behind it. */
+  /* photo stack: headshot in front, the other photos peek out behind it */
   .stage {
-    position: relative; height: 390px; width: 100%;
-    --w: 260px; --h: 320px;
-    --step: 52px; --tilt: 5deg; --fall: .08; --grow: 1;
+    position: relative; height: 400px; width: 100%;
+    --w: 290px; --h: 290px;
+    --step: 46px; --tilt: 6deg; --fall: .1; --grow: 1;
   }
-  .stage.open { --step: 84px; --tilt: 2deg; --fall: .05; --grow: 1.08; }
+  .stage.open { --step: 104px; --tilt: 3deg; --fall: .06; --grow: 1.07; }
   .ph {
-    position: absolute; left: 50%; top: 50%;
+    position: absolute; left: 50%; top: 46%;
     width: var(--w); height: var(--h);
     margin: calc(var(--h) / -2) 0 0 calc(var(--w) / -2);
-    padding: 0; border: 0; border-radius: 24px; overflow: hidden;
-    background: var(--surface); box-shadow: var(--shadow); cursor: pointer;
+    padding: 0; border: 6px solid var(--surface); border-radius: 26px; overflow: hidden;
+    background: var(--surface); box-shadow: var(--shadow-lg); cursor: pointer;
     transform:
       translateX(calc(var(--d, 0) * var(--step)))
       rotate(calc(var(--d, 0) * var(--tilt)))
       scale(calc((1 - var(--ad, 0) * var(--fall)) * var(--grow)));
-    transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .3s ease;
+    transition: transform .5s cubic-bezier(.2, .8, .2, 1), opacity .3s ease;
   }
-  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .ph.headshot img { object-position: 50% 22%; }
+  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 20px; }
   .ph.far { opacity: 0; pointer-events: none; }
   .ph:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
   .stage-btn {
-    position: absolute; top: 50%; z-index: 50; transform: translateY(-50%);
+    position: absolute; top: 46%; z-index: 50; transform: translateY(-50%);
     width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--line);
-    background: var(--surface); color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer;
-    box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity .25s ease;
+    background: var(--surface); color: var(--ink); font-size: 1.35rem; line-height: 1; cursor: pointer;
+    box-shadow: var(--shadow-sm); opacity: 0; pointer-events: none; transition: opacity .25s ease, border-color .2s ease;
   }
   .stage.open .stage-btn { opacity: 1; pointer-events: auto; }
   .stage-btn:hover { border-color: var(--accent); color: var(--accent); }
   .stage-btn.prev { left: 0; }
   .stage-btn.next { right: 0; }
-  .stage-count {
+  .stage-foot {
     position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 50;
-    font-size: .8rem; color: var(--muted); opacity: 0; transition: opacity .25s ease; white-space: nowrap;
+    font-size: .8rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums;
   }
-  .stage.open .stage-count { opacity: 1; }
+  .stage-foot .count { display: none; padding: 4px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+  .stage.open .stage-foot .count { display: inline-block; }
+  .stage.open .stage-foot .hint { display: none; }
 
-  section { padding: 48px 0; border-top: 1px solid var(--line); }
-  h2 { font-size: 2rem; margin: 0 0 8px; }
-  .section-intro { color: var(--muted); margin: 0 0 28px; }
+  /* ---------- sections ---------- */
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  .kicker { color: var(--muted); font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 10px; }
+  h2 { font-size: clamp(2rem, 4vw, 2.6rem); font-weight: 500; margin-bottom: 10px; }
+  .section-intro { color: var(--muted); margin: 0 0 36px; max-width: 60ch; }
 
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(285px, 1fr)); gap: 20px; }
+  /* work cards */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px 22px 20px;
-    box-shadow: var(--shadow); display: flex; flex-direction: column; border-top: 5px solid var(--accent);
+    position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+    padding: 24px 24px 22px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
   }
-  .card:nth-child(3n+2) { border-top-color: var(--accent-2); }
-  .card:nth-child(3n) { border-top-color: #d4a017; }
-  .card .tag { font-size: .78rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
-  .card h3 { font-size: 1.28rem; margin: 0 0 10px; }
-  .card p { margin: 0 0 14px; font-size: .96rem; }
-  .card .paper { font-size: .9rem; color: var(--muted); background: var(--accent-soft); border-radius: 10px; padding: 10px 12px; margin: 0 0 14px; }
-  .card .go { margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px 16px; font-weight: 600; font-size: .95rem; }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--c) 40%, var(--line)); }
+  .card .tag { display: flex; align-items: center; gap: 8px; font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; }
+  .card .tag::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); flex: none; }
+  .card h3 { font-size: 1.32rem; margin: 0 0 10px; }
+  .card p { margin: 0 0 14px; font-size: .95rem; }
+  .card .paper { font-size: .86rem; color: var(--muted); background: color-mix(in srgb, var(--c) 9%, var(--surface)); border-radius: 12px; padding: 10px 13px; }
+  .card .go { margin-top: auto; padding-top: 4px; display: flex; flex-wrap: wrap; gap: 6px 18px; font-weight: 600; font-size: .92rem; }
+  .card .go a { text-decoration: none; }
+  .card .go a:hover { text-decoration: underline; }
 
-  .scenic { --today: 2026.83; --span: 11.83; --S: 44px; display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; }
-  .chart { position: relative; width: 126px; align-self: stretch; min-height: 420px; }
-  .chart .axis { position: absolute; left: 62px; top: 0; bottom: 0; width: 1px; background: var(--muted); opacity: .6; }
-  .chart .tick { position: absolute; left: 0; width: 56px; text-align: right; font-size: .8rem; color: var(--muted); transform: translateY(-50%); font-variant-numeric: tabular-nums; }
-  .chart .tick::after { content: ""; position: absolute; right: -10px; top: 50%; width: 6px; height: 1px; background: var(--muted); }
-  .chart .lane {
-    position: absolute; width: 8px; border-radius: 4px; background: var(--c);
-    left: calc(74px + var(--lane) * 26px);
-    transform-origin: center; transition: transform .25s ease, box-shadow .25s ease;
-    top: calc((var(--today) - var(--e)) / var(--span) * 100%);
-    height: calc((var(--e) - var(--s)) / var(--span) * 100%);
+  /* ---------- scenic route: time axis + tiles ---------- */
+  .scenic { display: grid; grid-template-columns: 112px 1fr; gap: 28px; align-items: start; }
+  .chart { position: relative; height: 560px; }
+  .chart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .chart .tick {
+    position: absolute; left: 0; width: 44px; text-align: right; transform: translateY(-50%);
+    font-size: .74rem; color: var(--faint); font-variant-numeric: tabular-nums; line-height: 1;
   }
-  .sr-list { list-style: none; margin: 0; padding: 0; }
-  .sr-list li.tile {
-    background: var(--surface); border: 2px solid var(--c); border-radius: 16px;
-    padding: 14px 18px; margin: 0 0 16px; box-shadow: var(--shadow);
-    transition: transform .25s ease, box-shadow .25s ease;
+  .chart .tick.now { color: var(--ink); font-weight: 600; }
+  .chart .gridline { stroke: var(--line); stroke-width: 1; }
+  .chart .axis { stroke: var(--faint); stroke-width: 1; }
+  .chart .bar { fill: none; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; transition: stroke-width .25s ease, opacity .25s ease; cursor: pointer; }
+  .chart .bar.hl { stroke-width: 16; }
+  .scenic.focus .bar:not(.hl) { opacity: .22; }
+
+  .sr-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; align-content: space-between; }
+  .tile {
+    background: var(--surface); border: 1.5px solid var(--line); border-color: color-mix(in srgb, var(--c) 45%, var(--line));
+    border-radius: 16px; padding: 15px 20px; cursor: default; outline: none;
+    transition: transform .3s cubic-bezier(.2, .8, .2, 1), box-shadow .3s ease, border-color .25s ease, opacity .25s ease;
   }
-  .sr-list li.tile.hl { transform: scale(1.04); box-shadow: 0 12px 30px rgba(40, 30, 20, .16); }
-  .chart .lane.hl { transform: scaleX(1.9); }
-  .chart .con-path { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }
-  .chart .con-path path { fill: none; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; transition: stroke-width .25s ease; }
-  .chart .con-path.hl path { stroke-width: 13; }
-  .sr-list .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
-  .sr-list .when { color: var(--muted); font-size: .9rem; font-variant-numeric: tabular-nums; }
-  .sr-list .details { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .3s ease, opacity .25s ease; }
-  .sr-list .details > div { min-height: 0; overflow: hidden; }
-  .sr-list li.tile.hl .details { grid-template-rows: 1fr; opacity: 1; }
-  .sr-list .org { display: block; margin-top: 6px; font-size: .92rem; }
-  .sr-list .role { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 1.32rem; line-height: 1.2; }
-  .sr-list .org { color: var(--muted); }
-  .sr-list p { margin: 4px 0 0; font-size: .96rem; }
-  .sr-sub { font-family: Fraunces, Georgia, serif; font-size: 1.3rem; margin: 8px 0 16px; }
-  .scale-note { color: var(--muted); font-size: .88rem; margin: -18px 0 26px; }
+  .tile.hl, .tile.open { border-color: var(--c); transform: translateX(6px) scale(1.025); box-shadow: var(--shadow-lg); }
+  .scenic.focus .tile:not(.hl):not(.open) { opacity: .5; }
+  .tile .head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 16px; }
+  .tile .role { font-family: var(--serif); font-weight: 600; font-size: 1.32rem; line-height: 1.2; letter-spacing: -.01em; }
+  .tile .when { color: var(--c); font-weight: 600; font-size: .88rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tile .details { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .35s ease, opacity .25s ease; }
+  .tile .details > div { min-height: 0; overflow: hidden; }
+  .tile.hl .details, .tile.open .details, .tile:focus-visible .details, .tile:has(a:focus-visible) .details { grid-template-rows: 1fr; opacity: 1; }
+  .tile .org { margin: 8px 0 0; color: var(--muted); font-size: .92rem; }
+  .tile .body { margin: 4px 0 2px; font-size: .95rem; }
+  .scale-note { color: var(--muted); font-size: .86rem; margin: -22px 0 30px; }
 
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-  .two h3 { font-size: 1.35rem; margin: 0 0 12px; }
-  .plain { list-style: none; margin: 0; padding: 0; }
-  .plain li { padding: 8px 0; }
-  .plain .org { display: block; font-size: .94rem; }
-  .fun li::before { content: "✦ "; color: var(--accent); }
+  /* ---------- education + off the clock ---------- */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 28px 30px; box-shadow: var(--shadow-sm); }
+  .panel h2 { font-size: 1.7rem; margin-bottom: 18px; }
+  .edu { list-style: none; margin: 0; padding: 0; }
+  .edu li { padding: 14px 0; border-top: 1px dashed var(--line); }
+  .edu li:first-child { border-top: 0; padding-top: 0; }
+  .edu .row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .edu .what { font-family: var(--serif); font-weight: 600; font-size: 1.12rem; line-height: 1.25; }
+  .edu .when { color: var(--muted); font-size: .86rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .edu .where { display: block; font-size: .92rem; color: var(--muted); margin-top: 3px; }
+  .fun { list-style: none; margin: 0; padding: 0; }
+  .fun li { display: flex; gap: 12px; padding: 9px 0; }
+  .fun li::before { content: "✦"; color: var(--accent); flex: none; }
 
-  footer { border-top: 1px solid var(--line); padding: 30px 0 48px; color: var(--muted); font-size: .92rem; }
+  footer { border-top: 1px solid var(--line); padding: 34px 0 56px; color: var(--muted); font-size: .9rem; }
   footer a { color: var(--muted); }
 
+  @media (max-width: 900px) {
+    .cards { grid-template-columns: 1fr 1fr; }
+  }
   @media (max-width: 760px) {
+    body { font-size: 16px; }
     .wrap { padding: 0 16px; }
     nav.top ul { display: none; }
-    .hero { grid-template-columns: 1fr; gap: 8px; padding: 16px 0 40px; }
-    .stage { height: 300px; --w: 200px; --h: 246px; --step: 34px; }
+    .hero { grid-template-columns: 1fr; gap: 4px; padding: 8px 0 48px; }
+    .hero > div:first-child { order: 2; }
+    .stage { height: 300px; --w: 210px; --h: 210px; --step: 34px; }
     .stage.open { --step: 64px; }
-    .scenic { grid-template-columns: 1fr; gap: 28px; }
-    .chart { min-height: 380px; }
+    .cards { grid-template-columns: 1fr; }
+    section { padding: 48px 0; }
+    .scenic { grid-template-columns: 76px 1fr; gap: 12px; }
+    .chart .tick { width: 30px; font-size: .68rem; }
+    .tile { padding: 13px 15px; }
+    .tile .role { font-size: 1.12rem; }
+    .tile.hl, .tile.open { transform: scale(1.015); }
+    .two { grid-template-columns: 1fr; }
+    .panel { padding: 22px 20px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .ph, .stage-btn, .stage-count { transition: none; }
+    *, *::before, *::after { transition: none !important; }
   }
 </style>
 </head>
@@ -186,7 +225,7 @@
   <header class="hero">
     <div>
       <p class="eyebrow">Research Associate · NCEAS, UC Santa Barbara</p>
-      <h1>Hi, I'm Carlo</h1>
+      <h1>Hi, I'm <em>Carlo</em></h1>
       <p class="lead">I make maps and data tools about wildfire and the places it touches. My day job is at the <a href="https://www.nceas.ucsb.edu/">National Center for Ecological Analysis and Synthesis</a> (NCEAS), where I help build the <a href="https://wildfireindex.org/">Wildfire Resilience Index</a>: the data pipelines and interactive maps that show where communities are exposed to fire and how well they can cope.</p>
       <p>I was a Fulbright Scholar in Asunción, Paraguay in 2025–26, and I still work with partners there on fire simulation. Before that I was an Ocean Health Index fellow, and I spent a few years in supply-chain sustainability, starting as an early employee at SupplyShift.</p>
       <div class="links">
@@ -197,40 +236,39 @@
     </div>
 
     <div class="stage" id="stage" role="region" aria-roledescription="carousel" aria-label="Photos of Carlo">
-      <button class="ph headshot" style="--d:0" data-photo="headshot" aria-label="Headshot" aria-current="true">
-        <img src="headshot.jpg" alt="Portrait of Carlo Broderick">
-      </button>
+      <button class="ph headshot" style="--d:0" data-photo="headshot" aria-label="Headshot" aria-current="true"><img src="headshot.jpg" alt="Portrait of Carlo Broderick"></button>
       <button class="ph" style="--d:1" data-photo="04" aria-label="Show photo 04"><img src="photos/04.jpg" alt="Photo 04 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-2" data-photo="05" aria-label="Show photo 05"><img src="photos/05.jpg" alt="Photo 05 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:2" data-photo="05" aria-label="Show photo 05"><img src="photos/05.jpg" alt="Photo 05 from Carlo's archive" loading="lazy"></button>
       <button class="ph far" style="--d:3" data-photo="01" aria-label="Show photo 01"><img src="photos/01.jpg" alt="Photo 01 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-4" data-photo="03" aria-label="Show photo 03"><img src="photos/03.jpg" alt="Photo 03 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:4" data-photo="03" aria-label="Show photo 03"><img src="photos/03.jpg" alt="Photo 03 from Carlo's archive" loading="lazy"></button>
       <button class="ph far" style="--d:5" data-photo="12" aria-label="Show photo 12"><img src="photos/12.jpg" alt="Photo 12 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-6" data-photo="07" aria-label="Show photo 07"><img src="photos/07.jpg" alt="Photo 07 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:6" data-photo="07" aria-label="Show photo 07"><img src="photos/07.jpg" alt="Photo 07 from Carlo's archive" loading="lazy"></button>
       <button class="ph far" style="--d:-6" data-photo="02" aria-label="Show photo 02"><img src="photos/02.jpg" alt="Photo 02 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:5" data-photo="13" aria-label="Show photo 13"><img src="photos/13.jpg" alt="Photo 13 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-5" data-photo="13" aria-label="Show photo 13"><img src="photos/13.jpg" alt="Photo 13 from Carlo's archive" loading="lazy"></button>
       <button class="ph far" style="--d:-4" data-photo="11" aria-label="Show photo 11"><img src="photos/11.jpg" alt="Photo 11 from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:3" data-photo="10" aria-label="Show photo 10"><img src="photos/10.jpg" alt="Photo 10 from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-3" data-photo="10" aria-label="Show photo 10"><img src="photos/10.jpg" alt="Photo 10 from Carlo's archive" loading="lazy"></button>
       <button class="ph far" style="--d:-2" data-photo="06" aria-label="Show photo 06"><img src="photos/06.jpg" alt="Photo 06 from Carlo's archive" loading="lazy"></button>
-      <button class="ph" style="--d:1" data-photo="08" aria-label="Show photo 08"><img src="photos/08.jpg" alt="Photo 08 from Carlo's archive" loading="lazy"></button>
+      <button class="ph" style="--d:-1" data-photo="08" aria-label="Show photo 08"><img src="photos/08.jpg" alt="Photo 08 from Carlo's archive" loading="lazy"></button>
       <button class="stage-btn prev" aria-label="Previous photo">‹</button>
       <button class="stage-btn next" aria-label="Next photo">›</button>
-      <p class="stage-count" aria-live="polite">Headshot · 1 / 13</p>
+      <p class="stage-foot"><span class="hint">Hover to flip through photos</span><span class="count" aria-live="polite">Headshot · 1 / 13</span></p>
     </div>
   </header>
 
   <section id="work">
+    <p class="kicker">Selected work</p>
     <h2>Stuff I've made</h2>
     <p class="section-intro">Wildfire maps, a fire simulator, and open tools for people who write code with AI agents.</p>
     <div class="cards">
 
-      <article class="card">
+      <article class="card" style="--c: var(--ember)">
         <p class="tag">NCEAS · 2023–present</p>
         <h3>Wildfire Resilience Index</h3>
         <p>A look at how well communities in the western U.S. can resist, recover from and adapt to wildfire. I process and analyze the data behind its indicators, from road networks to burn hazard.</p>
         <div class="go"><a href="https://wildfireindex.org/">Open the map and explore the index →</a></div>
       </article>
 
-      <article class="card">
+      <article class="card" style="--c: var(--teal)">
         <p class="tag">Interactive map · 2026</p>
         <h3>Wildfire Evacuation Risk Across U.S. Communities</h3>
         <p>How many roads lead out of 30,728 small U.S. communities, set against how likely the land around them is to burn. Built from OpenStreetMap road networks and national burn-probability data.</p>
@@ -241,7 +279,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" style="--c: var(--ochre)">
         <p class="tag">Interactive map · 2026</p>
         <h3>Wildfire risk to U.S. cultural resources</h3>
         <p>Burn hazard for 56,106 places on the National Register of Historic Places. I helped make the map. I did not write the paper.</p>
@@ -252,13 +290,13 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" style="--c: var(--rose)">
         <p class="tag">Paraguay · 2025–present</p>
         <h3>Parafire</h3>
         <p>A fire-risk, simulation and rapid-response platform for INFONA, Paraguay's national forestry institute, built with Forest4Life Paraguay. It includes a review of the country's weather-station data and a fire-spread simulator tested against historical fires.</p>
       </article>
 
-      <article class="card">
+      <article class="card" style="--c: var(--plum)">
         <p class="tag">NCEAS-AI · open source</p>
         <h3>Coding-agent toolkits for data science</h3>
         <p>Ready-made skills and a ruleset that help AI coding agents write reproducible, analysis-first environmental data science in R and Python, including house-style interactive maps and chart pages.</p>
@@ -268,7 +306,7 @@
         </div>
       </article>
 
-      <article class="card">
+      <article class="card" style="--c: var(--lake)">
         <p class="tag">NCEAS · 2023</p>
         <h3>Ocean Health Index</h3>
         <p>As an OHI fellow I helped run the annual global assessment: preparing ecological datasets, calculating scores, and turning the results into web content, reports and charts.</p>
@@ -279,97 +317,87 @@
   </section>
 
   <section id="experience">
+    <p class="kicker">Experience</p>
     <h2>The scenic route</h2>
     <p class="section-intro">Supply chains, sustainability programs, then a turn toward data science.</p>
-    <p class="scale-note">2015 at the bottom, today at the top. Each bar is as long as that role lasted.</p>
-    <div class="scenic">
-      <div class="chart" aria-hidden="true">
-        <span class="axis"></span>
-        <span class="tick" style="top: 0%">Today</span>
-        <span class="tick" style="top: 7.016%">2026</span>
-        <span class="tick" style="top: 15.469%">2025</span>
-        <span class="tick" style="top: 23.922%">2024</span>
-        <span class="tick" style="top: 32.375%">2023</span>
-        <span class="tick" style="top: 40.828%">2022</span>
-        <span class="tick" style="top: 49.281%">2021</span>
-        <span class="tick" style="top: 57.735%">2020</span>
-        <span class="tick" style="top: 66.188%">2019</span>
-        <span class="tick" style="top: 74.641%">2018</span>
-        <span class="tick" style="top: 83.094%">2017</span>
-        <span class="tick" style="top: 91.547%">2016</span>
-        <span class="tick" style="top: 100.000%">2015</span>
-        <span class="lane" data-k="ra" style="--lane:0; --s:2023.0; --e:2026.83; --c:#c2410c"></span>
-        <span class="lane" data-k="ful" style="--lane:1; --s:2025.0; --e:2026.5; --c:#0f766e"></span>
-        <span class="lane" data-k="ohi" style="--lane:1; --s:2023.0; --e:2024.0; --c:#d4a017"></span>
-        <span class="lane" data-k="pc" style="--lane:0; --s:2019.0; --e:2023.0; --c:#7c3aed"></span>
-        <svg class="con-path" data-k="con" viewBox="0 0 126 100" preserveAspectRatio="none" aria-hidden="true"><path d="M 104 83.094 L 104 74.641 C 104 77.641 78 77.641 78 74.641 L 78 66.188" stroke="#2563eb" /></svg>
-        <span class="lane" data-k="ss" style="--lane:0; --s:2015.0; --e:2018.0; --c:#be185d"></span>
+    <p class="scale-note">2015 at the bottom, today at the top. Each bar is as long as that role lasted. Hover a role for details.</p>
+    <div class="scenic" id="scenic">
+      <div class="chart" id="chart" aria-hidden="true">
+        <svg id="chart-svg"></svg>
       </div>
-      <div>
-        <ul class="sr-list">
-        <li class="tile" data-k="ra" style="--c:#c2410c">
+      <ul class="sr-list" id="sr-list">
+        <!-- data-segs: lane:start:end, one per straight run of the bar; "now" means today -->
+        <li class="tile" tabindex="0" data-k="ra" data-segs="0:2023:now" style="--c: var(--ember)">
           <div class="head"><span class="role">Research Associate</span><span class="when">2023 – present</span></div>
           <div class="details"><div>
             <p class="org"><a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a></p>
-            <p>Data analysis for the <a href="https://wildfireindex.org/">Wildfire Resilience Index</a>: geospatial pipelines, wildfire-exposure research and interactive maps.</p>
+            <p class="body">Data analysis for the <a href="https://wildfireindex.org/">Wildfire Resilience Index</a>: geospatial pipelines, wildfire-exposure research and interactive maps.</p>
           </div></div>
         </li>
-        <li class="tile" data-k="ful" style="--c:#0f766e">
+        <li class="tile" tabindex="0" data-k="ful" data-segs="1:2025:2026.5" style="--c: var(--teal)">
           <div class="head"><span class="role">Fulbright full-ride scholarship</span><span class="when">2025 – 2026</span></div>
           <div class="details"><div>
-            <p class="org"><a href="https://fulbrightscholars.org/country/paraguay">U.S. Department of State</a> · Asunción, Paraguay</p>
-            <p>Studied wildfire, wildfire land use and geography. I still work with Hen Data, the company I worked with there.</p>
+            <p class="org"><a href="https://fulbrightscholars.org/country/paraguay">Fulbright, U.S. Department of State</a> · Asunción, Paraguay</p>
+            <p class="body">Studied wildfire, wildfire land use and geography. I still work with Hen Data, the company I worked with there.</p>
           </div></div>
         </li>
-        <li class="tile" data-k="ohi" style="--c:#d4a017">
+        <li class="tile" tabindex="0" data-k="ohi" data-segs="1:2023:2024" style="--c: var(--ochre)">
           <div class="head"><span class="role">Ocean Health Index Fellow</span><span class="when">2023</span></div>
           <div class="details"><div>
-            <p class="org"><a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a> · <a href="https://oceanhealthindex.org/">oceanhealthindex.org</a></p>
-            <p>Data preparation, processing and score calculation for the annual global assessment.</p>
+            <p class="org"><a href="https://oceanhealthindex.org/">Ocean Health Index</a> · <a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a></p>
+            <p class="body">Data preparation, processing and score calculation for the annual global assessment.</p>
           </div></div>
         </li>
-        <li class="tile" data-k="pc" style="--c:#7c3aed">
+        <li class="tile" tabindex="0" data-k="pc" data-segs="0:2019:2023" style="--c: var(--plum)">
           <div class="head"><span class="role">Program Coordinator</span><span class="when">2019 – 2022</span></div>
           <div class="details"><div>
             <p class="org"><a href="https://www.ucsb.edu/">UC Santa Barbara</a></p>
-            <p>Coordinated the Mellichamp Sustainable Materials and Product Design Initiative: grants, website, marketing, events and stakeholders. Staff TA for <em>Sustainability by the Numbers</em> (2021).</p>
+            <p class="body">Coordinated the Mellichamp Sustainable Materials and Product Design Initiative: grants, website, marketing, events and stakeholders. Staff TA for <em>Sustainability by the Numbers</em> (2021).</p>
           </div></div>
         </li>
-        <li class="tile" data-k="con" style="--c:#2563eb">
+        <li class="tile" tabindex="0" data-k="con" data-segs="1:2017:2018 0:2018:2019" style="--c: var(--lake)">
           <div class="head"><span class="role">Supply Chain &amp; Corporate Responsibility Consultant</span><span class="when">2017 – 2018</span></div>
           <div class="details"><div>
             <p class="org">Self-employed · Santa Cruz</p>
-            <p>Advised on international supply chains: data collection, risk management and corporate responsibility.</p>
+            <p class="body">Advised on international supply chains: data collection, risk management and corporate responsibility.</p>
           </div></div>
         </li>
-        <li class="tile" data-k="ss" style="--c:#be185d">
+        <li class="tile" tabindex="0" data-k="ss" data-segs="0:2015:2018" style="--c: var(--rose)">
           <div class="head"><span class="role">Client Management Team Lead</span><span class="when">2015 – 2017</span></div>
           <div class="details"><div>
             <p class="org"><a href="https://sphera.com/company/news/sphera-acquires-supplyshift">SupplyShift</a>, Santa Cruz (now part of Sphera)</p>
-            <p>Led the client team and oversaw supply-chain data programs for Fortune 500 companies. Sphera bought SupplyShift in 2024 and built it into its supply-chain visibility tool.</p>
+            <p class="body">Led the client team and oversaw supply-chain data programs for Fortune 500 companies. Sphera bought SupplyShift in 2024 and built it into its supply-chain visibility tool.</p>
           </div></div>
         </li>
-        </ul>
-      </div>
+      </ul>
     </div>
   </section>
 
   <section id="education">
     <div class="two">
-      <div>
-        <h3>Education</h3>
-        <ul class="plain">
-          <li><span class="role">Master of Environmental Data Science</span><span class="org"><a href="https://bren.ucsb.edu/">Bren School</a>, <a href="https://www.ucsb.edu/">UC Santa Barbara</a> · 2023</span></li>
-          <li><span class="role">Project Management Certification</span><span class="org"><a href="https://extension.berkeley.edu/cert/project.html">UC Berkeley Extension</a> · <a href="https://www.pmi.org/">PMI</a> · 2017–2018</span></li>
-          <li><span class="role">BA, Environmental Studies &amp; Economics</span><span class="org"><a href="https://www.ucsc.edu/">UC Santa Cruz</a> · 2015</span></li>
+      <div class="panel">
+        <h2>Education</h2>
+        <ul class="edu">
+          <li>
+            <div class="row"><span class="what">Master of Environmental Data Science</span><span class="when">2023</span></div>
+            <span class="where"><a href="https://bren.ucsb.edu/">Bren School</a>, <a href="https://www.ucsb.edu/">UC Santa Barbara</a></span>
+          </li>
+          <li>
+            <div class="row"><span class="what">Project Management Certification</span><span class="when">2017 – 2018</span></div>
+            <span class="where"><a href="https://extension.berkeley.edu/cert/project.html">UC Berkeley Extension</a> · <a href="https://www.pmi.org/">PMI</a></span>
+          </li>
+          <li>
+            <div class="row"><span class="what">BA, Environmental Studies &amp; Economics</span><span class="when">2015</span></div>
+            <span class="where"><a href="https://www.ucsc.edu/">UC Santa Cruz</a></span>
+          </li>
         </ul>
       </div>
-      <div>
-        <h3>Off the clock</h3>
-        <ul class="plain fun">
+      <div class="panel">
+        <h2>Off the clock</h2>
+        <ul class="fun">
           <li>New father</li>
           <li>Animal-shelter volunteer with Dog TLC</li>
-          <li><a href="https://www.sbcc.edu/">Permaculture Design Certificate</a>, Santa Barbara City College</li>
+          <li><span><a href="https://www.sbcc.edu/">Permaculture Design Certificate</a>, Santa Barbara City College</span></li>
           <li><a href="https://avalanche.org/">AIARE 1 avalanche certified</a></li>
           <li><a href="https://magic.wizards.com/">Magic: The Gathering</a></li>
           <li>Still perfecting the slow-cooked bean</li>
@@ -386,12 +414,11 @@
 </div>
 
 <script>
+/* ---------- photo stack ---------- */
 (function () {
   var stage = document.getElementById('stage');
   var cards = Array.prototype.slice.call(stage.querySelectorAll('.ph'));
-  var prevBtn = stage.querySelector('.stage-btn.prev');
-  var nextBtn = stage.querySelector('.stage-btn.next');
-  var count = stage.querySelector('.stage-count');
+  var count = stage.querySelector('.count');
   var n = cards.length;
   var cur = 0;
   var wheelLock = false;
@@ -410,12 +437,7 @@
     var label = cards[cur].getAttribute('data-photo');
     count.textContent = (label === 'headshot' ? 'Headshot' : 'Photo ' + label) + ' · ' + (cur + 1) + ' / ' + n;
   }
-
-  function go(step) {
-    cur = ((cur + step) % n + n) % n;
-    layout();
-  }
-
+  function go(step) { cur = ((cur + step) % n + n) % n; layout(); }
   function open() { stage.classList.add('open'); }
   function close() { stage.classList.remove('open'); }
 
@@ -425,28 +447,19 @@
       if (i !== cur) { cur = i; layout(); }
     });
   });
+  stage.querySelector('.prev').addEventListener('click', function () { open(); go(-1); });
+  stage.querySelector('.next').addEventListener('click', function () { open(); go(1); });
 
-  prevBtn.addEventListener('click', function () { open(); go(-1); });
-  nextBtn.addEventListener('click', function () { open(); go(1); });
-
-  // Hover opens the stack on mouse; focus opens it for keyboard users.
   stage.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') open(); });
   stage.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') close(); });
   stage.addEventListener('focusin', open);
-  stage.addEventListener('focusout', function (e) {
-    if (!stage.contains(e.relatedTarget)) close();
-  });
-  document.addEventListener('click', function (e) {
-    if (!stage.contains(e.target)) close();
-  });
-
-  // Arrow keys move through the photos while the stack has focus.
+  stage.addEventListener('focusout', function (e) { if (!stage.contains(e.relatedTarget)) close(); });
+  document.addEventListener('click', function (e) { if (!stage.contains(e.target)) close(); });
   stage.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowRight') { go(1); e.preventDefault(); }
     if (e.key === 'ArrowLeft') { go(-1); e.preventDefault(); }
+    if (e.key === 'Escape') { close(); }
   });
-
-  // Mouse wheel or trackpad swipe scrolls through the photos while the stack is open.
   stage.addEventListener('wheel', function (e) {
     if (!stage.classList.contains('open')) return;
     var delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
@@ -457,8 +470,6 @@
     go(delta > 0 ? 1 : -1);
     setTimeout(function () { wheelLock = false; }, 350);
   }, { passive: false });
-
-  // Touch: tap opens, swipe changes photo.
   stage.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
   stage.addEventListener('touchend', function (e) {
     if (touchX === null) return;
@@ -466,19 +477,119 @@
     touchX = null;
     if (Math.abs(dx) > 40) { open(); go(dx < 0 ? 1 : -1); }
   });
+  if (window.matchMedia('(hover: none)').matches) stage.querySelector('.hint').textContent = 'Tap to flip through photos';
 
   layout();
+})();
 
-  // Hovering a posting grows its tile and its bar together.
-  document.querySelectorAll('[data-k]').forEach(function (el) {
-    var k = el.getAttribute('data-k');
-    el.addEventListener('mouseenter', function () {
-      document.querySelectorAll('[data-k="' + k + '"]').forEach(function (x) { x.classList.add('hl'); });
+/* ---------- scenic route: time axis drawn from each tile's data-segs ---------- */
+(function () {
+  var TODAY = 2026 + (Date.now() - Date.UTC(2026, 0, 1)) / 31557600000;
+  if (!(TODAY > 2026 && TODAY < 2030)) TODAY = 2026.83;
+  var START = 2015;
+  var scenic = document.getElementById('scenic');
+  var chart = document.getElementById('chart');
+  var svg = document.getElementById('chart-svg');
+  var list = document.getElementById('sr-list');
+  var tiles = Array.prototype.slice.call(list.querySelectorAll('.tile'));
+  var NS = 'http://www.w3.org/2000/svg';
+  var small = window.matchMedia('(max-width: 760px)');
+
+  function el(name, attrs) {
+    var node = document.createElementNS(NS, name);
+    for (var a in attrs) node.setAttribute(a, attrs[a]);
+    return node;
+  }
+
+  function draw() {
+    // Give each year enough height to read, spread the roles over that height,
+    // and run the axis the full height of the list (with details collapsed).
+    list.style.minHeight = ((TODAY - START) * (small.matches ? 34 : 48)) + 'px';
+    if (!scenic.classList.contains('focus') && !list.querySelector('.tile.open')) {
+      chart.style.height = list.offsetHeight + 'px';
+    }
+    var W = chart.clientWidth, H = chart.clientHeight;
+    var axisX = small.matches ? 38 : 54;
+    var laneX = function (lane) { return axisX + 20 + lane * (small.matches ? 18 : 24); };
+    var y = function (t) { return (TODAY - t) / (TODAY - START) * H; };
+    var inset = 7;      // keeps rounded ends of touching bars apart
+    var swoosh = Math.min(22, H / (TODAY - START) * .45);   // half-height of a lane change
+
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    chart.querySelectorAll('.tick').forEach(function (t) { t.remove(); });
+
+    var years = [];
+    for (var yr = START; yr <= Math.floor(TODAY); yr++) years.push(yr);
+    years.forEach(function (yr) {
+      svg.appendChild(el('line', { x1: axisX, x2: W, y1: y(yr), y2: y(yr), 'class': 'gridline' }));
+      addTick(String(yr), y(yr) / H * 100, false);
     });
-    el.addEventListener('mouseleave', function () {
-      document.querySelectorAll('[data-k="' + k + '"]').forEach(function (x) { x.classList.remove('hl'); });
+    addTick('Today', 0, true);
+    svg.appendChild(el('line', { x1: axisX, x2: axisX, y1: 0, y2: H, 'class': 'axis' }));
+
+    tiles.forEach(function (tile) {
+      var segs = tile.getAttribute('data-segs').split(' ').map(function (s) {
+        var p = s.split(':');
+        return { lane: +p[0], s: +p[1], e: p[2] === 'now' ? TODAY : +p[2] };
+      });
+      var first = segs[0], last = segs[segs.length - 1];
+      var d = 'M ' + laneX(first.lane) + ' ' + (y(first.s) - inset);
+      for (var i = 1; i < segs.length; i++) {
+        var a = laneX(segs[i - 1].lane), b = laneX(segs[i].lane), yb = y(segs[i].s);
+        if (a === b) continue;
+        // smooth S-curve from the old lane into the new one, centred on the hand-off year
+        d += ' L ' + a + ' ' + (yb + swoosh) +
+             ' C ' + a + ' ' + yb + ' ' + b + ' ' + yb + ' ' + b + ' ' + (yb - swoosh);
+      }
+      d += ' L ' + laneX(last.lane) + ' ' + (y(last.e) + inset);
+      var color = getComputedStyle(tile).getPropertyValue('--c').trim();
+      svg.appendChild(el('path', { d: d, stroke: color, 'class': 'bar', 'data-k': tile.getAttribute('data-k') }));
+    });
+  }
+
+  function addTick(label, pct, now) {
+    var t = document.createElement('span');
+    t.className = 'tick' + (now ? ' now' : '');
+    t.style.top = pct + '%';
+    t.textContent = small.matches && !now ? "'" + label.slice(2) : label;
+    chart.appendChild(t);
+  }
+
+  // Hovering a role (or its bar) grows both and fades the rest.
+  function setActive(k) {
+    scenic.classList.toggle('focus', !!k);
+    scenic.querySelectorAll('[data-k]').forEach(function (node) {
+      var on = node.getAttribute('data-k') === k;
+      node.classList.toggle('hl', on);
+    });
+  }
+  scenic.addEventListener('pointerover', function (e) {
+    if (e.pointerType !== 'mouse') return;
+    var hit = e.target.closest('[data-k]');
+    setActive(hit ? hit.getAttribute('data-k') : null);
+  });
+  scenic.addEventListener('pointerleave', function () { setActive(null); });
+  tiles.forEach(function (tile) {
+    tile.addEventListener('focus', function () {
+      if (tile.matches(':focus-visible')) setActive(tile.getAttribute('data-k'));
+    });
+    tile.addEventListener('blur', function () { setActive(null); });
+    // Touch has no hover, so a tap opens a role's details.
+    tile.addEventListener('click', function (e) {
+      if (e.target.closest('a')) return;
+      if (window.matchMedia('(hover: hover)').matches) return;
+      var wasOpen = tile.classList.contains('open');
+      tiles.forEach(function (t) { t.classList.remove('open'); });
+      tile.classList.toggle('open', !wasOpen);
+      setActive(wasOpen ? null : tile.getAttribute('data-k'));
     });
   });
+
+  var timer;
+  window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(draw, 120); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  draw();
 })();
 </script>
 </body>
