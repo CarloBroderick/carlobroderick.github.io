@@ -795,7 +795,7 @@
       html += '<div class="au-models"><h3>Top models, all time</h3><table><thead><tr><th>Model</th><th>Tokens</th><th>API price</th></tr></thead><tbody>' +
         top.map(function (m) { return '<tr><td style="--c:' + PROV[m.provider].c + '">' + esc(m.name) + '</td><td>' + tok(m.tokens) + '</td><td>' + usd(m.cost) + '</td></tr>'; }).join('') +
         '</tbody></table></div>';
-      html += '<p class="au-note">Counted from the logs of my AI assistant and Claude Code on my ' +
+      html += '<p class="au-note">Counted from the logs of my AI assistants and Claude Code on my ' +
         esc(feeds.map(function (f) { return f.label || f.machine; }).join(' and ')) +
         '. Most tokens are earlier conversation re-read from cache on every turn, which costs a tenth of the normal input price or less. ' +
         'Costs use the providers\' list prices' + (checked ? ' (checked ' + fmtDay(checked) + ')' : '') +
