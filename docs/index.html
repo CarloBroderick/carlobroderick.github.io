@@ -28,7 +28,7 @@
     --plum: #6d4bb3;
     --lake: #2f6db5;
     --rose: #b8326a;
-    --slate: #3f4a5a;
+    --sky: #0b8fd4;
     --shadow-sm: 0 1px 2px rgba(40, 30, 20, .05), 0 4px 14px rgba(40, 30, 20, .05);
     --shadow-lg: 0 2px 6px rgba(40, 30, 20, .08), 0 18px 40px rgba(40, 30, 20, .14);
     --serif: Fraunces, Georgia, serif;
@@ -164,7 +164,6 @@
   .tile .details > div { min-height: 0; overflow: hidden; }
   .tile.hl .details, .tile.open .details, .tile:focus-visible .details, .tile:has(a:focus-visible) .details { grid-template-rows: 1fr; opacity: 1; }
   .tile .org { margin: 4px 0 0; color: var(--muted); font-size: 1.02rem; font-weight: 500; }
-  .tile:not(.hl):not(.open):not(:focus-visible) .org a { color: inherit; text-decoration: none; }
   .tile .body { margin: 8px 0 2px; font-size: .95rem; }
   .scale-note { color: var(--muted); font-size: .86rem; margin: -22px 0 30px; }
 
@@ -346,49 +345,49 @@
         <!-- data-segs: lane:start:end, one per straight run of the bar; "now" means today -->
         <li class="tile" tabindex="0" data-k="ra" data-segs="0:2024.66:now" style="--c: var(--ember)">
           <div class="head"><span class="role">Research Associate</span><span class="when">2024 – present</span></div>
-          <p class="org"><a href="https://www.nceas.ucsb.edu/" target="_blank" rel="noopener">National Center for Ecological Analysis and Synthesis</a> · UC Santa Barbara · Santa&nbsp;Barbara,&nbsp;California</p>
+          <p class="org"><a href="https://www.nceas.ucsb.edu/" target="_blank" rel="noopener">National Center for Ecological Analysis</a> · <a href="https://www.ucsb.edu/" target="_blank" rel="noopener">UC Santa Barbara</a> · <a href="https://santabarbaraca.gov/" target="_blank" rel="noopener">Santa&nbsp;Barbara,&nbsp;California</a></p>
           <div class="details"><div>
             <p class="body">Data analysis for the <a href="https://wildfireindex.org/" target="_blank" rel="noopener">Wildfire Resilience Index</a>: geospatial pipelines, wildfire-exposure research and interactive maps.</p>
           </div></div>
         </li>
-        <li class="tile" tabindex="0" data-k="wsc" data-segs="1:2026.17:now" style="--c: var(--slate)">
+        <li class="tile" tabindex="0" data-k="wsc" data-segs="1:2026.17:now" style="--c: var(--sky)">
           <div class="head"><span class="role">Wildfire Science Consultant</span><span class="when">2026 – present</span></div>
-          <p class="org">Self-employed, with <a href="https://hendata.lat/" target="_blank" rel="noopener">Hendata</a> · Paraguay</p>
+          <p class="org"><a href="https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" target="_blank" rel="noopener">Self-employed</a> · <a href="https://santabarbaraca.gov/" target="_blank" rel="noopener">Santa&nbsp;Barbara,&nbsp;California</a></p>
           <div class="details"><div>
-            <p class="body">Helping Paraguay build its national-level wildfire management systems.</p>
+            <p class="body">Helping Paraguay build its national-level wildfire management systems, with <a href="https://hendata.lat/" target="_blank" rel="noopener">Hendata</a>.</p>
           </div></div>
         </li>
         <li class="tile" tabindex="0" data-k="ful" data-segs="1:2025.25:2026.17" style="--c: var(--teal)">
           <div class="head"><span class="role">Fulbright Scholar</span><span class="when">2025 – 2026</span></div>
-          <p class="org">U.S. State Department · Asunción,&nbsp;Paraguay</p>
+          <p class="org"><a href="https://www.state.gov/" target="_blank" rel="noopener">U.S. State Department</a> · <a href="https://www.asuncion.gov.py/" target="_blank" rel="noopener">Asunción,&nbsp;Paraguay</a></p>
           <div class="details"><div>
             <p class="body"><a href="https://us.fulbrightonline.org/about/types-of-awards/study-research" target="_blank" rel="noopener">Open Study/Research Award</a>, Fulbright U.S. Student Program. Studied wildfire, wildfire land use and geography. I still work with <a href="https://hendata.lat/" target="_blank" rel="noopener">Hendata</a>, the company I worked with there.</p>
           </div></div>
         </li>
         <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2024:2024.39 1:2024.39:2024.966" style="--c: var(--ochre)">
           <div class="head"><span class="role">Ocean Health Index Fellow</span><span class="when">2024 – 2024</span></div>
-          <p class="org"><a href="https://oceanhealthindex.org/" target="_blank" rel="noopener">Ocean Health Index</a> · <a href="https://www.nceas.ucsb.edu/" target="_blank" rel="noopener">NCEAS, UC Santa Barbara</a> · Santa&nbsp;Barbara,&nbsp;California</p>
+          <p class="org"><a href="https://oceanhealthindex.org/" target="_blank" rel="noopener">Ocean Health Index</a> · <a href="https://www.nceas.ucsb.edu/" target="_blank" rel="noopener">NCEAS</a>, <a href="https://www.ucsb.edu/" target="_blank" rel="noopener">UC Santa Barbara</a> · <a href="https://santabarbaraca.gov/" target="_blank" rel="noopener">Santa&nbsp;Barbara,&nbsp;California</a></p>
           <div class="details"><div>
             <p class="body">Data preparation, processing and score calculation for the annual global assessment.</p>
           </div></div>
         </li>
         <li class="tile" tabindex="0" data-k="pc" data-segs="0:2019.2:2024" style="--c: var(--plum)">
           <div class="head"><span class="role">Program Coordinator</span><span class="when">2019 – 2023</span></div>
-          <p class="org"><a href="https://www.ucsb.edu/" target="_blank" rel="noopener">UC Santa Barbara</a> Chemical Engineering · Mellichamp Sustainability Initiative · Santa&nbsp;Barbara,&nbsp;California</p>
+          <p class="org"><a href="https://www.ucsb.edu/" target="_blank" rel="noopener">UC Santa Barbara</a> <a href="https://www.chemengr.ucsb.edu/" target="_blank" rel="noopener">Chemical Engineering</a> · <a href="https://carlobroderick.wixsite.com/website-1" target="_blank" rel="noopener">Mellichamp Sustainability Initiative</a> · <a href="https://santabarbaraca.gov/" target="_blank" rel="noopener">Santa&nbsp;Barbara,&nbsp;California</a></p>
           <div class="details"><div>
             <p class="body">Coordinated the Mellichamp Sustainable Materials and Product Design Initiative: grants, website, marketing, events and stakeholders. Staff TA for <em>Sustainability by the Numbers</em> (2021).</p>
           </div></div>
         </li>
         <li class="tile" tabindex="0" data-k="con" data-segs="1:2017.1:2018.3 0:2018.3:2019.2" style="--c: var(--lake)">
           <div class="head"><span class="role">Supply Chain &amp; Corporate Responsibility Consultant</span><span class="when">2017 – 2018</span></div>
-          <p class="org">Self-employed · Santa&nbsp;Cruz,&nbsp;California</p>
+          <p class="org"><a href="https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes" target="_blank" rel="noopener">Self-employed</a> · <a href="https://www.santacruzca.gov/" target="_blank" rel="noopener">Santa&nbsp;Cruz,&nbsp;California</a></p>
           <div class="details"><div>
             <p class="body">Advised on international supply chains: data collection, risk management and corporate responsibility.</p>
           </div></div>
         </li>
         <li class="tile" tabindex="0" data-k="ss" data-segs="0:2015:2018" style="--c: var(--rose)">
           <div class="head"><span class="role">Client Management Team Lead</span><span class="when">2015 – 2017</span></div>
-          <p class="org"><a href="https://sphera.com/company/news/sphera-acquires-supplyshift" target="_blank" rel="noopener">SupplyShift/Sphera</a> · Santa&nbsp;Cruz,&nbsp;California</p>
+          <p class="org"><a href="https://sphera.com/company/news/sphera-acquires-supplyshift" target="_blank" rel="noopener">SupplyShift/Sphera</a> · <a href="https://www.santacruzca.gov/" target="_blank" rel="noopener">Santa&nbsp;Cruz,&nbsp;California</a></p>
           <div class="details"><div>
             <p class="body">Led the client team and oversaw supply-chain data programs for Fortune 500 companies. Sphera bought SupplyShift in 2024 and built it into its supply-chain visibility tool.</p>
           </div></div>
