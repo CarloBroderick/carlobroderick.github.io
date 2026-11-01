@@ -331,8 +331,8 @@
       </div>
       <ul class="sr-list" id="sr-list">
         <!-- data-segs: lane:start:end, one per straight run of the bar; "now" means today -->
-        <li class="tile" tabindex="0" data-k="ra" data-segs="0:2024.55:now" style="--c: var(--ember)">
-          <div class="head"><span class="role">Research Associate</span><span class="when">2024 – present</span></div>
+        <li class="tile" tabindex="0" data-k="ra" data-segs="0:2025:now" style="--c: var(--ember)">
+          <div class="head"><span class="role">Research Associate</span><span class="when">2025 – present</span></div>
           <p class="org"><a href="https://www.nceas.ucsb.edu/">National Center for Ecological Analysis and Synthesis</a> · UC Santa Barbara</p>
           <div class="details"><div>
             <p class="where">Santa Barbara, California</p>
@@ -347,7 +347,7 @@
             <p class="body"><a href="https://us.fulbrightonline.org/about/types-of-awards/study-research">Open Study/Research Award</a>, Fulbright U.S. Student Program. Studied wildfire, wildfire land use and geography. I still work with <a href="https://hendata.lat/">Hendata</a>, the company I worked with there.</p>
           </div></div>
         </li>
-        <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2023.95:2024.25 1:2024.25:2024.55" style="--c: var(--ochre)">
+        <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2024.15:2024.7 1:2024.7:2025.15" style="--c: var(--ochre)">
           <div class="head"><span class="role">Ocean Health Index Fellow</span><span class="when">2024</span></div>
           <p class="org"><a href="https://oceanhealthindex.org/">Ocean Health Index</a> · <a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a></p>
           <div class="details"><div>
@@ -355,7 +355,7 @@
             <p class="body">Data preparation, processing and score calculation for the annual global assessment.</p>
           </div></div>
         </li>
-        <li class="tile" tabindex="0" data-k="pc" data-segs="0:2019.25:2023.88" style="--c: var(--plum)">
+        <li class="tile" tabindex="0" data-k="pc" data-segs="0:2019.25:2024" style="--c: var(--plum)">
           <div class="head"><span class="role">Program Coordinator</span><span class="when">2019 – 2023</span></div>
           <p class="org"><a href="https://www.ucsb.edu/">UC Santa Barbara</a> · Chemical Engineering Department · Mellichamp Sustainability Initiative</p>
           <div class="details"><div>
@@ -511,10 +511,15 @@
   }
 
   function draw() {
-    // Give each year enough height to read, spread the roles over that height,
-    // and run the axis the full height of the list (with details collapsed).
-    list.style.minHeight = ((TODAY - START) * (small.matches ? 34 : 48)) + 'px';
+    // Give each year enough height to read, and leave room for the tallest
+    // role to open without the list outgrowing the axis beside it.
     if (!scenic.classList.contains('focus') && !list.querySelector('.tile.open')) {
+      var rest = 14 * (tiles.length - 1), open = 0;
+      tiles.forEach(function (tile) {
+        rest += tile.offsetHeight;
+        open = Math.max(open, tile.querySelector('.details > div').scrollHeight);
+      });
+      list.style.minHeight = Math.max((TODAY - START) * (small.matches ? 34 : 48), rest + open + 12) + 'px';
       chart.style.height = list.offsetHeight + 'px';
     }
     var W = chart.clientWidth, H = chart.clientHeight;
