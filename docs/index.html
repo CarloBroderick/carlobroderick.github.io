@@ -56,7 +56,7 @@
   nav.top ul a:hover { color: var(--ink); }
 
   /* ---------- hero ---------- */
-  .hero { display: grid; grid-template-columns: 1fr 440px; gap: 40px; align-items: center; padding: 36px 0 72px; }
+  .hero { display: grid; grid-template-columns: 1fr 480px; gap: 40px; align-items: center; padding: 36px 0 72px; }
   .eyebrow { color: var(--teal); font-weight: 600; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 16px; }
   h1 { font-size: clamp(2.8rem, 6.4vw, 4.4rem); font-weight: 500; letter-spacing: -.03em; margin-bottom: 22px; }
   h1 em { font-style: italic; color: var(--accent); }
@@ -72,11 +72,11 @@
 
   /* photo stack: headshot in front, the other photos peek out behind it */
   .stage {
-    position: relative; height: 400px; width: 100%;
-    --w: 290px; --h: 290px;
+    position: relative; height: 450px; width: 100%;
+    --w: 330px; --h: 330px;
     --step: 46px; --tilt: 6deg; --fall: .1; --grow: 1;
   }
-  .stage.open { --step: 104px; --tilt: 3deg; --fall: .06; --grow: 1.07; }
+  .stage.open { --step: 92px; --tilt: 3deg; --fall: .06; --grow: 1.07; }
   .ph {
     position: absolute; left: 50%; top: 46%;
     width: var(--w); height: var(--h);
@@ -204,7 +204,7 @@
     nav.top ul { display: none; }
     .hero { grid-template-columns: 1fr; gap: 4px; padding: 8px 0 48px; }
     .hero > div:first-child { order: 2; }
-    .stage { height: 300px; --w: 210px; --h: 210px; --step: 34px; }
+    .stage { height: 330px; --w: 236px; --h: 236px; --step: 34px; }
     .stage.open { --step: 64px; }
     .cards { grid-template-columns: 1fr; }
     section { padding: 48px 0; }
@@ -235,10 +235,10 @@
 
   <header class="hero">
     <div>
-      <p class="eyebrow">Research Associate · NCEAS, UC Santa Barbara</p>
+      <p class="eyebrow">Environmental data scientist · NCEAS, UC Santa Barbara</p>
       <h1>Hi, I'm <em>Carlo</em></h1>
-      <p class="lead">I make maps and data tools about wildfire and the places it touches. My day job is at the <a href="https://www.nceas.ucsb.edu/">National Center for Ecological Analysis and Synthesis</a> (NCEAS), where I help build the <a href="https://wildfireindex.org/">Wildfire Resilience Index</a>: the data pipelines and interactive maps that show where communities are exposed to fire and how well they can cope.</p>
-      <p>I was a Fulbright Scholar in Asunción, Paraguay in 2025–26, and I still work with partners there on fire simulation. Before that I was an Ocean Health Index fellow, and I spent a few years in supply-chain sustainability, starting as an early employee at SupplyShift.</p>
+      <p class="lead">I make maps and data tools to explore the environment. Right now that means wildfire: at the <a href="https://www.nceas.ucsb.edu/">National Center for Ecological Analysis and Synthesis</a> (NCEAS) I help build the <a href="https://wildfireindex.org/">Wildfire Resilience Index</a>, a free tool that measures how well every community and landscape in the U.S. and Canadian West can resist wildfire and recover after it. I build the data pipelines and interactive maps that help communicate wildfire science and show which communities are exposed to fire.</p>
+      <p>I was a Fulbright Scholar in Asunción, Paraguay in 2025–26, and I still work with partners there on wildfire science. Before that I was an Ocean Health Index fellow, and I spent a few years in supply-chain sustainability.</p>
       <div class="links">
         <a href="mailto:carlwilliambroderick@gmail.com">Email</a>
         <a href="https://www.linkedin.com/in/carlo-broderick-55a78352/">LinkedIn</a>
@@ -276,7 +276,7 @@
       <article class="card" style="--c: var(--ember)">
         <p class="tag">NCEAS · 2023–present</p>
         <h3>Wildfire Resilience Index</h3>
-        <p>A look at how well communities in the western U.S. can resist, recover from and adapt to wildfire. I process and analyze the data behind its indicators, from road networks to burn hazard.</p>
+        <p>A free, open-access tool that scores wildfire resilience from 0 to 100 for any community or landscape in the U.S. and Canadian West, across eight domains from infrastructure and communities to water and air. I build the data pipelines and interactive maps behind it.</p>
         <div class="go">
           <a href="https://wildfireindex.org/dashboard">View map →</a>
           <a href="https://wildfireindex.org/">Explore the index →</a>
