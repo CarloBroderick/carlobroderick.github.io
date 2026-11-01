@@ -275,6 +275,11 @@
   .au-hint { color: var(--muted); font-size: .82rem; margin: 10px 0 0; }
   .au-fnote { color: var(--muted); font-size: .84rem; margin: 0 0 16px; padding: 10px 14px; border-left: 3px solid var(--line); background: var(--surface); border-radius: 0 10px 10px 0; max-width: 78ch; }
   .au-none { color: var(--muted); padding: 26px 0; }
+  .au-mhead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin: 0 0 6px; }
+  .au-mhead h3 { margin: 0; }
+  .au-unit button { padding: 5px 13px; font-size: .82rem; }
+  .au-key { flex-wrap: wrap; }
+  .au-axis { font-style: normal; margin-left: auto; }
   @media (max-width: 760px) {
     .au-cards { grid-template-columns: 1fr; }
     .au-filters { gap: 12px; }
@@ -744,7 +749,7 @@
   /* xAI, Google and Cursor's own models (all from the Cursor feed) are grouped as one "other" provider */
   function pk(p) { return p === 'anthropic' || p === 'openai' ? p : 'other'; }
   var KINDS = ['input', 'output', 'cacheRead', 'cacheWrite'];
-  var st = { range: 'all', tool: 'all', prov: 'all', model: 'all' };
+  var st = { range: 'all', tool: 'all', prov: 'all', model: 'all', unit: 'cost' };
 
   function tok(n) {
     if (n >= 1e9) return (n / 1e9).toFixed(n >= 1e10 ? 1 : 2) + 'B';
@@ -857,7 +862,7 @@
       var sel = rows(), t = { anthropic: zero(), openai: zero(), other: zero() }, months = {};
       sel.rows.forEach(function (x) {
         add(t[x.p], x.r);
-        var m = months[x.d.slice(0, 7)] || (months[x.d.slice(0, 7)] = { anthropic: 0, openai: 0, other: 0 }); m[x.p] += x.r.cost;
+        var m = months[x.d.slice(0, 7)] || (months[x.d.slice(0, 7)] = { anthropic: 0, openai: 0, other: 0, ta: 0, to: 0, tx: 0 }); m[x.p] += x.r.cost; m[{ anthropic: 'ta', openai: 'to', other: 'tx' }[x.p]] += sum(x.r);
       });
       var modelOn = st.model !== 'all', mp = modelOn ? st.model.split('|')[0] : '', mname = modelOn ? st.model.slice(st.model.indexOf('|') + 1) : '';
       var shown = modelOn ? [mp] : provs();
@@ -891,18 +896,26 @@
             (ex.tokens ? '<li><span>Not itemised (other Mac mini)</span><span>' + tok(ex.tokens) + '</span></li>' : '') + '</ul></article>';
         });
         html += '</div>';
-        var ms = Object.keys(months).sort().slice(-12).map(function (k) { return { m: k, a: months[k].anthropic, o: months[k].openai, x: months[k].other }; });
-        var max = Math.max.apply(null, ms.map(function (m) { return m.a + m.o + m.x; }).concat(1));
+        var tk = st.unit === 'tokens', fmt = tk ? tok : usd;
+        var ms = Object.keys(months).sort().slice(-12).map(function (k) { var v = months[k];
+          return tk ? { m: k, a: v.ta, o: v.to, x: v.tx } : { m: k, a: v.anthropic, o: v.openai, x: v.other }; });
+        var max = Math.max.apply(null, ms.map(function (m) { return m.a + m.o + m.x; }).concat(tk ? 1 : 0.01));
+        var tallest = ms.reduce(function (b, m) { return !b || m.a + m.o + m.x > b.a + b.o + b.x ? m : b; }, null);
         var keyP = modelOn ? [mp] : provs();
-        html += '<div class="au-months"><h3>Cost by month' + (scope ? ' <span style="font-weight:400;color:var(--muted);font-size:.9rem">· ' + esc(scope) + '</span>' : '') + '</h3><p class="au-key">' +
-          keyP.map(function (p) { return '<span style="--c:' + PROV[p].c + '">' + PROV[p].name + '</span>'; }).join('') + '</p><div class="au-cols' + (ms.length > 8 ? ' dense' : '') + '">' +
+        html += '<div class="au-months"><div class="au-mhead"><h3>' + (tk ? 'Tokens' : 'Cost') + ' by month' + (scope ? ' <span style="font-weight:400;color:var(--muted);font-size:.9rem">· ' + esc(scope) + '</span>' : '') + '</h3>' +
+          '<div class="au-range au-unit" role="group" aria-label="Chart unit"><button type="button" data-u="cost" aria-pressed="' + !tk + '">Cost</button><button type="button" data-u="tokens" aria-pressed="' + tk + '">Tokens</button></div></div>' +
+          '<p class="au-key">' + keyP.map(function (p) { return '<span style="--c:' + PROV[p].c + '">' + PROV[p].name + '</span>'; }).join('') +
+          '<em class="au-axis">Bars: ' + (tk ? 'tokens per month (all kinds, cache included)' : 'US dollars per month at API prices') +
+          (tallest ? ' · tallest ' + fmt(tallest.a + tallest.o + tallest.x) + (tk ? ' tokens' : '') + ' (' + new Date(tallest.m + '-15T12:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) + ')' : '') + '</em></p>' +
+          '<div class="au-cols' + (ms.length > 8 ? ' dense' : '') + '" role="img" aria-label="' + (tk ? 'Tokens' : 'Cost') + ' by month">' +
           ms.map(function (m) {
             var h = (m.a + m.o + m.x) / max * 100, label = new Date(m.m + '-15T12:00:00').toLocaleDateString('en-US', { month: 'short' });
-            var tip = label + ': ' + keyP.map(function (p) { var v = p === 'anthropic' ? m.a : p === 'openai' ? m.o : m.x; return PROV[p].name + ' ' + usd(v); }).join(', ');
-            return '<div class="au-col" title="' + tip + '"><span class="v">' + usd(m.a + m.o + m.x) + '</span>' +
+            var tip = label + ': ' + fmt(m.a + m.o + m.x) + (tk ? ' tokens' : ' at API prices') + ' (' + keyP.map(function (p) { var v = p === 'anthropic' ? m.a : p === 'openai' ? m.o : m.x; return PROV[p].name + ' ' + fmt(v); }).join(', ') + ')';
+            return '<div class="au-col" title="' + esc(tip) + '"><span class="v">' + fmt(m.a + m.o + m.x) + '</span>' +
               '<div class="stack" style="height:' + h.toFixed(1) + '%"><i style="--c:var(--anth);flex:' + m.a + '"></i><i style="--c:var(--oai);flex:' + m.o + '"></i><i style="--c:var(--oth);flex:' + m.x + '"></i></div>' +
               '<span class="m">' + label + '</span></div>';
-          }).join('') + '</div></div>';
+          }).join('') + '</div>' +
+          (modelOn && sel.extra.tokens ? '<p class="au-hint">The chart leaves out the other Mac mini\'s use of this model, which has no monthly detail.</p>' : '') + '</div>';
       }
       /* models table: all time, narrowed by tool and provider; a row can be clicked to filter to that model */
       var merged = {};
@@ -937,8 +950,9 @@
       if (focus) { var el = focus === 'au-model' ? document.getElementById('au-model') : root.querySelector('[data-f="' + focus.split('|')[0] + '"][data-v="' + focus.split('|')[1] + '"]'); if (el) el.focus({ preventScroll: true }); }
     }
     root.addEventListener('click', function (e) {
-      var r = e.target.closest('.au-range button'), c = e.target.closest('.au-chips button'), m = e.target.closest('.au-pick');
-      if (r) { st.range = r.getAttribute('data-r'); render(); }
+      var u = e.target.closest('.au-unit button'), r = e.target.closest('.au-range button'), c = e.target.closest('.au-chips button'), m = e.target.closest('.au-pick');
+      if (u) { st.unit = u.getAttribute('data-u'); render(); }
+      else if (r) { st.range = r.getAttribute('data-r'); render(); }
       else if (c) { st[c.getAttribute('data-f')] = c.getAttribute('data-v'); render(); }
       else if (m) { st.model = m.getAttribute('data-m'); var pv = st.model.split('|')[0]; if (st.prov !== 'all' && st.prov !== pv) st.prov = pv; render(); }
     });
