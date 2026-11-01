@@ -261,8 +261,26 @@
   .au-models td:first-child::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 9px; background: var(--c); }
   .au-note { color: var(--muted); font-size: .84rem; margin: 18px 0 0; max-width: 78ch; }
   .au-empty { color: var(--muted); }
+  .au-filters { display: flex; flex-wrap: wrap; gap: 14px 26px; margin: 0 0 22px; }
+  .au-f { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .au-f > span { font-size: .74rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .au-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .au-chips button { border: 1px solid var(--line); background: var(--surface); font: inherit; font-size: .88rem; font-weight: 600; color: var(--muted); padding: 7px 14px; border-radius: 999px; cursor: pointer; }
+  .au-chips button:hover { color: var(--ink); }
+  .au-chips button[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+  .au-f select { font: inherit; font-size: .9rem; min-height: 38px; padding: 7px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); max-width: 100%; }
+  .au-chips button:focus-visible, .au-f select:focus-visible, .au-pick:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .au-pick { border: 0; background: none; padding: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; }
+  .au-models tr.on td { font-weight: 600; }
+  .au-hint { color: var(--muted); font-size: .82rem; margin: 10px 0 0; }
+  .au-fnote { color: var(--muted); font-size: .84rem; margin: 0 0 16px; padding: 10px 14px; border-left: 3px solid var(--line); background: var(--surface); border-radius: 0 10px 10px 0; max-width: 78ch; }
+  .au-none { color: var(--muted); padding: 26px 0; }
   @media (max-width: 760px) {
     .au-cards { grid-template-columns: 1fr; }
+    .au-filters { gap: 12px; }
+    .au-f { width: 100%; }
+    .au-chips button { padding: 7px 12px; }
+    .au-f select { width: 100%; }
     .au-card, .au-months { padding: 20px; }
     .au-cols { height: 160px; gap: 6px; }
     .au-cols.dense .v { display: none; }   /* 12 months leave no room for the dollar labels on a phone; the tap/hover title keeps them */
@@ -713,16 +731,20 @@
   // close on the × or a click anywhere outside the photo
   dlg.addEventListener('click', function (e) { if (e.target !== dlg.querySelector('img')) dlg.close(); });
 })();
-/* ---------- AI usage: sums the per-machine feeds in data/ (each machine pushes its own file daily) ---------- */
+/* ---------- AI usage: sums the per-machine feeds in data/ (each machine pushes its own file daily).
+   Read-only: it fetches the three public JSON files and filters them in the page. Filters: tool (my agents / Cursor), provider,
+   and model. With no filter the numbers are exactly the provider-level day totals; a model filter reads each feed's `modelDays`
+   (per day per model) and, for a feed that doesn't publish that yet, falls back to its all-time per-model totals. ---------- */
 (function () {
   var FEEDS = ['rocket', 'this-is-us', 'cursor'];
   var root = document.getElementById('au');
   var PROV = { anthropic: { name: 'Anthropic', sub: 'Claude', c: 'var(--anth)' }, openai: { name: 'OpenAI', sub: 'GPT', c: 'var(--oai)' },
     other: { name: 'Other', sub: 'Grok · Gemini · Composer', c: 'var(--oth)' } };
+  var TOOLS = { agents: 'Agents', cursor: 'Cursor' };
   /* xAI, Google and Cursor's own models (all from the Cursor feed) are grouped as one "other" provider */
   function pk(p) { return p === 'anthropic' || p === 'openai' ? p : 'other'; }
   var KINDS = ['input', 'output', 'cacheRead', 'cacheWrite'];
-  var range = 'all';
+  var st = { range: 'all', tool: 'all', prov: 'all', model: 'all' };
 
   function tok(n) {
     if (n >= 1e9) return (n / 1e9).toFixed(n >= 1e10 ? 1 : 2) + 'B';
@@ -735,22 +757,36 @@
   function zero() { return { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0 }; }
   function add(a, b) { KINDS.concat('cost').forEach(function (k) { a[k] += +b[k] || 0; }); }
   function sum(r) { return r.input + r.output + r.cacheRead + r.cacheWrite; }
+  function toolOf(f) { return f.machine === 'cursor' ? 'cursor' : 'agents'; }
 
   Promise.all(FEEDS.map(function (f) {
     return fetch('data/usage-' + f + '.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   })).then(function (feeds) {
     feeds = feeds.filter(function (f) { return f && f.days; });
     if (!feeds.length) { root.textContent = 'Usage numbers are not available right now.'; return; }
-    var days = {}, models = {}, updated = '', checked = '', last = '';
+    var D = { agents: {}, cursor: {} },      /* D[tool][day][provider] = totals */
+        MD = { agents: {}, cursor: {} },     /* MD[tool]["provider|model"][day] = totals (feeds that publish modelDays) */
+        MT = { agents: {}, cursor: {} },     /* MT[tool]["provider|model"] = all-time {tokens, cost} from every feed */
+        MC = { agents: {}, cursor: {} },     /* MC[tool]["provider|model"] = all-time totals from feeds WITHOUT modelDays */
+        coarse = [], updated = '', checked = '', last = '';
     feeds.forEach(function (f) {
+      var tool = toolOf(f), fine = !!f.modelDays;
+      if (!fine) coarse.push({ tool: tool, label: f.label || f.machine });
       Object.keys(f.days).forEach(function (d) {
-        var row = days[d] || (days[d] = { anthropic: zero(), openai: zero(), other: zero() });
-        Object.keys(f.days[d]).forEach(function (p) { add(row[pk(p)], f.days[d][p]); });
+        var row = D[tool][d] || (D[tool][d] = {});
+        Object.keys(f.days[d]).forEach(function (p) { add(row[pk(p)] || (row[pk(p)] = zero()), f.days[d][p]); });
         if (d > last) last = d;
       });
+      if (fine) Object.keys(f.modelDays).forEach(function (d) {
+        Object.keys(f.modelDays[d]).forEach(function (k) {
+          var i = k.indexOf('|'), key = pk(k.slice(0, i)) + '|' + k.slice(i + 1), v = f.modelDays[d][k], m = MD[tool][key] || (MD[tool][key] = {});
+          add(m[d] || (m[d] = zero()), { input: v[0], output: v[1], cacheRead: v[2], cacheWrite: v[3], cost: v[4] });
+        });
+      });
       (f.models || []).forEach(function (m) {
-        var k = pk(m.provider) + '|' + m.name, t = models[k] || (models[k] = { provider: pk(m.provider), name: m.name, tokens: 0, cost: 0 });
+        var key = pk(m.provider) + '|' + m.name, t = MT[tool][key] || (MT[tool][key] = { provider: pk(m.provider), name: m.name, tokens: 0, cost: 0 });
         t.tokens += m.tokens; t.cost += m.cost;
+        if (!fine) { var c = MC[tool][key] || (MC[tool][key] = { tokens: 0, cost: 0 }); c.tokens += m.tokens; c.cost += m.cost; }
       });
       if (f.updated > updated) updated = f.updated;
       var pc = f.pricesChecked && f.pricesChecked.anthropic;
@@ -758,74 +794,155 @@
     });
     var cursor = feeds.filter(function (f) { return f.machine === 'cursor'; })[0];
     var machines = feeds.filter(function (f) { return f !== cursor; });
-    var hasOther = Object.keys(days).some(function (d) { return sum(days[d].other) > 0; });
+    var hasCursor = !!cursor, hasOther = false;
+    Object.keys(D).forEach(function (t) { Object.keys(D[t]).forEach(function (d) { if (D[t][d].other && sum(D[t][d].other) > 0) hasOther = true; }); });
     var PS = hasOther ? ['anthropic', 'openai', 'other'] : ['anthropic', 'openai'];
-    var dayList = Object.keys(days).sort();
-    var first = dayList[0];
+    var allDays = {};
+    Object.keys(D).forEach(function (t) { Object.keys(D[t]).forEach(function (d) { allDays[d] = 1; }); });
+    var first = Object.keys(allDays).sort()[0];
+    var cut = '';
+    function setCut() { if (st.range === '30') { var d = new Date(last + 'T12:00:00'); d.setDate(d.getDate() - 29); cut = d.toISOString().slice(0, 10); } else cut = ''; }
 
-    function totals() {
-      var cut = '';
-      if (range === '30') { var d = new Date(last + 'T12:00:00'); d.setDate(d.getDate() - 29); cut = d.toISOString().slice(0, 10); }
-      var t = { anthropic: zero(), openai: zero(), other: zero() };
-      dayList.forEach(function (d) { if (d >= cut) PS.forEach(function (p) { add(t[p], days[d][p]); }); });
-      return t;
+    function tools() { return st.tool === 'all' ? ['agents', 'cursor'] : [st.tool]; }
+    function provs() { return st.prov === 'all' ? PS : [st.prov]; }
+    function mOK(key) { var p = key.split('|')[0]; return st.prov === 'all' || p === st.prov; }
+    function modelOptions() {
+      var seen = {}, out = [];
+      tools().forEach(function (t) { Object.keys(MD[t]).forEach(function (k) {
+        if (!mOK(k) || seen[k]) return; seen[k] = 1;
+        var all = 0; tools().forEach(function (tt) { if (MT[tt][k]) all += MT[tt][k].cost; });
+        out.push({ key: k, p: k.split('|')[0], name: k.slice(k.indexOf('|') + 1), cost: all });
+      }); });
+      out.sort(function (a, b) { return PS.indexOf(a.p) - PS.indexOf(b.p) || b.cost - a.cost; });
+      return out;
     }
-    function months() {
-      var out = {};
-      dayList.forEach(function (d) {
-        var m = out[d.slice(0, 7)] || (out[d.slice(0, 7)] = { anthropic: 0, openai: 0, other: 0 });
-        m.anthropic += days[d].anthropic.cost; m.openai += days[d].openai.cost; m.other += days[d].other.cost;
+    /* the rows the current filters select: [{day, p, r}] and, for a model filter, all-time totals the feeds without daily model data add */
+    function rows() {
+      var out = [], extra = { tokens: 0, cost: 0 };
+      tools().forEach(function (t) {
+        if (st.model === 'all') {
+          Object.keys(D[t]).forEach(function (d) { if (d >= cut) provs().forEach(function (p) { if (D[t][d][p]) out.push({ d: d, p: p, r: D[t][d][p] }); }); });
+        } else {
+          var m = MD[t][st.model], p = st.model.split('|')[0];
+          if (m) Object.keys(m).forEach(function (d) { if (d >= cut) out.push({ d: d, p: p, r: m[d] }); });
+          var c = MC[t][st.model]; if (c && st.range === 'all') { extra.tokens += c.tokens; extra.cost += c.cost; }
+        }
       });
-      return Object.keys(out).sort().slice(-12).map(function (k) { return { m: k, a: out[k].anthropic, o: out[k].openai, x: out[k].other }; });
+      return { rows: out, extra: extra };
     }
     function fmtDay(d) { return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
+    function chips(label, key, opts) {
+      return '<div class="au-f"><span>' + label + '</span><div class="au-chips" role="group" aria-label="' + label + '">' + opts.map(function (o) {
+        return '<button type="button" data-f="' + key + '" data-v="' + o[0] + '" aria-pressed="' + (st[key] === o[0]) + '">' + esc(o[1]) + '</button>';
+      }).join('') + '</div></div>';
+    }
+    function filterBar() {
+      var provOpts = [['all', 'All']].concat(PS.map(function (p) { return [p, PROV[p].name]; }));
+      var toolOpts = hasCursor ? [['all', 'All'], ['agents', TOOLS.agents], ['cursor', TOOLS.cursor]] : null;
+      var mo = modelOptions(), group = '', sel = '<option value="all">All models</option>';
+      mo.forEach(function (o) {
+        if (o.p !== group) { if (group) sel += '</optgroup>'; group = o.p; sel += '<optgroup label="' + esc(PROV[o.p].name) + '">'; }
+        sel += '<option value="' + esc(o.key) + '"' + (st.model === o.key ? ' selected' : '') + '>' + esc(o.name) + '</option>';
+      });
+      if (group) sel += '</optgroup>';
+      return '<div class="au-filters">' + (toolOpts ? chips('Tool', 'tool', toolOpts) : '') + chips('Provider', 'prov', provOpts) +
+        '<div class="au-f"><span><label for="au-model">Model</label></span><select id="au-model">' + sel + '</select></div></div>';
+    }
+    function fixModel() {
+      if (st.model !== 'all' && !modelOptions().some(function (o) { return o.key === st.model; })) st.model = 'all';
+    }
 
     function render() {
-      var t = totals(), all = sum(t.anthropic) + sum(t.openai) + sum(t.other), cost = t.anthropic.cost + t.openai.cost + t.other.cost;
-      var html = '<div class="au-bar"><div class="au-range" role="group" aria-label="Time range">' +
-        '<button type="button" data-r="30" aria-pressed="' + (range === '30') + '">Last 30 days</button>' +
-        '<button type="button" data-r="all" aria-pressed="' + (range === 'all') + '">All time</button></div>' +
-        '<p class="au-total"><b>' + tok(all) + '</b> tokens · <b>' + usd(cost) + '</b> at API prices' +
-        (range === 'all' ? ' since ' + fmtDay(first) : '') + '</p></div><div class="au-cards' + (PS.length > 2 ? ' n3' : '') + '">';
-      PS.forEach(function (p) {
-        var r = t[p], P = PROV[p];
-        html += '<article class="au-card" style="--c:' + P.c + '"><p class="tag">' + P.name + ' · ' + P.sub + '</p>' +
-          '<p class="au-big">' + tok(sum(r)) + '<small>tokens</small></p>' +
-          '<p class="au-cost"><b>' + usd(r.cost) + '</b> at API prices</p><ul class="au-split">' +
-          '<li><span>Read from cache</span><span>' + tok(r.cacheRead) + '</span></li>' +
-          '<li><span>Written to cache</span><span>' + tok(r.cacheWrite) + '</span></li>' +
-          '<li><span>New input</span><span>' + tok(r.input) + '</span></li>' +
-          '<li><span>Output</span><span>' + tok(r.output) + '</span></li></ul></article>';
+      fixModel(); setCut();
+      var sel = rows(), t = { anthropic: zero(), openai: zero(), other: zero() }, months = {};
+      sel.rows.forEach(function (x) {
+        add(t[x.p], x.r);
+        var m = months[x.d.slice(0, 7)] || (months[x.d.slice(0, 7)] = { anthropic: 0, openai: 0, other: 0 }); m[x.p] += x.r.cost;
       });
-      html += '</div>';
-      var ms = months(), max = Math.max.apply(null, ms.map(function (m) { return m.a + m.o + m.x; }).concat(1));
-      html += '<div class="au-months"><h3>Cost by month</h3><p class="au-key"><span style="--c:var(--anth)">Anthropic</span><span style="--c:var(--oai)">OpenAI</span>' +
-        (hasOther ? '<span style="--c:var(--oth)">Other</span>' : '') + '</p><div class="au-cols' + (ms.length > 8 ? ' dense' : '') + '">' +
-        ms.map(function (m) {
-          var h = (m.a + m.o + m.x) / max * 100, label = new Date(m.m + '-15T12:00:00').toLocaleDateString('en-US', { month: 'short' });
-          return '<div class="au-col" title="' + label + ': Anthropic ' + usd(m.a) + ', OpenAI ' + usd(m.o) + (hasOther ? ', other ' + usd(m.x) : '') + '"><span class="v">' + usd(m.a + m.o + m.x) + '</span>' +
-            '<div class="stack" style="height:' + h.toFixed(1) + '%"><i style="--c:var(--anth);flex:' + m.a + '"></i><i style="--c:var(--oai);flex:' + m.o + '"></i><i style="--c:var(--oth);flex:' + m.x + '"></i></div>' +
-            '<span class="m">' + label + '</span></div>';
-        }).join('') + '</div></div>';
-      var top = Object.keys(models).map(function (k) { return models[k]; }).sort(function (a, b) { return b.cost - a.cost; }).slice(0, 8);
-      html += '<div class="au-models"><h3>Top models, all time</h3><table><thead><tr><th>Model</th><th>Tokens</th><th>API price</th></tr></thead><tbody>' +
-        top.map(function (m) { return '<tr><td style="--c:' + PROV[m.provider].c + '">' + esc(m.name) + '</td><td>' + tok(m.tokens) + '</td><td>' + usd(m.cost) + '</td></tr>'; }).join('') +
-        '</tbody></table></div>';
+      var modelOn = st.model !== 'all', mp = modelOn ? st.model.split('|')[0] : '', mname = modelOn ? st.model.slice(st.model.indexOf('|') + 1) : '';
+      var shown = modelOn ? [mp] : provs();
+      var all = 0, cost = 0; shown.forEach(function (p) { all += sum(t[p]); cost += t[p].cost; });
+      all += sel.extra.tokens; cost += sel.extra.cost;
+      var scope = [st.tool === 'all' ? '' : TOOLS[st.tool], st.prov === 'all' || modelOn ? '' : PROV[st.prov].name, modelOn ? mname : ''].filter(Boolean).join(' · ');
+      var html = '<div class="au-bar"><div class="au-range" role="group" aria-label="Time range">' +
+        '<button type="button" data-r="30" aria-pressed="' + (st.range === '30') + '">Last 30 days</button>' +
+        '<button type="button" data-r="all" aria-pressed="' + (st.range === 'all') + '">All time</button></div>' +
+        '<p class="au-total">' + (scope ? esc(scope) + ': ' : '') + '<b>' + tok(all) + '</b> tokens · <b>' + usd(cost) + '</b> at API prices' +
+        (st.range === 'all' && st.tool !== 'cursor' ? ' since ' + fmtDay(first) : '') + '</p></div>' + filterBar();
+      /* feeds that can't split days by model, when a model is picked */
+      var cf = modelOn ? coarse.filter(function (c) { return tools().indexOf(c.tool) >= 0; }) : [];
+      if (cf.length) {
+        html += '<p class="au-fnote">The ' + esc(cf.map(function (c) { return c.label; }).join(' and ')) + ' feed doesn\'t split days by model yet. ' +
+          (st.range === 'all' ? 'Its all-time total for this model is in the totals above, but not in the cache split or the monthly chart.' : 'It is left out of this 30-day model view.') + '</p>';
+      }
+      if (!all) {
+        html += '<p class="au-none">No usage matches these filters in this period.</p>';
+      } else {
+        html += '<div class="au-cards' + (shown.length > 2 ? ' n3' : '') + '">';
+        shown.forEach(function (p) {
+          var r = t[p], P = PROV[p], ex = modelOn ? sel.extra : { tokens: 0, cost: 0 };
+          html += '<article class="au-card" style="--c:' + P.c + '"><p class="tag">' + (modelOn ? esc(mname) + ' · ' + P.name : P.name + ' · ' + P.sub) + '</p>' +
+            '<p class="au-big">' + tok(sum(r) + ex.tokens) + '<small>tokens</small></p>' +
+            '<p class="au-cost"><b>' + usd(r.cost + ex.cost) + '</b> at API prices</p><ul class="au-split">' +
+            '<li><span>Read from cache</span><span>' + tok(r.cacheRead) + '</span></li>' +
+            '<li><span>Written to cache</span><span>' + tok(r.cacheWrite) + '</span></li>' +
+            '<li><span>New input</span><span>' + tok(r.input) + '</span></li>' +
+            '<li><span>Output</span><span>' + tok(r.output) + '</span></li>' +
+            (ex.tokens ? '<li><span>Not itemised (other Mac mini)</span><span>' + tok(ex.tokens) + '</span></li>' : '') + '</ul></article>';
+        });
+        html += '</div>';
+        var ms = Object.keys(months).sort().slice(-12).map(function (k) { return { m: k, a: months[k].anthropic, o: months[k].openai, x: months[k].other }; });
+        var max = Math.max.apply(null, ms.map(function (m) { return m.a + m.o + m.x; }).concat(1));
+        var keyP = modelOn ? [mp] : provs();
+        html += '<div class="au-months"><h3>Cost by month' + (scope ? ' <span style="font-weight:400;color:var(--muted);font-size:.9rem">· ' + esc(scope) + '</span>' : '') + '</h3><p class="au-key">' +
+          keyP.map(function (p) { return '<span style="--c:' + PROV[p].c + '">' + PROV[p].name + '</span>'; }).join('') + '</p><div class="au-cols' + (ms.length > 8 ? ' dense' : '') + '">' +
+          ms.map(function (m) {
+            var h = (m.a + m.o + m.x) / max * 100, label = new Date(m.m + '-15T12:00:00').toLocaleDateString('en-US', { month: 'short' });
+            var tip = label + ': ' + keyP.map(function (p) { var v = p === 'anthropic' ? m.a : p === 'openai' ? m.o : m.x; return PROV[p].name + ' ' + usd(v); }).join(', ');
+            return '<div class="au-col" title="' + tip + '"><span class="v">' + usd(m.a + m.o + m.x) + '</span>' +
+              '<div class="stack" style="height:' + h.toFixed(1) + '%"><i style="--c:var(--anth);flex:' + m.a + '"></i><i style="--c:var(--oai);flex:' + m.o + '"></i><i style="--c:var(--oth);flex:' + m.x + '"></i></div>' +
+              '<span class="m">' + label + '</span></div>';
+          }).join('') + '</div></div>';
+      }
+      /* models table: all time, narrowed by tool and provider; a row can be clicked to filter to that model */
+      var merged = {};
+      tools().forEach(function (tl) { Object.keys(MT[tl]).forEach(function (k) {
+        if (!mOK(k)) return;
+        var m = merged[k] || (merged[k] = { key: k, provider: MT[tl][k].provider, name: MT[tl][k].name, tokens: 0, cost: 0 });
+        m.tokens += MT[tl][k].tokens; m.cost += MT[tl][k].cost;
+      }); });
+      var list = Object.keys(merged).map(function (k) { return merged[k]; }).sort(function (a, b) { return b.cost - a.cost; });
+      var top = list.slice(0, 8);
+      if (modelOn && merged[st.model] && top.indexOf(merged[st.model]) < 0) top.push(merged[st.model]);
+      html += '<div class="au-models"><h3>Top models, all time' + (st.tool !== 'all' || st.prov !== 'all' ? ' <span style="font-weight:400;color:var(--muted);font-size:.9rem">· ' + esc([st.tool === 'all' ? '' : TOOLS[st.tool], st.prov === 'all' ? '' : PROV[st.prov].name].filter(Boolean).join(' · ')) + '</span>' : '') +
+        '</h3><table><thead><tr><th>Model</th><th>Tokens</th><th>API price</th></tr></thead><tbody>' +
+        top.map(function (m) {
+          var fine = !!MD.agents[m.key] || !!MD.cursor[m.key];
+          return '<tr' + (st.model === m.key ? ' class="on"' : '') + '><td style="--c:' + PROV[m.provider].c + '">' +
+            (fine ? '<button type="button" class="au-pick" data-m="' + esc(m.key) + '" title="Show only this model">' + esc(m.name) + '</button>' : esc(m.name)) +
+            '</td><td>' + tok(m.tokens) + '</td><td>' + usd(m.cost) + '</td></tr>';
+        }).join('') + '</tbody></table><p class="au-hint">Tap a model name to see just that model above.</p></div>';
       html += '<p class="au-note">Counted from the logs of my AI assistants and Claude Code on my ' +
         esc(machines.map(function (f) { return f.label || f.machine; }).join(' and ')) +
         (cursor ? ', plus my Cursor usage export (' + fmtDay(cursor.since) + ' to ' + fmtDay(cursor.through) + ')' : '') +
-        '. Most tokens are earlier conversation re-read from cache on every turn, which costs a tenth of the normal input price or less. ' +
+        '. "Agents" means the first group; "Cursor" is the export. A provider\'s numbers include its models used inside Cursor. Most tokens are earlier conversation re-read from cache on every turn, which costs a tenth of the normal input price or less. ' +
         (feeds.every(function (f) { return f.pricing === 'dated'; })
           ? 'Each day is priced at the providers\' list price in effect that day' + (checked ? ' (prices checked ' + fmtDay(checked) + ')' : '')
           : 'Costs use the providers\' list prices' + (checked ? ' (checked ' + fmtDay(checked) + ')' : '')) +
         (hasOther ? '; Grok, Gemini and Cursor\'s own Composer models use xAI\'s, Google\'s and Cursor\'s published prices' : '') +
         '. Updated ' + new Date(updated).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '.</p>';
+      var focus = document.activeElement && document.activeElement.closest && root.contains(document.activeElement) ? (document.activeElement.id || document.activeElement.getAttribute('data-f') + '|' + document.activeElement.getAttribute('data-v') || '') : '';
       root.className = '';
       root.innerHTML = html;
-      root.querySelectorAll('.au-range button').forEach(function (b) {
-        b.addEventListener('click', function () { range = b.getAttribute('data-r'); render(); });
-      });
+      if (focus) { var el = focus === 'au-model' ? document.getElementById('au-model') : root.querySelector('[data-f="' + focus.split('|')[0] + '"][data-v="' + focus.split('|')[1] + '"]'); if (el) el.focus({ preventScroll: true }); }
     }
+    root.addEventListener('click', function (e) {
+      var r = e.target.closest('.au-range button'), c = e.target.closest('.au-chips button'), m = e.target.closest('.au-pick');
+      if (r) { st.range = r.getAttribute('data-r'); render(); }
+      else if (c) { st[c.getAttribute('data-f')] = c.getAttribute('data-v'); render(); }
+      else if (m) { st.model = m.getAttribute('data-m'); var pv = st.model.split('|')[0]; if (st.prov !== 'all' && st.prov !== pv) st.prov = pv; render(); }
+    });
+    root.addEventListener('change', function (e) { if (e.target.id === 'au-model') { st.model = e.target.value; render(); } });
     render();
   });
 })();
