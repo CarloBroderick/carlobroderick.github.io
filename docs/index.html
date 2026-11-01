@@ -184,6 +184,14 @@
   .fun li { display: flex; gap: 12px; padding: 9px 0; }
   .fun li::before { content: "✦"; color: var(--accent); flex: none; }
 
+  /* "New father" opens the photo big over a dimmed page */
+  .peek { border: 0; padding: 0; background: transparent; max-width: min(92vw, 760px); max-height: 90vh; overflow: visible; }
+  .peek::backdrop { background: rgba(28, 25, 21, .72); backdrop-filter: blur(3px); }
+  .peek img { display: block; max-width: 100%; max-height: 86vh; border: 8px solid var(--surface); border-radius: 26px; box-shadow: var(--shadow-lg); }
+  .peek[open] img { animation: peek-in .35s cubic-bezier(.2, .8, .2, 1); }
+  @keyframes peek-in { from { transform: scale(.85) rotate(-3deg); opacity: 0; } }
+  .peek button { position: absolute; top: -14px; right: -14px; width: 38px; height: 38px; border-radius: 50%; border: 0; background: var(--surface); color: var(--ink); font-size: 1.3rem; line-height: 1; cursor: pointer; box-shadow: var(--shadow-sm); }
+
   footer { border-top: 1px solid var(--line); padding: 34px 0 56px; color: var(--muted); font-size: .9rem; }
   footer a { color: var(--muted); }
 
@@ -270,8 +278,8 @@
         <h3>Wildfire Resilience Index</h3>
         <p>A look at how well communities in the western U.S. can resist, recover from and adapt to wildfire. I process and analyze the data behind its indicators, from road networks to burn hazard.</p>
         <div class="go">
-          <a href="https://wildfireindex.org/dashboard">Open the map →</a>
-          <a href="https://wildfireindex.org/">See the index →</a>
+          <a href="https://wildfireindex.org/dashboard">View map →</a>
+          <a href="https://wildfireindex.org/">Explore the index →</a>
         </div>
       </article>
 
@@ -281,7 +289,7 @@
         <p>How many roads lead out of 30,728 small U.S. communities, set against how likely the land around them is to burn. Built from OpenStreetMap road networks and national burn-probability data.</p>
         <p class="paper">Paper: Fong, Broderick, Moritz &amp; Halpern, <em>Egress thresholds and wildfire fatalities</em>, PNAS (2026).</p>
         <div class="go">
-          <a href="https://wri-science.github.io/public_publication/publication_htmls/road_networks/us_bivariate_map.html">Open the map →</a>
+          <a href="https://wri-science.github.io/public_publication/publication_htmls/road_networks/us_bivariate_map.html">View map →</a>
           <a href="https://doi.org/10.1073/pnas.2535081123">Read the paper →</a>
         </div>
       </article>
@@ -292,7 +300,7 @@
         <p>Burn hazard for 56,106 places on the National Register of Historic Places. I helped make the map. I did not write the paper.</p>
         <p class="paper">Paper: Farnisa, Halpern &amp; Fong, <em>Scientific Reports</em> (2026).</p>
         <div class="go">
-          <a href="https://wri-science.github.io/public_publication/publication_htmls/fsim_nps_places/us_interactive_map.html">Open the map →</a>
+          <a href="https://wri-science.github.io/public_publication/publication_htmls/fsim_nps_places/us_interactive_map.html">View map →</a>
           <a href="https://doi.org/10.1038/s41598-026-52407-9">Read the paper →</a>
         </div>
       </article>
@@ -334,8 +342,8 @@
       </div>
       <ul class="sr-list" id="sr-list">
         <!-- data-segs: lane:start:end, one per straight run of the bar; "now" means today -->
-        <li class="tile" tabindex="0" data-k="ra" data-segs="0:2025:now" style="--c: var(--ember)">
-          <div class="head"><span class="role">Research Associate</span><span class="when">2025 – present</span></div>
+        <li class="tile" tabindex="0" data-k="ra" data-segs="0:2024.85:now" style="--c: var(--ember)">
+          <div class="head"><span class="role">Research Associate</span><span class="when">2024 – present</span></div>
           <p class="org"><a href="https://www.nceas.ucsb.edu/">National Center for Ecological Analysis and Synthesis</a> · UC Santa Barbara</p>
           <div class="details"><div>
             <p class="where">Santa Barbara, California</p>
@@ -350,7 +358,7 @@
             <p class="body"><a href="https://us.fulbrightonline.org/about/types-of-awards/study-research">Open Study/Research Award</a>, Fulbright U.S. Student Program. Studied wildfire, wildfire land use and geography. I still work with <a href="https://hendata.lat/">Hendata</a>, the company I worked with there.</p>
           </div></div>
         </li>
-        <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2024.15:2024.7 1:2024.7:2025.15" style="--c: var(--ochre)">
+        <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2024:2024.56 1:2024.56:2025" style="--c: var(--ochre)">
           <div class="head"><span class="role">Ocean Health Index Fellow</span><span class="when">2024</span></div>
           <p class="org"><a href="https://oceanhealthindex.org/">Ocean Health Index</a> · <a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a></p>
           <div class="details"><div>
@@ -358,7 +366,7 @@
             <p class="body">Data preparation, processing and score calculation for the annual global assessment.</p>
           </div></div>
         </li>
-        <li class="tile" tabindex="0" data-k="pc" data-segs="0:2019.25:2024" style="--c: var(--plum)">
+        <li class="tile" tabindex="0" data-k="pc" data-segs="0:2019.2:2024" style="--c: var(--plum)">
           <div class="head"><span class="role">Program Coordinator</span><span class="when">2019 – 2023</span></div>
           <p class="org"><a href="https://www.ucsb.edu/">UC Santa Barbara</a> · Chemical Engineering Department · Mellichamp Sustainability Initiative</p>
           <div class="details"><div>
@@ -408,9 +416,8 @@
       <div class="panel">
         <h2>Off the clock</h2>
         <ul class="fun">
-          <li>New father</li>
-          <li>Animal-shelter volunteer with Dog TLC</li>
-          <li><span><a href="https://www.sbcc.edu/">Permaculture Design Certificate</a>, Santa Barbara City College</span></li>
+          <li><a href="photos/04.jpg" id="father-link">New father</a></li>
+          <li><span>Permaculture Design Certificate, <a href="https://www.sbcc.edu/">Santa Barbara City College</a></span></li>
           <li><a href="https://avalanche.org/">AIARE 1 avalanche certified</a></li>
           <li><a href="https://magic.wizards.com/">Magic: The Gathering</a></li>
           <li>Still perfecting the slow-cooked bean</li>
@@ -529,7 +536,6 @@
     var axisX = small.matches ? 38 : 54;
     var laneX = function (lane) { return axisX + 20 + lane * (small.matches ? 18 : 24); };
     var y = function (t) { return (TODAY - t) / (TODAY - START) * H; };
-    var inset = 7;      // keeps rounded ends of touching bars apart
     var swoosh = Math.min(22, H / (TODAY - START) * .45);   // half-height of a lane change
 
     svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
@@ -545,28 +551,46 @@
     addTick('Today', 0, true);
     svg.appendChild(el('line', { x1: axisX, x2: axisX, y1: 0, y2: H, 'class': 'axis' }));
 
-    tiles.forEach(function (tile) {
+    // Bar ends. Where one role ends and the next starts in the same lane, both ends
+    // are pulled back so every same-lane gap is exactly one lane-width (like the
+    // gap between side-by-side bars); a lone end just stops at its date.
+    var gap = laneX(1) - laneX(0), cap = 5;
+    var bars = tiles.map(function (tile) {
       var segs = tile.getAttribute('data-segs').split(' ').map(function (s) {
         var p = s.split(':');
         return { lane: +p[0], s: +p[1], e: p[2] === 'now' ? TODAY : +p[2] };
       });
       var first = segs[0], last = segs[segs.length - 1];
-      var ins = segs.length > 1 ? 2 : inset;  // curved bars need every pixel for the swoosh
-      var d = 'M ' + laneX(first.lane) + ' ' + (y(first.s) - ins);
+      return { tile: tile, segs: segs, y0: y(first.s) - cap, y1: y(last.e) + cap };
+    });
+    bars.forEach(function (lo) {
+      var last = lo.segs[lo.segs.length - 1];
+      bars.forEach(function (hi) {
+        var first = hi.segs[0];
+        if (hi === lo || first.lane !== last.lane || first.s < last.e - .01 || first.s - last.e > .5) return;
+        var mid = (y(last.e) + y(first.s)) / 2;
+        lo.y1 = mid + gap / 2; hi.y0 = mid - gap / 2;
+      });
+    });
+
+    bars.forEach(function (bar) {
+      var segs = bar.segs, first = segs[0], last = segs[segs.length - 1];
+      var d = 'M ' + laneX(first.lane) + ' ' + bar.y0;
       for (var i = 1; i < segs.length; i++) {
         var a = laneX(segs[i - 1].lane), b = laneX(segs[i].lane), yb = y(segs[i].s);
         if (a === b) continue;
-        var below = (i === 1 ? y(segs[0].s) - ins : y(segs[i - 1].s)) - yb;
-        var above = yb - (i === segs.length - 1 ? y(segs[i].e) + ins : y(segs[i].e));
+        var below = (i === 1 ? bar.y0 : y(segs[i - 1].s)) - yb;
+        var above = yb - (i === segs.length - 1 ? bar.y1 : y(segs[i].e));
         var sw = Math.max(4, Math.min(swoosh, below, above));
         // smooth S-curve from the old lane into the new one, centred on the hand-off year
         d += ' L ' + a + ' ' + (yb + sw) +
              ' C ' + a + ' ' + yb + ' ' + b + ' ' + yb + ' ' + b + ' ' + (yb - sw);
       }
-      d += ' L ' + laneX(last.lane) + ' ' + (y(last.e) + ins);
-      var color = getComputedStyle(tile).getPropertyValue('--c').trim();
-      svg.appendChild(el('path', { d: d, stroke: color, 'class': 'bar', 'data-k': tile.getAttribute('data-k') }));
+      d += ' L ' + laneX(last.lane) + ' ' + bar.y1;
+      var color = getComputedStyle(bar.tile).getPropertyValue('--c').trim();
+      svg.appendChild(el('path', { d: d, stroke: color, 'class': 'bar', 'data-k': bar.tile.getAttribute('data-k') }));
     });
+    chart.setAttribute('data-ppy', (H / (TODAY - START)).toFixed(2));
   }
 
   function addTick(label, pct, now) {
@@ -611,6 +635,22 @@
   window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(draw, 120); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
   draw();
+})();
+</script>
+<dialog class="peek" id="father" aria-label="Photo of Carlo">
+  <img src="photos/04.jpg" alt="Carlo, new father">
+  <button type="button" aria-label="Close">×</button>
+</dialog>
+<script>
+(function () {
+  var dlg = document.getElementById('father');
+  document.getElementById('father-link').addEventListener('click', function (e) {
+    if (!dlg.showModal) return;   // very old browsers just follow the link to the photo
+    e.preventDefault();
+    dlg.showModal();
+  });
+  // close on the × or a click anywhere outside the photo
+  dlg.addEventListener('click', function (e) { if (e.target !== dlg.querySelector('img')) dlg.close(); });
 })();
 </script>
 </body>
