@@ -138,15 +138,15 @@
   .chart { position: relative; height: 560px; }
   .chart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
   .chart .tick {
-    position: absolute; left: 0; width: 44px; text-align: right; transform: translateY(-50%);
-    font-size: .74rem; color: var(--faint); font-variant-numeric: tabular-nums; line-height: 1;
+    position: absolute; left: 0; width: 46px; text-align: right; transform: translateY(-50%);
+    font-size: .86rem; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1;
   }
-  .chart .tick.now { color: var(--ink); font-weight: 600; }
+  .chart .tick.now { color: var(--ink); font-weight: 700; }
   .chart .gridline { stroke: var(--line); stroke-width: 1; }
   .chart .axis { stroke: var(--faint); stroke-width: 1; }
   .chart .bar { fill: none; stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; transition: stroke-width .25s ease, opacity .25s ease; cursor: pointer; }
   .chart .bar.hl { stroke-width: 16; }
-  .scenic.focus .bar:not(.hl) { opacity: .22; }
+  .scenic.focus .bar:not(.hl) { opacity: .22; stroke-width: 7; }
 
   .sr-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; align-content: space-between; }
   .tile {
@@ -155,7 +155,7 @@
     transition: transform .3s cubic-bezier(.2, .8, .2, 1), box-shadow .3s ease, border-color .25s ease, opacity .25s ease;
   }
   .tile.hl, .tile.open { border-color: var(--c); transform: translateX(6px) scale(1.025); box-shadow: var(--shadow-lg); }
-  .scenic.focus .tile:not(.hl):not(.open) { opacity: .5; }
+  .scenic.focus .tile:not(.hl):not(.open) { opacity: .5; transform: scale(.97); }
   .tile .head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 16px; }
   .tile .role { font-family: var(--serif); font-weight: 600; font-size: 1.32rem; line-height: 1.2; letter-spacing: -.01em; }
   .tile .when { color: var(--c); font-weight: 600; font-size: .88rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -199,7 +199,7 @@
     .cards { grid-template-columns: 1fr; }
     section { padding: 48px 0; }
     .scenic { grid-template-columns: 76px 1fr; gap: 12px; }
-    .chart .tick { width: 30px; font-size: .68rem; }
+    .chart .tick { width: 32px; font-size: .76rem; }
     .tile { padding: 13px 15px; }
     .tile .role { font-size: 1.12rem; }
     .tile.hl, .tile.open { transform: scale(1.015); }
