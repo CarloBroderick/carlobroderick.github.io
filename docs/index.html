@@ -798,7 +798,9 @@
       html += '<p class="au-note">Counted from the logs of my AI assistants and Claude Code on my ' +
         esc(feeds.map(function (f) { return f.label || f.machine; }).join(' and ')) +
         '. Most tokens are earlier conversation re-read from cache on every turn, which costs a tenth of the normal input price or less. ' +
-        'Costs use the providers\' list prices' + (checked ? ' (checked ' + fmtDay(checked) + ')' : '') +
+        (feeds.every(function (f) { return f.pricing === 'dated'; })
+          ? 'Each day is priced at the providers\' list price in effect that day' + (checked ? ' (prices checked ' + fmtDay(checked) + ')' : '')
+          : 'Costs use the providers\' list prices' + (checked ? ' (checked ' + fmtDay(checked) + ')' : '')) +
         '. Updated ' + new Date(updated).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '.</p>';
       root.className = '';
       root.innerHTML = html;
