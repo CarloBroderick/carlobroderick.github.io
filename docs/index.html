@@ -56,6 +56,8 @@
   nav.top ul { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; }
   nav.top ul a { color: var(--muted); text-decoration: none; font-size: .94rem; font-weight: 500; }
   nav.top ul a:hover { color: var(--ink); }
+  .on-touch { display: none; }
+  @media (hover: none) { .on-hover { display: none; } .on-touch { display: inline; } }
 
   /* ---------- hero ---------- */
   .hero { display: grid; grid-template-columns: 1fr 436px; gap: 40px; align-items: center; padding: 36px 0 72px; }
@@ -200,7 +202,10 @@
   @media (max-width: 760px) {
     body { font-size: 16px; }
     .wrap { padding: 0 16px; }
-    nav.top ul { display: none; }
+    nav.top { padding: 18px 0; gap: 12px; }
+    nav.top .name { font-size: .98rem; white-space: nowrap; }
+    nav.top ul { gap: 12px; }
+    nav.top ul a { font-size: .82rem; display: inline-block; padding: 8px 0; }
     .hero { grid-template-columns: 1fr; gap: 4px; padding: 8px 0 48px; }
     .hero > div:first-child { order: 2; }
     .stage { height: 350px; --w: 226px; --h: 256px; --step: 34px; }
@@ -380,7 +385,7 @@
     <p class="kicker">Experience</p>
     <h2>The scenic route</h2>
     <p class="section-intro">Supply chains, sustainability programs, then a turn toward data science.</p>
-    <p class="scale-note">2015 at the bottom, today at the top. Each bar is as long as that role lasted. Hover a role for details.</p>
+    <p class="scale-note">2015 at the bottom, today at the top. Each bar is as long as that role lasted. <span class="on-hover">Hover</span><span class="on-touch">Tap</span> a role for details.</p>
     <div class="scenic" id="scenic">
       <div class="chart" id="chart" aria-hidden="true">
         <svg id="chart-svg"></svg>
