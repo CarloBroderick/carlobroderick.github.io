@@ -358,7 +358,7 @@
             <p class="body"><a href="https://us.fulbrightonline.org/about/types-of-awards/study-research" target="_blank" rel="noopener">Open Study/Research Award</a>, Fulbright U.S. Student Program. Studied wildfire, wildfire land use and geography. I still work with <a href="https://hendata.lat/" target="_blank" rel="noopener">Hendata</a>, the company I worked with there.</p>
           </div></div>
         </li>
-        <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2024:2024.39 1:2024.39:2024.93" style="--c: var(--ochre)">
+        <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2024:2024.39 1:2024.39:2024.966" style="--c: var(--ochre)">
           <div class="head"><span class="role">Ocean Health Index Fellow</span><span class="when">2024 – 2024</span></div>
           <p class="org"><a href="https://oceanhealthindex.org/" target="_blank" rel="noopener">Ocean Health Index</a> · <a href="https://www.nceas.ucsb.edu/" target="_blank" rel="noopener">NCEAS, UC Santa Barbara</a> · Santa&nbsp;Barbara,&nbsp;California</p>
           <div class="details"><div>
@@ -563,7 +563,7 @@
       var last = lo.segs[lo.segs.length - 1];
       bars.forEach(function (hi) {
         var first = hi.segs[0];
-        if (hi === lo || first.lane !== last.lane || first.s < last.e - .01 || first.s - last.e > .3) return;
+        if (hi === lo || first.lane !== last.lane || first.s < last.e - .01 || first.s - last.e > .2) return;
         var mid = (y(last.e) + y(first.s)) / 2;
         lo.y1 = mid + gap / 2; hi.y0 = mid - gap / 2;
       });
