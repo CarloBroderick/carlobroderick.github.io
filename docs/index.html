@@ -60,8 +60,9 @@
   .eyebrow { color: var(--teal); font-weight: 600; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 16px; }
   h1 { font-size: clamp(2.8rem, 6.4vw, 4.4rem); font-weight: 500; letter-spacing: -.03em; margin-bottom: 22px; }
   h1 em { font-style: italic; color: var(--accent); }
-  .hero p { margin: 0 0 14px; max-width: 58ch; }
-  .hero p.lead { font-size: 1.16rem; }
+  .hero p { margin: 0 0 12px; max-width: 58ch; }
+  .hero p.lead { font-size: 1.04rem; }
+  .hero p.lead + p { font-size: .95rem; }
   .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
   .links a {
     display: inline-block; padding: 9px 20px; border: 1.5px solid var(--line); border-radius: 999px;
@@ -245,23 +246,26 @@
     </div>
 
     <div class="stage" id="stage" role="region" aria-roledescription="carousel" aria-label="Photos of Carlo">
-      <button class="ph headshot" style="--d:0" aria-label="Photo 1 of 14" aria-current="true"><img src="headshot.jpg" alt="Portrait of Carlo Broderick"></button>
-      <button class="ph" style="--d:1" aria-label="Photo 2 of 14"><img src="photos/04.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:2" aria-label="Photo 3 of 14"><img src="photos/05.jpg" style="transform: scale(1.08); transform-origin: 50% 100%" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:3" aria-label="Photo 4 of 14"><img src="photos/01.jpg" style="object-position: 50% 20%; transform: scale(1.12); transform-origin: 100% 0%" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:4" aria-label="Photo 5 of 14"><img src="photos/03.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:5" aria-label="Photo 6 of 14"><img src="photos/12.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:6" aria-label="Photo 7 of 14"><img src="photos/07.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:7" aria-label="Photo 8 of 14"><img src="photos/old-headshot.jpg" style="object-position: 50% 6%" alt="Earlier portrait of Carlo Broderick" loading="lazy"></button>
-      <button class="ph far" style="--d:-6" aria-label="Photo 9 of 14"><img src="photos/02.jpg" style="object-position: 50% 0%" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-5" aria-label="Photo 10 of 14"><img src="photos/13.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-4" aria-label="Photo 11 of 14"><img src="photos/11.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-3" aria-label="Photo 12 of 14"><img src="photos/10.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph far" style="--d:-2" aria-label="Photo 13 of 14"><img src="photos/06.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
-      <button class="ph" style="--d:-1" aria-label="Photo 14 of 14"><img src="photos/08.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph headshot" style="--d:0" aria-label="Photo 1 of 17" aria-current="true"><img src="headshot.jpg" alt="Portrait of Carlo Broderick"></button>
+      <button class="ph" style="--d:1" aria-label="Photo 2 of 17"><img src="photos/04.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:2" aria-label="Photo 3 of 17"><img src="photos/05.jpg" style="transform: scale(1.08); transform-origin: 50% 100%" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:3" aria-label="Photo 4 of 17"><img src="photos/01.jpg" style="object-position: 50% 20%; transform: scale(1.12); transform-origin: 100% 0%" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:4" aria-label="Photo 5 of 17"><img src="photos/14.jpg" style="object-position: 50% 70%" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:5" aria-label="Photo 6 of 17"><img src="photos/03.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:6" aria-label="Photo 7 of 17"><img src="photos/12.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:7" aria-label="Photo 8 of 17"><img src="photos/07.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:8" aria-label="Photo 9 of 17"><img src="photos/15.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-8" aria-label="Photo 10 of 17"><img src="photos/old-headshot.jpg" style="object-position: 50% 6%" alt="Earlier portrait of Carlo Broderick" loading="lazy"></button>
+      <button class="ph far" style="--d:-7" aria-label="Photo 11 of 17"><img src="photos/02.jpg" style="object-position: 50% 0%" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-6" aria-label="Photo 12 of 17"><img src="photos/13.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-5" aria-label="Photo 13 of 17"><img src="photos/16.jpg" style="object-position: 50% 12%" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-4" aria-label="Photo 14 of 17"><img src="photos/11.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-3" aria-label="Photo 15 of 17"><img src="photos/10.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph far" style="--d:-2" aria-label="Photo 16 of 17"><img src="photos/06.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
+      <button class="ph" style="--d:-1" aria-label="Photo 17 of 17"><img src="photos/08.jpg" alt="Photo from Carlo's archive" loading="lazy"></button>
       <button class="stage-btn prev" aria-label="Previous photo">‹</button>
       <button class="stage-btn next" aria-label="Next photo">›</button>
-      <p class="stage-foot"><span class="hint">Hover to flip through photos</span><span class="count" aria-live="polite">1 / 14</span></p>
+      <p class="stage-foot"><span class="hint">Hover to flip through photos</span><span class="count" aria-live="polite">1 / 17</span></p>
     </div>
   </header>
 
@@ -354,7 +358,7 @@
             <p class="body"><a href="https://us.fulbrightonline.org/about/types-of-awards/study-research">Open Study/Research Award</a>, Fulbright U.S. Student Program. Studied wildfire, wildfire land use and geography. I still work with <a href="https://hendata.lat/">Hendata</a>, the company I worked with there.</p>
           </div></div>
         </li>
-        <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2024:2024.39 1:2024.39:2024.75" style="--c: var(--ochre)">
+        <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2024:2024.39 1:2024.39:2024.93" style="--c: var(--ochre)">
           <div class="head"><span class="role">Ocean Health Index Fellow</span><span class="when">2024</span></div>
           <p class="org"><a href="https://oceanhealthindex.org/">Ocean Health Index</a> · <a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a> · Santa&nbsp;Barbara,&nbsp;California</p>
           <div class="details"><div>
