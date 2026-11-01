@@ -331,7 +331,7 @@
       </div>
       <ul class="sr-list" id="sr-list">
         <!-- data-segs: lane:start:end, one per straight run of the bar; "now" means today -->
-        <li class="tile" tabindex="0" data-k="ra" data-segs="1:2024.5:now" style="--c: var(--ember)">
+        <li class="tile" tabindex="0" data-k="ra" data-segs="0:2024.55:now" style="--c: var(--ember)">
           <div class="head"><span class="role">Research Associate</span><span class="when">2024 – present</span></div>
           <p class="org"><a href="https://www.nceas.ucsb.edu/">National Center for Ecological Analysis and Synthesis</a> · UC Santa Barbara</p>
           <div class="details"><div>
@@ -339,7 +339,7 @@
             <p class="body">Data analysis for the <a href="https://wildfireindex.org/">Wildfire Resilience Index</a>: geospatial pipelines, wildfire-exposure research and interactive maps.</p>
           </div></div>
         </li>
-        <li class="tile" tabindex="0" data-k="ful" data-segs="0:2025.25:2026.5" style="--c: var(--teal)">
+        <li class="tile" tabindex="0" data-k="ful" data-segs="1:2025.25:2026.5" style="--c: var(--teal)">
           <div class="head"><span class="role">Fulbright Scholar</span><span class="when">2025 – 2026</span></div>
           <p class="org">U.S. State Department</p>
           <div class="details"><div>
@@ -347,16 +347,16 @@
             <p class="body"><a href="https://us.fulbrightonline.org/about/types-of-awards/study-research">Open Study/Research Award</a>, Fulbright U.S. Student Program. Studied wildfire, wildfire land use and geography. I still work with <a href="https://hendata.lat/">Hendata</a>, the company I worked with there.</p>
           </div></div>
         </li>
-        <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2023:2024.8" style="--c: var(--ochre)">
-          <div class="head"><span class="role">Ocean Health Index Fellow</span><span class="when">2023 – 2024</span></div>
+        <li class="tile" tabindex="0" data-k="ohi" data-segs="0:2023.95:2024.25 1:2024.25:2024.55" style="--c: var(--ochre)">
+          <div class="head"><span class="role">Ocean Health Index Fellow</span><span class="when">2024</span></div>
           <p class="org"><a href="https://oceanhealthindex.org/">Ocean Health Index</a> · <a href="https://www.nceas.ucsb.edu/">NCEAS, UC Santa Barbara</a></p>
           <div class="details"><div>
             <p class="where">Santa Barbara, California</p>
             <p class="body">Data preparation, processing and score calculation for the annual global assessment.</p>
           </div></div>
         </li>
-        <li class="tile" tabindex="0" data-k="pc" data-segs="0:2019.25:2022.7" style="--c: var(--plum)">
-          <div class="head"><span class="role">Program Coordinator</span><span class="when">2019 – 2022</span></div>
+        <li class="tile" tabindex="0" data-k="pc" data-segs="0:2019.25:2023.88" style="--c: var(--plum)">
+          <div class="head"><span class="role">Program Coordinator</span><span class="when">2019 – 2023</span></div>
           <p class="org"><a href="https://www.ucsb.edu/">UC Santa Barbara</a> · Chemical Engineering Department · Mellichamp Sustainability Initiative</p>
           <div class="details"><div>
             <p class="where">Santa Barbara, California</p>
@@ -543,15 +543,19 @@
         return { lane: +p[0], s: +p[1], e: p[2] === 'now' ? TODAY : +p[2] };
       });
       var first = segs[0], last = segs[segs.length - 1];
-      var d = 'M ' + laneX(first.lane) + ' ' + (y(first.s) - inset);
+      var ins = segs.length > 1 ? 2 : inset;  // curved bars need every pixel for the swoosh
+      var d = 'M ' + laneX(first.lane) + ' ' + (y(first.s) - ins);
       for (var i = 1; i < segs.length; i++) {
         var a = laneX(segs[i - 1].lane), b = laneX(segs[i].lane), yb = y(segs[i].s);
         if (a === b) continue;
+        var below = (i === 1 ? y(segs[0].s) - ins : y(segs[i - 1].s)) - yb;
+        var above = yb - (i === segs.length - 1 ? y(segs[i].e) + ins : y(segs[i].e));
+        var sw = Math.max(4, Math.min(swoosh, below, above));
         // smooth S-curve from the old lane into the new one, centred on the hand-off year
-        d += ' L ' + a + ' ' + (yb + swoosh) +
-             ' C ' + a + ' ' + yb + ' ' + b + ' ' + yb + ' ' + b + ' ' + (yb - swoosh);
+        d += ' L ' + a + ' ' + (yb + sw) +
+             ' C ' + a + ' ' + yb + ' ' + b + ' ' + yb + ' ' + b + ' ' + (yb - sw);
       }
-      d += ' L ' + laneX(last.lane) + ' ' + (y(last.e) + inset);
+      d += ' L ' + laneX(last.lane) + ' ' + (y(last.e) + ins);
       var color = getComputedStyle(tile).getPropertyValue('--c').trim();
       svg.appendChild(el('path', { d: d, stroke: color, 'class': 'bar', 'data-k': tile.getAttribute('data-k') }));
     });
