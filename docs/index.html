@@ -56,7 +56,7 @@
   nav.top ul a:hover { color: var(--ink); }
 
   /* ---------- hero ---------- */
-  .hero { display: grid; grid-template-columns: 1fr 420px; gap: 40px; align-items: center; padding: 36px 0 72px; }
+  .hero { display: grid; grid-template-columns: 1fr 436px; gap: 40px; align-items: center; padding: 36px 0 72px; }
   .eyebrow { color: var(--teal); font-weight: 600; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 16px; }
   h1 { font-size: clamp(2.8rem, 6.4vw, 4.4rem); font-weight: 500; letter-spacing: -.03em; margin-bottom: 22px; }
   h1 em { font-style: italic; color: var(--accent); }
@@ -74,7 +74,7 @@
   /* photo stack: headshot in front, the other photos peek out behind it */
   .stage {
     position: relative; height: 480px; width: 100%;
-    --w: 290px; --h: 360px;
+    --w: 306px; --h: 346px;
     --step: 42px; --tilt: 6deg; --fall: .1; --grow: 1;
   }
   .stage.open { --step: 72px; --tilt: 3deg; --fall: .06; --grow: 1.07; }
@@ -203,7 +203,7 @@
     nav.top ul { display: none; }
     .hero { grid-template-columns: 1fr; gap: 4px; padding: 8px 0 48px; }
     .hero > div:first-child { order: 2; }
-    .stage { height: 350px; --w: 216px; --h: 268px; --step: 34px; }
+    .stage { height: 350px; --w: 226px; --h: 256px; --step: 34px; }
     .stage.open { --step: 64px; }
     .cards { grid-template-columns: 1fr; }
     section { padding: 48px 0; }
