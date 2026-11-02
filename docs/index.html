@@ -139,6 +139,7 @@
   .card .paper { font-size: .86rem; color: var(--muted); background: color-mix(in srgb, var(--c) 9%, var(--surface)); border-radius: 12px; padding: 10px 13px; }
   .card .go { margin-top: auto; padding-top: 4px; display: flex; flex-wrap: wrap; gap: 6px 18px; font-weight: 600; font-size: .92rem; }
   .card .go a { text-decoration: none; }
+  .card .more { display: none; border: 0; background: none; padding: 0 0 10px; font: inherit; font-size: .86rem; font-weight: 600; color: var(--muted); cursor: pointer; text-align: left; }
   .card .go a:hover { text-decoration: underline; }
 
   /* ---------- scenic route: time axis + tiles ---------- */
@@ -216,9 +217,15 @@
     .hero > div:first-child { order: 2; }
     .stage { height: 350px; --w: 226px; --h: 256px; --step: 34px; }
     .stage.open { --step: 64px; }
-    .cards { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: 1fr; gap: 12px; }
+    .card { padding: 16px 18px 14px; border-radius: 16px; }
+    .card .tag { margin-bottom: 8px; }
+    .card h3 { font-size: 1.12rem; margin-bottom: 8px; }
+    .card > p:not(.tag) { display: none; }
+    .card.open > p:not(.tag) { display: block; }
+    .card .more { display: inline-block; }
     section { padding: 48px 0; }
-    /* phones: a slimmer axis, and every role shows its details (no hover to reveal them) */
+    /* phones: a slimmer, shorter axis that slides as you scroll so each role's bar sits beside it; a tap opens a role */
     .scenic { grid-template-columns: 64px 1fr; gap: 10px; }
     .chart .tick { width: 24px; font-size: .72rem; }
     .chart .tick.now { font-size: .64rem; }
@@ -230,7 +237,7 @@
     .tile .when { font-size: .84rem; }
     .tile .org { font-size: .88rem; line-height: 1.45; margin-top: 5px; }
     .tile .org a { color: var(--muted); text-decoration-color: color-mix(in srgb, var(--c) 60%, transparent); }
-    .tile .details { grid-template-rows: 1fr; opacity: 1; transition: none; }
+    .chart { will-change: transform; }
     .tile .body { font-size: .9rem; line-height: 1.5; margin: 6px 0 0; }
     .tile.hl, .tile.open { transform: scale(1.015); }
     .two { grid-template-columns: 1fr; }
@@ -264,7 +271,11 @@
   .au-key { display: flex; gap: 16px; font-size: .82rem; color: var(--muted); margin: 0 0 14px; }
   .au-key span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; background: var(--c); vertical-align: -1px; }
   .au-cols { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); align-items: end; gap: 10px; height: 190px; }
-  .au-col { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; min-width: 0; text-align: center; }
+  .au-col { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; min-width: 0; text-align: center;
+    border: 0; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer; transition: opacity .2s ease; }
+  .au-cols.picked .au-col:not(.on) { opacity: .45; }
+  .au-read { margin: 12px 0 0; font-size: .88rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .au-read b { color: var(--ink); }
   .au-col .v { font-size: .74rem; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; margin-bottom: 4px; white-space: nowrap; }
   .au-col .stack { display: flex; flex-direction: column-reverse; border-radius: 6px 6px 2px 2px; overflow: hidden; min-height: 2px; }
   .au-col .stack i { display: block; background: var(--c); }
@@ -603,6 +614,18 @@
   layout();
 })();
 
+/* ---------- project cards: phones show title and links, with the description a tap away ---------- */
+document.querySelectorAll('.card').forEach(function (card) {
+  var b = document.createElement('button');
+  b.type = 'button'; b.className = 'more'; b.textContent = 'More ▾'; b.setAttribute('aria-expanded', 'false');
+  b.addEventListener('click', function () {
+    var on = card.classList.toggle('open');
+    b.textContent = on ? 'Less ▴' : 'More ▾'; b.setAttribute('aria-expanded', on);
+  });
+  var go = card.querySelector('.go');
+  card.insertBefore(b, go || null);
+});
+
 /* ---------- scenic route: time axis drawn from each tile's data-segs ---------- */
 (function () {
   var TODAY = 2026 + (Date.now() - Date.UTC(2026, 0, 1)) / 31557600000;
@@ -638,7 +661,7 @@
   function draw() {
     stackDates();
     var hover = window.matchMedia('(hover: hover)').matches;
-    document.getElementById('sr-hint').textContent = (hover ? 'Hover' : 'Tap') + ' a role ' + (small.matches ? 'to light up its bar.' : 'for details.');
+    document.getElementById('sr-hint').textContent = (hover ? 'Hover' : 'Tap') + ' a role for details.';
     // Give each year enough height to read, and (where details open on hover)
     // leave room for the tallest role to open without the list outgrowing the axis beside it.
     if (!scenic.classList.contains('focus') && !list.querySelector('.tile.open')) {
@@ -648,8 +671,8 @@
         rest += tile.offsetHeight;
         if (!small.matches) open = Math.max(open, tile.querySelector('.details > div').scrollHeight);
       });
-      list.style.minHeight = Math.max((TODAY - START) * (small.matches ? 34 : 48), rest + open + 12) + 'px';
-      chart.style.height = list.offsetHeight + 'px';
+      list.style.minHeight = Math.max((TODAY - START) * (small.matches ? 56 : 48), rest + open + 12) + 'px';
+      chart.style.height = (small.matches ? (TODAY - START) * 56 : list.offsetHeight) + 'px';
       needsSize = false;
     } else needsSize = true;
     var W = chart.clientWidth, H = chart.clientHeight;
@@ -684,6 +707,7 @@
       var first = segs[0], last = segs[segs.length - 1];
       return { tile: tile, segs: segs, y0: y(first.s) - cap, y1: y(last.e) + cap };
     });
+    mids = bars;
     bars.forEach(function (lo) {
       var last = lo.segs[lo.segs.length - 1];
       bars.forEach(function (hi) {
@@ -713,7 +737,40 @@
     });
     chart.setAttribute('data-ppy', (H / (TODAY - START)).toFixed(2));
     if (active) setActive(active);
+    follow();
   }
+
+  // Phones: the list is much taller than the axis, so slide the axis down the list as
+  // you scroll, keeping the bar of whichever role is mid-screen level with that role.
+  var mids = [], ticking = false;
+  function follow() {
+    if (!small.matches) { chart.style.transform = ''; return; }
+    var top = list.getBoundingClientRect().top, v = innerHeight / 2 - top;
+    var pts = mids.map(function (bar) {
+      var r = bar.tile.getBoundingClientRect(), c = r.top + r.height / 2 - top;
+      return { c: c, need: c - (bar.y0 + bar.y1) / 2 };
+    });
+    if (!pts.length) return;
+    var shift = pts[0].need;
+    for (var i = 0; i < pts.length; i++) {
+      if (v >= pts[i].c) shift = pts[i].need;
+      if (i + 1 < pts.length && v >= pts[i].c && v < pts[i + 1].c) {
+        var f = (v - pts[i].c) / (pts[i + 1].c - pts[i].c);
+        shift = pts[i].need + f * (pts[i + 1].need - pts[i].need);
+      }
+    }
+    shift = Math.max(0, Math.min(shift, list.offsetHeight - chart.offsetHeight));
+    chart.style.transform = 'translateY(' + shift.toFixed(1) + 'px)';
+  }
+  function followFor(ms) {
+    var end = Date.now() + ms;
+    (function step() { follow(); if (Date.now() < end) requestAnimationFrame(step); })();
+  }
+  window.addEventListener('scroll', function () {
+    if (ticking || !small.matches) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; follow(); });
+  }, { passive: true });
 
   function addTick(label, pct, now) {
     var t = document.createElement('span');
@@ -744,7 +801,7 @@
       if (tile.matches(':focus-visible')) setActive(tile.getAttribute('data-k'));
     });
     tile.addEventListener('blur', function () {
-      if (!window.matchMedia('(hover: hover)').matches) tile.classList.remove('open');
+      if (!window.matchMedia('(hover: hover)').matches) { tile.classList.remove('open'); if (small.matches) followFor(500); }
       setActive(null);
     });
     // Touch has no hover, so a tap opens a role's details.
@@ -755,6 +812,12 @@
       tiles.forEach(function (t) { t.classList.remove('open'); });
       tile.classList.toggle('open', !wasOpen);
       setActive(wasOpen ? null : tile.getAttribute('data-k'));
+      if (small.matches) {
+        followFor(1200);
+        if (!wasOpen) setTimeout(function () {
+          if (tile.classList.contains('open')) tile.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }, 380);
+      }
     });
   });
 
@@ -950,6 +1013,7 @@
         var ms = Object.keys(months).sort().slice(-12).map(function (k) { var v = months[k];
           return tk ? { m: k, a: v.ta, o: v.to, x: v.tx } : { m: k, a: v.anthropic, o: v.openai, x: v.other }; });
         var max = Math.max.apply(null, ms.map(function (m) { return m.a + m.o + m.x; }).concat(tk ? 1 : 0.01));
+        var pick = ms.some(function (m) { return m.m === st.month; }) ? st.month : null, read = '';
         var tallest = ms.reduce(function (b, m) { return !b || m.a + m.o + m.x > b.a + b.o + b.x ? m : b; }, null);
         var keyP = modelOn ? [mp] : provs();
         html += '<div class="au-months"><div class="au-mhead"><h3>' + (tk ? 'Tokens' : 'Cost') + ' by month' + (scope ? ' <span style="font-weight:400;color:var(--muted);font-size:.9rem">· ' + esc(scope) + '</span>' : '') + '</h3>' +
@@ -957,14 +1021,15 @@
           '<p class="au-key">' + keyP.map(function (p) { return '<span style="--c:' + PROV[p].c + '">' + PROV[p].name + '</span>'; }).join('') +
           '<em class="au-axis">Bars: ' + (tk ? 'tokens per month (all kinds, cache included)' : 'US dollars per month at API prices') +
           (tallest ? ' · tallest ' + fmt(tallest.a + tallest.o + tallest.x) + (tk ? ' tokens' : '') + ' (' + new Date(tallest.m + '-15T12:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) + ')' : '') + '</em></p>' +
-          '<div class="au-cols' + (ms.length > 8 ? ' dense' : '') + '" role="img" aria-label="' + (tk ? 'Tokens' : 'Cost') + ' by month">' +
+          '<div class="au-cols' + (ms.length > 8 ? ' dense' : '') + (pick ? ' picked' : '') + '" role="group" aria-label="' + (tk ? 'Tokens' : 'Cost') + ' by month">' +
           ms.map(function (m) {
             var h = (m.a + m.o + m.x) / max * 100, label = new Date(m.m + '-15T12:00:00').toLocaleDateString('en-US', { month: 'short' });
             var tip = label + ': ' + fmt(m.a + m.o + m.x) + (tk ? ' tokens' : ' at API prices') + ' (' + keyP.map(function (p) { var v = p === 'anthropic' ? m.a : p === 'openai' ? m.o : m.x; return PROV[p].name + ' ' + fmt(v); }).join(', ') + ')';
-            return '<div class="au-col" title="' + esc(tip) + '"><span class="v">' + fmt(m.a + m.o + m.x) + '</span>' +
+            if (m.m === pick) read = tip;
+            return '<button type="button" class="au-col' + (m.m === pick ? ' on' : '') + '" data-mo="' + m.m + '" title="' + esc(tip) + '" aria-pressed="' + (m.m === pick) + '"><span class="v">' + fmt(m.a + m.o + m.x) + '</span>' +
               '<div class="stack" style="height:' + h.toFixed(1) + '%"><i style="--c:var(--anth);flex:' + m.a + '"></i><i style="--c:var(--oai);flex:' + m.o + '"></i><i style="--c:var(--oth);flex:' + m.x + '"></i></div>' +
-              '<span class="m">' + label + '</span></div>';
-          }).join('') + '</div>' +
+              '<span class="m">' + label + '</span></button>';
+          }).join('') + '</div>' + (read ? '<p class="au-read" aria-live="polite">' + esc(read).replace(/^([^:]+:)( [^(]+)/, '<b>$1$2</b>') + '</p>' : '') +
           (modelOn && sel.extra.tokens ? '<p class="au-hint">The chart leaves out the other Mac mini\'s use of this model, which has no monthly detail.</p>' : '') + '</div>';
       }
       /* models table: all time, narrowed by tool and provider; a row can be clicked to filter to that model */
@@ -1001,6 +1066,8 @@
     }
     root.addEventListener('toggle', function (e) { if (e.target.classList.contains('au-note')) noteOpen = e.target.open; }, true);
     root.addEventListener('click', function (e) {
+      var mo = e.target.closest('.au-col');
+      if (mo) { st.month = st.month === mo.getAttribute('data-mo') ? null : mo.getAttribute('data-mo'); render(); return; }
       var u = e.target.closest('.au-unit button'), r = e.target.closest('.au-range button'), c = e.target.closest('.au-chips button'), m = e.target.closest('.au-pick');
       if (u) { st.unit = u.getAttribute('data-u'); render(); }
       else if (r) { st.range = r.getAttribute('data-r'); render(); }
