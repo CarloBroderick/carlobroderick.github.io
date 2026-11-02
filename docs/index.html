@@ -209,8 +209,8 @@
   /* embroidered figures walking along a running stitch at the very bottom; only whole figures show on a narrow screen */
   footer { padding-bottom: 14px; }
   .parade {
-    --fig: 56px; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 0 3px;
-    height: calc(var(--fig) + 16px); overflow: hidden; margin: 30px 0 0; padding: 10px 8px 0; position: relative;
+    --fig: 40px; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 0 3px;
+    height: calc(var(--fig) + 12px); overflow: hidden; margin: 26px 0 0; padding: 4px 8px 0; position: relative;
     -webkit-mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   }
   .parade::before, .parade::after {
@@ -268,7 +268,7 @@
     .tile.hl, .tile.open { transform: scale(1.015); }
     .two { grid-template-columns: 1fr; }
     .panel { padding: 22px 20px; }
-    .parade { --fig: 50px; }
+    .parade { --fig: 36px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition: none !important; }
