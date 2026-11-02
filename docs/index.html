@@ -16,6 +16,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  // embroidered look, if this visitor switched it on last time (see the footer figures)
+  try { if (localStorage.getItem('stitch') === '1') document.documentElement.classList.add('stitch'); } catch (e) {}
+</script>
 <style>
   :root {
     color-scheme: light;
@@ -270,6 +274,67 @@
     *, *::before, *::after { transition: none !important; }
     .parade img:hover { transform: rotate(var(--tilt, 0deg)); }
   }
+  /* ---------- embroidery: tapping the figures in the footer re-stitches the whole page ---------- */
+  .parade { cursor: pointer; }
+  .parade:focus-visible { outline: 2px dashed var(--accent); outline-offset: 4px; }
+  html.stitch {
+    --bg: #efe5d2; --surface: #f8f0e0; --line: #d9c9ac; --muted: #6a5a45;
+    --thread: #2e3a5c;
+    --linen: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .38 0 0 0 0 .3 0 0 0 0 .18 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      repeating-linear-gradient(0deg, rgba(120, 92, 55, .07) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(120, 92, 55, .06) 0 1px, transparent 1px 3px);
+  }
+  html.stitch body { background-color: var(--bg); background-image: var(--linen); }
+  /* satin-stitch lettering: fine diagonal thread lines clipped to the text, with a little raised shadow */
+  html.stitch h1, html.stitch h2, html.stitch h3, html.stitch nav.top .name, html.stitch .tile .role, html.stitch .edu .what {
+    font-family: Caveat, var(--serif); font-weight: 700; letter-spacing: 0; font-size-adjust: .52;
+    --th: var(--thread);
+    background: repeating-linear-gradient(115deg, var(--th) 0 1.4px, color-mix(in srgb, var(--th) 62%, #fff) 1.4px 2.8px);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 1px 0 rgba(60, 40, 20, .35));
+    padding: 0 .08em .18em 0;   /* the clipped thread pattern has to reach the tails of g, y and p */
+  }
+  html.stitch .card h3, html.stitch .tile .role { --th: var(--c); }
+  html.stitch h1 em {
+    font-style: normal; color: transparent; -webkit-background-clip: text; background-clip: text;
+    background-image: repeating-linear-gradient(115deg, var(--accent) 0 1.6px, #f08a4b 1.6px 3.2px);
+  }
+  html.stitch a { text-decoration-style: dashed; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  html.stitch .kicker, html.stitch .eyebrow { letter-spacing: .16em; }
+  html.stitch .kicker::before, html.stitch .eyebrow::before { content: "✕ "; color: var(--accent); letter-spacing: 0; }
+  html.stitch section { border-top: 2px dashed var(--line); }
+  html.stitch footer { border-top: 2px dashed var(--line); }
+  /* felt patches sewn on with a running stitch just inside the edge */
+  html.stitch .card, html.stitch .tile, html.stitch .panel, html.stitch .au-card, html.stitch .au-months {
+    background-color: var(--surface); background-image: var(--linen);
+    border: 1.5px solid color-mix(in srgb, var(--c, var(--thread)) 30%, var(--line));
+    outline: 2px dashed color-mix(in srgb, var(--c, var(--thread)) 75%, transparent); outline-offset: -8px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset, 0 2px 3px rgba(60, 40, 20, .12), 0 10px 22px rgba(60, 40, 20, .1);
+  }
+  html.stitch .panel, html.stitch .au-months { --c: var(--thread); }
+  html.stitch .au-card { border-top-width: 1.5px; }
+  html.stitch .links a, html.stitch .au-range, html.stitch .au-chips button {
+    background-color: var(--surface); border-style: dashed; border-color: color-mix(in srgb, var(--thread) 45%, transparent);
+  }
+  html.stitch .au-range button[aria-pressed="true"], html.stitch .au-chips button[aria-pressed="true"] {
+    background: repeating-linear-gradient(115deg, var(--thread) 0 2px, color-mix(in srgb, var(--thread) 80%, #fff) 2px 4px);
+  }
+  /* photos sit in a stitched frame */
+  html.stitch .ph { border-color: var(--surface); outline: 2px dashed color-mix(in srgb, var(--accent) 70%, transparent); outline-offset: -12px; }
+  html.stitch .ph img { filter: saturate(.85) contrast(.96) sepia(.12); }
+  /* the timeline becomes running stitches */
+  html.stitch .chart .bar { stroke-dasharray: 12 5; stroke-linecap: butt; stroke-width: 6; }
+  html.stitch .chart .bar.hl { stroke-width: 9; }
+  html.stitch .chart .gridline { stroke-dasharray: 3 5; stroke: color-mix(in srgb, var(--thread) 25%, transparent); }
+  html.stitch .chart .axis { stroke-dasharray: 5 4; stroke: var(--thread); stroke-width: 1.5; }
+  html.stitch .tick { font-family: Caveat, var(--sans); font-size: 1.05rem; font-weight: 700; color: var(--thread); }
+  /* monthly bars and their thread fill */
+  html.stitch .au-col .stack { outline: 1.5px dashed rgba(255, 255, 255, .7); outline-offset: -4px; }
+  html.stitch .au-col .stack i { background-image: repeating-linear-gradient(60deg, rgba(255, 255, 255, .22) 0 1.5px, transparent 1.5px 3.5px); }
+  html.stitch .au-models td, html.stitch .edu li { border-color: color-mix(in srgb, var(--thread) 30%, transparent); }
+  html.stitch .fun li::before { content: "✕"; font-weight: 700; }
+  html.stitch .parade img { filter: drop-shadow(0 2px 1px rgba(60, 40, 20, .25)); }
+
   /* ---------- AI usage: tokens and API-price cost, from docs/data/usage-*.json (written daily by each machine) ---------- */
   #ai-usage { --anth: #c2410c; --oai: #0f766e; --oth: #6d4fc2; }
   .au-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin: 0 0 22px; }
@@ -566,7 +631,7 @@
   <footer>
     Carlo Broderick · Santa Barbara, California ·
     <a href="mailto:carlwilliambroderick@gmail.com">carlwilliambroderick@gmail.com</a>
-    <div class="parade" aria-hidden="true"><img src="parade/parade-01.png" width="45" height="84" alt="" title="Basket woman" loading="lazy" decoding="async"><img src="parade/parade-02.png" width="46" height="84" alt="" title="Staff walker" loading="lazy" decoding="async"><img src="parade/parade-03.png" width="48" height="84" alt="" title="Dancing woman" loading="lazy" decoding="async"><img src="parade/parade-04.png" width="43" height="84" alt="" title="Guitar player" loading="lazy" decoding="async"><img src="parade/parade-05.png" width="41" height="84" alt="" title="Jug carrier" loading="lazy" decoding="async"><img src="parade/parade-06.png" width="39" height="84" alt="" title="Basket carrier" loading="lazy" decoding="async"><img src="parade/parade-07.png" width="42" height="84" alt="" title="Flower gatherer" loading="lazy" decoding="async"><img src="parade/parade-08.png" width="52" height="84" alt="" title="Trumpet player" loading="lazy" decoding="async"><img src="parade/parade-09.png" width="42" height="84" alt="" title="Bundle carrier" loading="lazy" decoding="async"><img src="parade/parade-10.png" width="53" height="84" alt="" title="Blanket walker" loading="lazy" decoding="async"><img src="parade/parade-11.png" width="42" height="84" alt="" title="Bread carrier" loading="lazy" decoding="async"><img src="parade/parade-12.png" width="43" height="84" alt="" title="Drummer" loading="lazy" decoding="async"><img src="parade/parade-13.png" width="56" height="84" alt="" title="Watering gardener" loading="lazy" decoding="async"><img src="parade/parade-14.png" width="38" height="84" alt="" title="Book reader" loading="lazy" decoding="async"><img src="parade/parade-15.png" width="37" height="84" alt="" title="Pot carrier" loading="lazy" decoding="async"><img src="parade/parade-16.png" width="53" height="84" alt="" title="Flute player" loading="lazy" decoding="async"><img src="parade/parade-17.png" width="50" height="84" alt="" title="Fruit seller" loading="lazy" decoding="async"><img src="parade/parade-18.png" width="51" height="84" alt="" title="Gardener with spade" loading="lazy" decoding="async"><img src="parade/parade-19.png" width="72" height="84" alt="" title="Scarf dancer" loading="lazy" decoding="async"><img src="parade/parade-20.png" width="46" height="84" alt="" title="Chicken carrier" loading="lazy" decoding="async"></div>
+    <div class="parade" role="button" tabindex="0" aria-pressed="false" aria-label="Embroider the whole site" title="Embroider the whole site"><img src="parade/parade-01.png" width="45" height="84" alt="" title="Basket woman" loading="lazy" decoding="async"><img src="parade/parade-02.png" width="46" height="84" alt="" title="Staff walker" loading="lazy" decoding="async"><img src="parade/parade-03.png" width="48" height="84" alt="" title="Dancing woman" loading="lazy" decoding="async"><img src="parade/parade-04.png" width="43" height="84" alt="" title="Guitar player" loading="lazy" decoding="async"><img src="parade/parade-05.png" width="41" height="84" alt="" title="Jug carrier" loading="lazy" decoding="async"><img src="parade/parade-06.png" width="39" height="84" alt="" title="Basket carrier" loading="lazy" decoding="async"><img src="parade/parade-07.png" width="42" height="84" alt="" title="Flower gatherer" loading="lazy" decoding="async"><img src="parade/parade-08.png" width="52" height="84" alt="" title="Trumpet player" loading="lazy" decoding="async"><img src="parade/parade-09.png" width="42" height="84" alt="" title="Bundle carrier" loading="lazy" decoding="async"><img src="parade/parade-10.png" width="53" height="84" alt="" title="Blanket walker" loading="lazy" decoding="async"><img src="parade/parade-11.png" width="42" height="84" alt="" title="Bread carrier" loading="lazy" decoding="async"><img src="parade/parade-12.png" width="43" height="84" alt="" title="Drummer" loading="lazy" decoding="async"><img src="parade/parade-13.png" width="56" height="84" alt="" title="Watering gardener" loading="lazy" decoding="async"><img src="parade/parade-14.png" width="38" height="84" alt="" title="Book reader" loading="lazy" decoding="async"><img src="parade/parade-15.png" width="37" height="84" alt="" title="Pot carrier" loading="lazy" decoding="async"><img src="parade/parade-16.png" width="53" height="84" alt="" title="Flute player" loading="lazy" decoding="async"><img src="parade/parade-17.png" width="50" height="84" alt="" title="Fruit seller" loading="lazy" decoding="async"><img src="parade/parade-18.png" width="51" height="84" alt="" title="Gardener with spade" loading="lazy" decoding="async"><img src="parade/parade-19.png" width="72" height="84" alt="" title="Scarf dancer" loading="lazy" decoding="async"><img src="parade/parade-20.png" width="46" height="84" alt="" title="Chicken carrier" loading="lazy" decoding="async"></div>
   </footer>
 
 </div>
@@ -637,6 +702,36 @@
   if (window.matchMedia('(hover: none)').matches) stage.querySelector('.hint').textContent = 'Tap to flip through photos';
 
   layout();
+})();
+
+/* ---------- embroidery: the footer figures switch the page to a stitched look and back ---------- */
+(function () {
+  var root = document.documentElement, parade = document.querySelector('.parade');
+  if (!parade) return;
+  parade.querySelectorAll('img').forEach(function (img) { img.removeAttribute('title'); });
+  function font() {
+    if (document.getElementById('stitch-font')) return;
+    var l = document.createElement('link');
+    l.id = 'stitch-font'; l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap';
+    document.head.appendChild(l);
+  }
+  function show(on) {
+    root.classList.toggle('stitch', on);
+    parade.setAttribute('aria-pressed', on);
+    parade.title = on ? 'Unpick the embroidery' : 'Embroider the whole site';
+    parade.setAttribute('aria-label', parade.title);
+    if (on) font();
+  }
+  show(root.classList.contains('stitch'));
+  function flip() {
+    var on = !root.classList.contains('stitch');
+    try { localStorage.setItem('stitch', on ? '1' : '0'); } catch (e) {}
+    if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(function () { show(on); });
+    else show(on);
+  }
+  parade.addEventListener('click', flip);
+  parade.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
 })();
 
 /* ---------- project cards: phones show title and links, with the description a tap away ---------- */
