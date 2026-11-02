@@ -272,6 +272,9 @@
   .au-models th:not(:first-child), .au-models td:not(:first-child) { text-align: right; }
   .au-models td:first-child::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 9px; background: var(--c); }
   .au-note { color: var(--muted); font-size: .84rem; margin: 18px 0 0; max-width: 78ch; }
+  .au-note summary { cursor: pointer; width: max-content; }
+  .au-note summary:hover { color: var(--ink); }
+  .au-note p { margin: 8px 0 0; }
   .au-empty { color: var(--muted); }
   .au-filters { display: flex; flex-wrap: wrap; gap: 14px 26px; margin: 0 0 22px; }
   .au-f { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
@@ -792,6 +795,7 @@
   function pk(p) { return p === 'anthropic' || p === 'openai' ? p : 'other'; }
   var KINDS = ['input', 'output', 'cacheRead', 'cacheWrite'];
   var st = { range: 'all', tool: 'all', prov: 'all', model: 'all', unit: 'cost' };
+  var noteOpen = false;
 
   function tok(n) {
     if (n >= 1e9) return (n / 1e9).toFixed(n >= 1e10 ? 1 : 2) + 'B';
@@ -976,8 +980,8 @@
           return '<tr' + (st.model === m.key ? ' class="on"' : '') + '><td style="--c:' + PROV[m.provider].c + '">' +
             (fine ? '<button type="button" class="au-pick" data-m="' + esc(m.key) + '" title="Show only this model">' + esc(m.name) + '</button>' : esc(m.name)) +
             '</td><td>' + tok(m.tokens) + '</td><td>' + usd(m.cost) + '</td></tr>';
-        }).join('') + '</tbody></table><p class="au-hint">Tap a model name to see just that model above.</p></div>';
-      html += '<p class="au-note">Counted from the logs of my AI assistants and Claude Code on my ' +
+        }).join('') + '</tbody></table></div>';
+      html += '<details class="au-note"' + (noteOpen ? ' open' : '') + '><summary>How this is counted</summary><p>Counted from the logs of my AI assistants and Claude Code on my ' +
         esc(machines.map(function (f) { return f.label || f.machine; }).join(' and ')) +
         (cursor ? ', plus my Cursor usage export (' + fmtDay(cursor.since) + ' to ' + fmtDay(cursor.through) + ')' : '') +
         '. "Agents" means the first group; "Cursor" is the export. A provider\'s numbers include its models used inside Cursor. Most tokens are earlier conversation re-read from cache on every turn, which costs a tenth of the normal input price or less. ' +
@@ -985,12 +989,13 @@
           ? 'Each day is priced at the providers\' list price in effect that day' + (checked ? ' (prices checked ' + fmtDay(checked) + ')' : '')
           : 'Costs use the providers\' list prices' + (checked ? ' (checked ' + fmtDay(checked) + ')' : '')) +
         (hasOther ? '; Grok, Gemini and Cursor\'s own Composer models use xAI\'s, Google\'s and Cursor\'s published prices' : '') +
-        '. Updated ' + new Date(updated).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '.</p>';
+        '. Updated ' + new Date(updated).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + '.</p></details>';
       var focus = document.activeElement && document.activeElement.closest && root.contains(document.activeElement) ? (document.activeElement.id || document.activeElement.getAttribute('data-f') + '|' + document.activeElement.getAttribute('data-v') || '') : '';
       root.className = '';
       root.innerHTML = html;
       if (focus) { var el = focus === 'au-model' ? document.getElementById('au-model') : root.querySelector('[data-f="' + focus.split('|')[0] + '"][data-v="' + focus.split('|')[1] + '"]'); if (el) el.focus({ preventScroll: true }); }
     }
+    root.addEventListener('toggle', function (e) { if (e.target.classList.contains('au-note')) noteOpen = e.target.open; }, true);
     root.addEventListener('click', function (e) {
       var u = e.target.closest('.au-unit button'), r = e.target.closest('.au-range button'), c = e.target.closest('.au-chips button'), m = e.target.closest('.au-pick');
       if (u) { st.unit = u.getAttribute('data-u'); render(); }
