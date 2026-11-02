@@ -202,6 +202,28 @@
 
   footer { border-top: 1px solid var(--line); padding: 34px 0 56px; color: var(--muted); font-size: .9rem; }
   footer a { color: var(--muted); }
+  /* embroidered figures walking along a running stitch at the very bottom; only whole figures show on a narrow screen */
+  footer { padding-bottom: 14px; }
+  .parade {
+    --fig: 56px; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 0 3px;
+    height: calc(var(--fig) + 16px); overflow: hidden; margin: 30px 0 0; padding: 10px 8px 0; position: relative;
+    -webkit-mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .parade::before, .parade::after {
+    content: ""; position: absolute; left: 0; right: 0; height: 2px; border-radius: 1px;
+    background: repeating-linear-gradient(90deg, rgba(194, 65, 12, .5) 0 10px, transparent 10px 16px);
+  }
+  .parade::before { bottom: 4px; }
+  .parade::after { bottom: 0; opacity: .45; background-position: 8px 0; }
+  .parade img {
+    height: var(--fig); width: auto; flex: none; margin-bottom: 5px; transform-origin: 50% 100%;
+    transform: rotate(var(--tilt, 0deg)); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1);
+  }
+  .parade img:nth-child(4n+1) { --tilt: -2deg; }
+  .parade img:nth-child(4n+2) { --tilt: 1.5deg; }
+  .parade img:nth-child(4n+3) { --tilt: -.8deg; }
+  .parade img:nth-child(4n) { --tilt: 2.2deg; }
+  .parade img:hover { transform: translateY(-7px) rotate(calc(var(--tilt, 0deg) * -2)); }
 
   @media (max-width: 900px) {
     .cards { grid-template-columns: 1fr 1fr; }
@@ -242,9 +264,11 @@
     .tile.hl, .tile.open { transform: scale(1.015); }
     .two { grid-template-columns: 1fr; }
     .panel { padding: 22px 20px; }
+    .parade { --fig: 50px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition: none !important; }
+    .parade img:hover { transform: rotate(var(--tilt, 0deg)); }
   }
   /* ---------- AI usage: tokens and API-price cost, from docs/data/usage-*.json (written daily by each machine) ---------- */
   #ai-usage { --anth: #c2410c; --oai: #0f766e; --oth: #6d4fc2; }
@@ -542,6 +566,7 @@
   <footer>
     Carlo Broderick · Santa Barbara, California ·
     <a href="mailto:carlwilliambroderick@gmail.com">carlwilliambroderick@gmail.com</a>
+    <div class="parade" aria-hidden="true"><img src="parade/parade-01.png" width="45" height="84" alt="" title="Basket woman" loading="lazy" decoding="async"><img src="parade/parade-02.png" width="46" height="84" alt="" title="Staff walker" loading="lazy" decoding="async"><img src="parade/parade-03.png" width="48" height="84" alt="" title="Dancing woman" loading="lazy" decoding="async"><img src="parade/parade-04.png" width="43" height="84" alt="" title="Guitar player" loading="lazy" decoding="async"><img src="parade/parade-05.png" width="41" height="84" alt="" title="Jug carrier" loading="lazy" decoding="async"><img src="parade/parade-06.png" width="39" height="84" alt="" title="Basket carrier" loading="lazy" decoding="async"><img src="parade/parade-07.png" width="42" height="84" alt="" title="Flower gatherer" loading="lazy" decoding="async"><img src="parade/parade-08.png" width="52" height="84" alt="" title="Trumpet player" loading="lazy" decoding="async"><img src="parade/parade-09.png" width="42" height="84" alt="" title="Bundle carrier" loading="lazy" decoding="async"><img src="parade/parade-10.png" width="53" height="84" alt="" title="Blanket walker" loading="lazy" decoding="async"><img src="parade/parade-11.png" width="42" height="84" alt="" title="Bread carrier" loading="lazy" decoding="async"><img src="parade/parade-12.png" width="43" height="84" alt="" title="Drummer" loading="lazy" decoding="async"><img src="parade/parade-13.png" width="56" height="84" alt="" title="Watering gardener" loading="lazy" decoding="async"><img src="parade/parade-14.png" width="38" height="84" alt="" title="Book reader" loading="lazy" decoding="async"><img src="parade/parade-15.png" width="37" height="84" alt="" title="Pot carrier" loading="lazy" decoding="async"><img src="parade/parade-16.png" width="53" height="84" alt="" title="Flute player" loading="lazy" decoding="async"><img src="parade/parade-17.png" width="50" height="84" alt="" title="Fruit seller" loading="lazy" decoding="async"><img src="parade/parade-18.png" width="51" height="84" alt="" title="Gardener with spade" loading="lazy" decoding="async"><img src="parade/parade-19.png" width="72" height="84" alt="" title="Scarf dancer" loading="lazy" decoding="async"><img src="parade/parade-20.png" width="46" height="84" alt="" title="Chicken carrier" loading="lazy" decoding="async"></div>
   </footer>
 
 </div>
