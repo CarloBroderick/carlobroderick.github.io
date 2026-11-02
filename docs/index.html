@@ -161,6 +161,8 @@
   .tile.hl, .tile.open { border-color: var(--c); transform: translateX(6px) scale(1.025); box-shadow: var(--shadow-lg); }
   .scenic.focus .tile:not(.hl):not(.open) { opacity: .5; transform: scale(.97); }
   .tile .head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 16px; }
+  /* set by the script when any role's dates would wrap, so every role puts its dates under the title together */
+  .sr-list.stack-when .tile .head { flex-direction: column; align-items: flex-start; }
   .tile .role { font-family: var(--serif); font-weight: 600; font-size: 1.32rem; line-height: 1.2; letter-spacing: -.01em; }
   .tile .when { color: var(--c); font-weight: 600; font-size: .88rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .tile .details { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .35s ease, opacity .25s ease; }
@@ -212,10 +214,20 @@
     .stage.open { --step: 64px; }
     .cards { grid-template-columns: 1fr; }
     section { padding: 48px 0; }
-    .scenic { grid-template-columns: 76px 1fr; gap: 12px; }
-    .chart .tick { width: 32px; font-size: .76rem; }
-    .tile { padding: 13px 15px; }
-    .tile .role { font-size: 1.12rem; }
+    /* phones: a slimmer axis, and every role shows its details (no hover to reveal them) */
+    .scenic { grid-template-columns: 64px 1fr; gap: 10px; }
+    .chart .tick { width: 24px; font-size: .72rem; }
+    .chart .tick.now { font-size: .64rem; }
+    .chart .bar { stroke-width: 8; }
+    .chart .bar.hl { stroke-width: 12; }
+    .sr-list { gap: 12px; }
+    .tile { padding: 12px 14px; border-radius: 14px; }
+    .tile .role { font-size: 1.1rem; }
+    .tile .when { font-size: .84rem; }
+    .tile .org { font-size: .88rem; line-height: 1.45; margin-top: 5px; }
+    .tile .org a { color: var(--muted); text-decoration-color: color-mix(in srgb, var(--c) 60%, transparent); }
+    .tile .details { grid-template-rows: 1fr; opacity: 1; transition: none; }
+    .tile .body { font-size: .9rem; line-height: 1.5; margin: 6px 0 0; }
     .tile.hl, .tile.open { transform: scale(1.015); }
     .two { grid-template-columns: 1fr; }
     .panel { padding: 22px 20px; }
@@ -410,7 +422,7 @@
     <p class="kicker">Experience</p>
     <h2>The scenic route</h2>
     <p class="section-intro">Supply chains, sustainability programs, then a turn toward data science.</p>
-    <p class="scale-note">2015 at the bottom, today at the top. Each bar is as long as that role lasted. <span class="on-hover">Hover</span><span class="on-touch">Tap</span> a role for details.</p>
+    <p class="scale-note">2015 at the bottom, today at the top. Each bar is as long as that role lasted. <span id="sr-hint">Hover a role for details.</span></p>
     <div class="scenic" id="scenic">
       <div class="chart" id="chart" aria-hidden="true">
         <svg id="chart-svg"></svg>
@@ -603,21 +615,39 @@
     return node;
   }
 
+  // If any role's dates would wrap under its title, put every role's dates there.
+  // Phones always stack them, so narrowing the window flips them once, not back and forth.
+  function stackDates() {
+    list.classList.remove('stack-when');
+    var wraps = small.matches || tiles.some(function (tile) {
+      var role = tile.querySelector('.role');
+      return tile.querySelector('.when').offsetTop >= role.offsetTop + role.offsetHeight / 2;
+    });
+    list.classList.toggle('stack-when', wraps);
+  }
+
+  var active = null, needsSize = false;
+
   function draw() {
-    // Give each year enough height to read, and leave room for the tallest
-    // role to open without the list outgrowing the axis beside it.
+    stackDates();
+    var hover = window.matchMedia('(hover: hover)').matches;
+    document.getElementById('sr-hint').textContent = (hover ? 'Hover' : 'Tap') + ' a role ' + (small.matches ? 'to light up its bar.' : 'for details.');
+    // Give each year enough height to read, and (where details open on hover)
+    // leave room for the tallest role to open without the list outgrowing the axis beside it.
     if (!scenic.classList.contains('focus') && !list.querySelector('.tile.open')) {
-      var rest = 14 * (tiles.length - 1), open = 0;
+      var gapY = parseFloat(getComputedStyle(list).rowGap) || 14;
+      var rest = gapY * (tiles.length - 1), open = 0;
       tiles.forEach(function (tile) {
         rest += tile.offsetHeight;
-        open = Math.max(open, tile.querySelector('.details > div').scrollHeight);
+        if (!small.matches) open = Math.max(open, tile.querySelector('.details > div').scrollHeight);
       });
       list.style.minHeight = Math.max((TODAY - START) * (small.matches ? 34 : 48), rest + open + 12) + 'px';
       chart.style.height = list.offsetHeight + 'px';
-    }
+      needsSize = false;
+    } else needsSize = true;
     var W = chart.clientWidth, H = chart.clientHeight;
-    var axisX = small.matches ? 38 : 54;
-    var laneX = function (lane) { return axisX + 20 + lane * (small.matches ? 18 : 24); };
+    var axisX = small.matches ? 32 : 54;
+    var laneX = function (lane) { return axisX + (small.matches ? 16 : 20) + lane * (small.matches ? 15 : 24); };
     var y = function (t) { return (TODAY - t) / (TODAY - START) * H; };
     var swoosh = Math.min(22, H / (TODAY - START) * .45);   // half-height of a lane change
 
@@ -675,6 +705,7 @@
       svg.appendChild(el('path', { d: d, stroke: color, 'class': 'bar', 'data-k': bar.tile.getAttribute('data-k') }));
     });
     chart.setAttribute('data-ppy', (H / (TODAY - START)).toFixed(2));
+    if (active) setActive(active);
   }
 
   function addTick(label, pct, now) {
@@ -687,11 +718,13 @@
 
   // Hovering a role (or its bar) grows both and fades the rest.
   function setActive(k) {
+    active = k;
     scenic.classList.toggle('focus', !!k);
     scenic.querySelectorAll('[data-k]').forEach(function (node) {
       var on = node.getAttribute('data-k') === k;
       node.classList.toggle('hl', on);
     });
+    if (!k && needsSize) setTimeout(function () { if (!active && !list.querySelector('.tile.open')) draw(); }, 400);
   }
   scenic.addEventListener('pointerover', function (e) {
     if (e.pointerType !== 'mouse') return;
@@ -703,7 +736,10 @@
     tile.addEventListener('focus', function () {
       if (tile.matches(':focus-visible')) setActive(tile.getAttribute('data-k'));
     });
-    tile.addEventListener('blur', function () { setActive(null); });
+    tile.addEventListener('blur', function () {
+      if (!window.matchMedia('(hover: hover)').matches) tile.classList.remove('open');
+      setActive(null);
+    });
     // Touch has no hover, so a tap opens a role's details.
     tile.addEventListener('click', function (e) {
       if (e.target.closest('a')) return;
@@ -716,7 +752,13 @@
   });
 
   var timer;
-  window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(draw, 120); });
+  // Crossing the phone breakpoint opens or closes every role's details, so wait for that to finish.
+  var wasSmall = small.matches, settle = 0;
+  window.addEventListener('resize', function () {
+    stackDates();
+    if (small.matches !== wasSmall) { wasSmall = small.matches; settle = Date.now() + 450; }
+    clearTimeout(timer); timer = setTimeout(draw, Math.max(120, settle - Date.now()));
+  });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
   draw();
 })();
