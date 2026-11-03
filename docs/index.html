@@ -23,6 +23,38 @@
     if (theme === 'stitch' || (theme !== 'plain' && localStorage.getItem('stitch') === '1')) document.documentElement.classList.add('stitch');
   } catch (e) {}
 </script>
+<script>
+  // Carlo's embroidered loader (stitch/stitch-loader.js), only on a genuinely slow load: if the page isn't ready 0.45 s in,
+  // a linen screen with eight figures circling; once it's readable the linen fades and they leave the ring one by one,
+  // walking off the right edge. Skipped if it would arrive late, after the visitor has started reading or scrolling.
+  (function () {
+    // ready to read: loaded, or the fonts are in and every picture on screen is drawn
+    function pageReady() {
+      if (document.readyState === 'complete') return true;
+      if (document.readyState === 'loading' || (document.fonts && document.fonts.status !== 'loaded')) return false;
+      for (var i = 0, im, r; i < document.images.length; i++) {
+        im = document.images[i]; if (im.complete) continue;
+        r = im.getBoundingClientRect(); if (r.width && r.bottom > 0 && r.top < innerHeight) return false;
+      }
+      return true;
+    }
+    setTimeout(function () {
+      if (pageReady()) return;
+      var decided = performance.now(), touched = false;
+      ['scroll', 'pointerdown', 'keydown', 'touchstart'].forEach(function (e) { addEventListener(e, function () { touched = true; }, { once: true, passive: true, capture: true }); });
+      var s = document.createElement('script');
+      s.src = 'stitch/stitch-loader.js'; s.fetchPriority = 'high';
+      s.onload = function () {
+        if (!window.StitchLoader || touched || scrollY > 0 || performance.now() - decided > 1200 || pageReady()) return;
+        var h = StitchLoader.show({ base: 'stitch/', backdrop: 'full', artTimeout: 1200 }), shownAt = performance.now();
+        var poll = setInterval(function () {
+          if (pageReady() || performance.now() - shownAt > 8000) { clearInterval(poll); h.finish(); }
+        }, 150);
+      };
+      document.head.appendChild(s);
+    }, 450);
+  })();
+</script>
 <style>
   :root {
     color-scheme: light;
@@ -468,6 +500,15 @@
     .au-cols.dense .v { display: none; }   /* 12 months leave no room for the dollar labels on a phone; the tap/hover title keeps them */
     .au-col .v { font-size: .66rem; }
   }
+  /* loading screen (stitch/stitch-loader.js, shown only on a slow load) */
+  .stl { position: fixed; inset: 0; z-index: 1000; pointer-events: none; --stl-paper: #f1ecdf; opacity: 0; transition: opacity .3s ease; }
+  .stl.stl-on { opacity: 1; }
+  .stl.stl-done { opacity: 0; transition-duration: .25s; }
+  .stl-cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .stl-bg { position: absolute; inset: 0; background: var(--stl-paper); transition: opacity .5s ease; }
+  .stl.stl-leaving .stl-bg { opacity: 0; }
+  .stl.stl-full.stl-on:not(.stl-leaving) { pointer-events: auto; }   /* no tapping links you can't see */
+  .stl-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 </style>
 </head>
 <body>
