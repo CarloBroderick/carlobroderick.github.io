@@ -276,6 +276,14 @@
   }
   /* ---------- embroidery: tapping the figures in the footer re-stitches the whole page ---------- */
   .parade { cursor: pointer; }
+  /* three figures walking along the divider under the photos */
+  .hero { position: relative; }
+  .parade.mini {
+    position: absolute; right: 24px; bottom: -1px; --fig: 40px; height: auto; margin: 0; padding: 0; gap: 0 4px; overflow: visible;
+    -webkit-mask: none; mask: none;
+  }
+  .parade.mini::before, .parade.mini::after { display: none; }
+  .parade.mini img { margin-bottom: 0; }
   .parade:focus-visible { outline: 2px dashed var(--accent); outline-offset: 4px; }
   html.stitch {
     --bg: #efe5d2; --surface: #f8f0e0; --line: #d9c9ac; --muted: #6a5a45;
@@ -459,6 +467,7 @@
       <button class="stage-btn next" aria-label="Next photo">›</button>
       <p class="stage-foot"><span class="hint">Hover to flip through photos</span><span class="count" aria-live="polite">1 / 17</span></p>
     </div>
+    <div class="parade mini" role="button" tabindex="0" aria-pressed="false" aria-label="Embroider the whole site" title="Embroider the whole site"><img src="parade/parade-08.png" width="52" height="84" alt=""><img src="parade/parade-04.png" width="43" height="84" alt=""><img src="parade/parade-12.png" width="43" height="84" alt=""></div>
   </header>
 
   <section id="work">
@@ -706,9 +715,9 @@
 
 /* ---------- embroidery: the footer figures switch the page to a stitched look and back ---------- */
 (function () {
-  var root = document.documentElement, parade = document.querySelector('.parade');
-  if (!parade) return;
-  parade.querySelectorAll('img').forEach(function (img) { img.removeAttribute('title'); });
+  var root = document.documentElement, parades = document.querySelectorAll('.parade');
+  if (!parades.length) return;
+  parades.forEach(function (p) { p.querySelectorAll('img').forEach(function (img) { img.removeAttribute('title'); }); });
   function font() {
     if (document.getElementById('stitch-font')) return;
     var l = document.createElement('link');
@@ -718,9 +727,11 @@
   }
   function show(on) {
     root.classList.toggle('stitch', on);
-    parade.setAttribute('aria-pressed', on);
-    parade.title = on ? 'Unpick the embroidery' : 'Embroider the whole site';
-    parade.setAttribute('aria-label', parade.title);
+    parades.forEach(function (p) {
+      p.setAttribute('aria-pressed', on);
+      p.title = on ? 'Unpick the embroidery' : 'Embroider the whole site';
+      p.setAttribute('aria-label', p.title);
+    });
     if (on) font();
   }
   show(root.classList.contains('stitch'));
@@ -730,8 +741,10 @@
     if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(function () { show(on); });
     else show(on);
   }
-  parade.addEventListener('click', flip);
-  parade.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+  parades.forEach(function (p) {
+    p.addEventListener('click', flip);
+    p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+  });
 })();
 
 /* ---------- project cards: phones show title and links, with the description a tap away ---------- */
